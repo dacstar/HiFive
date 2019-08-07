@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.Member{
+  height:100vh;
+    background: grey;
+}
 </style>

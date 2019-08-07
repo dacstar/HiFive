@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.Team{
+  height:100vh;
+    background: gold;
+}
 </style>

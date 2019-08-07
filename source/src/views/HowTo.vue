@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.HowTo{
+  height:100vh;
+  background: orange;
+}
 </style>

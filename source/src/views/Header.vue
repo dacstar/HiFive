@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.Header{
+  height:100vh;
+  background: blue;
+}
 </style>

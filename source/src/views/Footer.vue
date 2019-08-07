@@ -11,5 +11,8 @@ export default {
 </script>
 
 <style>
-
+.Footer{
+  height:100vh;
+    background: greenyellow;
+}
 </style>

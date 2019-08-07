@@ -1,6 +1,6 @@
 <template>
-  <div class="Main">
-    this is Main section
+  <div class="MemberContains">
+    this is MemberContains
   </div>
 </template>
 
@@ -11,8 +11,5 @@ export default {
 </script>
 
 <style>
-.Main{
-  height:100vh;
-  background: red;
-}
+
 </style>
