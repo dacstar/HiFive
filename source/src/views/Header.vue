@@ -1,18 +1,21 @@
 <template>
   <div class="Header">
-    this is hifive??
+    <Navbar></Navbar>
   </div>
 </template>
 
 <script>
-export default {
+import Navbar from "../components/HeaderContains/Navbar";
 
+export default {
+  components:{
+    Navbar
+  }
 }
 </script>
 
 <style>
 .Header{
   height:100vh;
-  background: blue;
 }
 </style>
