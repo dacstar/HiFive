@@ -35,8 +35,8 @@ export default {
         margin: 0;
         padding: 0;
         overflow: hidden;
-        background-color: aquamarine;
-        position:fixed;
+        background-color: coral;
+        position:sticky;
         top:0;
         width:100%;
     }
