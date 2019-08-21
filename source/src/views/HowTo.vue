@@ -1,18 +1,21 @@
 <template>
   <div class="HowTo">
-    this is How to move section!!
+    <HowTo></HowTo>
   </div>
 </template>
 
 <script>
-export default {
+import HowTo from '../components/HowtoContents'
 
+export default {
+  components:{
+    HowTo
+  }
 }
 </script>
-
-<style>
+<style scoped>
 .HowTo{
   height:100vh;
-  background: orange;
+  background: aliceblue;
 }
 </style>
