@@ -1,26 +1,11 @@
 <template>
   <div class="Team">
-    <h1 class="grey--text">하이파이브가 이 세상에 나오기까지,<span class="purple--text">노력한 사람들</span></h1>
-
-    <v-container class="my-5">
-      <v-layout row wrap>
-        <v-flex xs12 sm6 md4 lg3 v-for="person in team" :key="person.name">
-          <v-card flat class="text-xs-center ma-3">
-            <v-responsive class="pt-4">
-              <v-avatar size="100" class="grey lighten-2">
-                <img :src="person.avatar">
-              </v-avatar>
-            </v-responsive>
-            <v-card-text>
-              <div>{{ person.name }}</div>
-              <div>{{ person.role }}</div>
-              <div>{{ person.intro}}</div>
-            </v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-
-    </v-container>
+    <h1>하이파이브, 뭐하는 스타트업이지?</h1>
+    장소 평가 시스템 : 간편함, 재미, 성취
+간편함 : 찍고 -- 방문했니? -- 맘에 들면 방문 한거고, 아님 안찍고. 큐알 코드를 통한 소통
+재미 : 훈장 시스템. 여기저기 방문하면서 레밸 업 및 재미. ex) 이 구역의 수호자
+성취 : 2차 전직, 3차 전직, 원칙.
+객관성 : 점주입장. 많이 방문한 곳은 그냥 확실한 지표이다. 시간대, 연령, 프리미엄 서비스 제공으로 인한 수익구조 창출.
 
   </div>
 </template>
@@ -29,18 +14,13 @@
   export default {
     data() {
       return {
-        team: [
-        { name: '유동관', role: '팀장', avatar: '/avatar-1.png', intro: '자기소개' },
-        { name: '노현우', role: 'Web developer', avatar: '/avatar-2.png', intro: '자기소개' },
-        { name: '신채원', role: 'Graphic designer', avatar: '/avatar-3.png', intro: '자기소개' },
-        { name: '박길준', role: 'Social media maverick', avatar: '/avatar-4.png', intro: '자기소개' }
-        ]
+       
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
 .Team{
   height:100vh;
     background: gold;
