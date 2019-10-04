@@ -3,7 +3,8 @@
 
 
 ## 동관
-
+- (중요) push 할 때 package.json 제거하고 올리세요~ 아니면 버전 오류납니다.
+- (중요) clone 하실 때 npm install 해주세요.
 - 기본 구조 작성하였습니다. 
 - 개발 흐름도 작성하였습니다.
 - vue-router 사용하여 APP.vue 내부에 SPA 방식으로 구현하였습니다.
