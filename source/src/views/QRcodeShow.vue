@@ -4,10 +4,10 @@
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
       <div v-if="validationSuccess" class="validation-success">
-          <a href="/login" class="accepted">
+          <router-link to="/login" class="accepted">
             하이파이브 하시겠습니까??
             alert("하이파이브 하시겠습니까?")
-          </a>
+          </router-link> |
       </div>
 
       <div v-if="validationFailure" class="validation-failure">

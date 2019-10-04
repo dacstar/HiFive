@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- ToolBar 대체용품. 더 편하다 -->
+    <!-- ToolBar 대체용품. 더 편하다@! -->
     <tool-bar></tool-bar>
     <img alt="하이파이브 logo" src="./assets/logo.png">
     <router-view></router-view>
