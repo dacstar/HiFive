@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="decode-result">Last result: <b>{{ result }}</b></p>
+    <p class="decode-result">좋은하루입니다! 하이파이브할까요?: <b>{{ result }}</b></p>
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
       <div v-if="validationSuccess" class="validation-success">

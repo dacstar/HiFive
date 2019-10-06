@@ -4,7 +4,7 @@ import KakaoMap from '../views/KakaoMap.vue';
 import LoginPage from '../views/LoginPage.vue';
 import MyPage from '../views/MyPage.vue';
 import QRcodeShow from '../views/QRcodeShow.vue';
-import SignIn from '../views/SignIn.vue';
+import SignUp from '../views/SignUp.vue';
 
 Vue.use(VueRouter);
 
@@ -33,8 +33,8 @@ export const router = new VueRouter({
             component: QRcodeShow
         },
         {
-            path: '/signin',
-            component: SignIn
+            path: '/signup',
+            component: SignUp
         },
     ]
 })
