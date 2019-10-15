@@ -1,7 +1,7 @@
 <template>
   <div class="app">
       <div class="container">
-        <form action="/action_page.php">
+        <div>
           <div class="row">
             <h2 style="text-align:center">this is login & sign in show page</h2>
             <div class="vl">
@@ -24,14 +24,12 @@
               <div class="hide-md-lg">
                 <p>Or sign in manually:</p>
               </div>
-
-              <input type="text" name="username" placeholder="Username" required>
-              <input type="password" name="password" placeholder="Password" required>
-              <input type="submit" value="Login">
+              <input type="text" name="username" placeholder="Username" v-model="email" required>
+              <input type="password" name="password" placeholder="Password" v-model="password" required>
+              <input type="submit" value="Login" v-on:click="login">
             </div>
-            
           </div>
-        </form>
+        </div>
       </div>
 
       <div class="bottom-container">
@@ -48,7 +46,28 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
+  name:'login',
+  data:function(){
+    return {
+      email:'',
+      password:''
+    }
+  },
+  methods:{
+    login:function(){
+      firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
+        function(user){
+          alert("로그인 잘 되었습니다.")
+        },
+        function(err){
+          alert(err.message)
+        }
+      );
+    }
+  },
   mounted(){
     alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
   }

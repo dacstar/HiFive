@@ -1,16 +1,16 @@
 <template>
   <div class="app">
-    <form action="./map" style="border:1px solid #ccc">
+    <div style="border:1px solid #ccc">
       <div class="container">
         <h1>Sign Up</h1>
         <p>Please fill in this form to create an account.</p>
         <hr>
 
         <label for="email"><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+        <input type="text" v-model='email' placeholder="Enter Email" name="email" required>
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
+        <input type="password" v-model='password' placeholder="Enter Password" name="psw" required>
 
         <label for="psw-repeat"><b>Repeat Password</b></label>
         <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
@@ -22,17 +22,42 @@
         <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
         <div class="clearfix">
-          <button type="button" class="cancelbtn">Cancel</button>
-          <button type="submit" class="signupbtn">Sign Up</button>
+          <button type="button" class="cancelbtn" v-on:click="cancel">뒤로가기</button>
+          <button type="submit" class="signupbtn" v-on:click="signUp">회원가입</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import firebase from 'firebase';
+import router from '../routes/index.js'
+import { log } from 'util';
 
+export default {
+  name:'signup',
+  data:function(){
+    return {
+      email:'',
+      password:''
+    }
+  },
+  methods:{
+    signUp: function(){
+      firebase.auth().createUserWithEmailAndPassword(this.email,this.password).then(
+        function(user){
+          alert("회원가입 완료!")
+        },
+        function(err){
+          alert(err.message)
+        }
+      );
+    },
+    cancel: function(){
+      this.$router.go(-1)
+    }
+  }
 }
 </script>
 
