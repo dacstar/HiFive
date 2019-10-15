@@ -10,17 +10,58 @@
 - vue-router 사용하여 APP.vue 내부에 SPA 방식으로 구현하였습니다.
 
 1. router-view
-   - 따로 폴더를 만들어 관리하는 것도 괜찮은 방법
-
+   
+- 따로 폴더를 만들어 관리하는 것도 괜찮은 방법
+   
 2. missing script 오류를 해결할 때 , 그리고 package.json 에 대해 배운 점 공유
    - package.json은 설치된 라이브러리의 버전을 저장해놓는 도서관의 기능을 수행한다. 이것의 목차본은 package-lock.json 이고, 때문에 
      package.json을 함부로 지우면 안된다...ㅠㅠ missing script 에러가 날 수 있다.
    - 그럼에도 불구하고 실수로 지울 수 있다. 그러면 npm init으로 새로 만들어 주고, 기억을 더듬어... 다시 설치해야한다. npm install -g @vue/cli부터 시작해보면 될듯.. 
 
 3. 화살표 함수를 사용하는 이유 공유합니다.
-    - 함수 내부와 외부의 바인딩을 그대로 가져가기 위해 사용함.
-
+    
+- 함수 내부와 외부의 바인딩을 그대로 가져가기 위해 사용함.
+    
 4. 회원가입 및 로그인 #firebase 구현 완료
+
+5. 로그인 및 회원가입 완료 후 페이지 넘어가지 않던 오류 해결한거 공유합니다.
+
+    ```javascript
+    // 해결되지 않던 코드
+    methods:{
+        login:function(){
+            firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
+                function(user){
+                    alert("로그인 잘 되었습니다.")
+                    this.$router.replace('map')
+                },
+                function(err){
+                    alert(err.message)
+                }
+            );
+        }
+    },
+    ```
+
+    ```javascript
+    // 해결된 코드
+    methods:{
+        login:function(){
+            firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
+                res=> {
+                    console.log(res);
+                    alert("로그인 잘 되었습니다.")
+                    this.$router.push("map");
+                },
+                function(err){
+                    alert(err.message)
+                }
+            );
+        }
+    },
+    ```
+
+    - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다.
 
 ## 현우
 
