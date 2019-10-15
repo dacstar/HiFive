@@ -59,8 +59,10 @@ export default {
   methods:{
     login:function(){
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
-        function(user){
+        res=> {
+          console.log(res);
           alert("로그인 잘 되었습니다.")
+          this.$router.push("map");
         },
         function(err){
           alert(err.message)
@@ -69,7 +71,7 @@ export default {
     }
   },
   mounted(){
-    alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
+    // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
   }
 }
 </script>
