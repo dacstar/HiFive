@@ -22,6 +22,7 @@ export const router = new VueRouter({
         },
         {
             path: '/login',
+            name:'login',
             component: LoginPage
         },
         {
