@@ -46,8 +46,10 @@ export default {
   methods:{
     signUp: function(){
       firebase.auth().createUserWithEmailAndPassword(this.email,this.password).then(
-        function(user){
-          alert("회원가입 완료!")
+        res=> {
+          console.log(res);
+          alert("회원가입 성공!")
+          this.$router.push("login");
         },
         function(err){
           alert(err.message)
