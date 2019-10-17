@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <div v-if="this.flag==true">
       <div class="container">
         <div>
           <div class="row">
@@ -15,8 +16,8 @@
               <a href="#" class="twitter btn">
                 <i class="fa fa-twitter fa-fw"></i> Login with Twitter
               </a>
-              <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-                </i> Login with Google+
+              <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
+                </i> 구글 로그인
               </a>
             </div>
 
@@ -42,6 +43,11 @@
           </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      {{this.email}}님 안녕하세요!
+      <input type="submit" value="로그아웃" v-on:click="logout">
+    </div>
   </div>
 </template>
 
@@ -53,7 +59,9 @@ export default {
   data:function(){
     return {
       email:'',
-      password:''
+      password:'',
+      user:[],
+      flag:true
     }
   },
   methods:{
@@ -61,13 +69,48 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
         res=> {
           console.log(res);
-          alert("로그인 잘 되었습니다.")
-          this.$router.push("map");
-        },
-        function(err){
+          //alert("로그인 잘 되었습니다.")
+          //this.$router.push("map");
+          this.flag=false;
+          this.user = res.user
+        }).catch(function(error) {
           alert(err.message)
         }
       );
+    },
+    google_login:function(){
+      firebase.auth().getRedirectResult().then(
+        result=> {
+        if (result.credential) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // ...
+        }
+        // The signed-in user info.
+        var user = result.user;
+        this.flag = false;
+        this.email = result.user.email
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+    },
+    logout:function(){
+      firebase.auth().signOut().then(
+        result=> {
+        // Sign-out successful.
+        this.flag = true;
+        this.user = []
+      }).catch(function(error) {
+        // An error happened.
+        alert(error.message);
+      });
     }
   },
   mounted(){

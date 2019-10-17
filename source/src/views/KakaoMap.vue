@@ -4,7 +4,7 @@
       <input type="text" name="search" placeholder="공간 검색하기">
       <div id="map" style="width:500px;height:400px;"></div>
       <div v-for='store in stores'>
-        {{store}}
+        {{store.title}}
       </div>
   </div>
 </template>
