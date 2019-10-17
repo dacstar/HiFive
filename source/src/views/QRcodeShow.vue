@@ -21,6 +21,10 @@
         잠시만 기다려주세요.
       </div>
     </qrcode-stream>
+      <div class="recommend">
+        아직 회원이 아니신가요? 
+        <a href="/login" class="loginmove">로그인하기</a>
+      </div>
   </div>
 </template>
 
