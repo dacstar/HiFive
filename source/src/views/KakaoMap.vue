@@ -78,16 +78,17 @@ export default {
         latlng: new kakao.maps.LatLng(36.34851424918655, 127.29726813490997)
       }
     ];
-    // 마커 이미지 경로
-    var imageSrc = "https://www.iconsdb.com/icons/preview/violet/hand-cursor-xxl.png";
-    var imageSize = new kakao.maps.Size(25, 25);
+    // Marker
+    var imageSrc = "https://www.iconsdb.com/icons/preview/violet/hand-cursor-xl.png"; // 마커 이미지 링크
+    // var imageSrc = "../assets/hifive_purple.png";
+    var imageSize = new kakao.maps.Size(30, 30);
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
     for (var i = 0; i < positions.length; i++) {
       var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: positions[i].latlng, // 마커를 표시할 위치
         title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-        // image: markerImage // 마커 이미지
+        image: markerImage // 마커 이미지
       });
       var infowindow = new kakao.maps.InfoWindow({
         content : positions[i].content // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
