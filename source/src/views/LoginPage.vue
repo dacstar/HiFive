@@ -13,7 +13,7 @@
               <a href="#" class="fb btn">
                 <i class="fa fa-facebook fa-fw"></i> Login with Facebook
               </a>
-              <a href="#" class="twitter btn">
+              <a href="#" class="twitter btn" v-on:click="next">
                 <i class="fa fa-twitter fa-fw"></i> Login with Twitter
               </a>
               <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
@@ -73,23 +73,28 @@ export default {
           //this.$router.push("map");
           this.flag=false;
           this.user = res.user
+          this.email = user.email
         }).catch(function(error) {
-          alert(err.message)
+          //alert(error.message)
         }
       );
     },
     google_login:function(){
-      firebase.auth().getRedirectResult().then(
-        result=> {
-        if (result.credential) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // ...
-        }
-        // The signed-in user info.
-        var user = result.user;
-        this.flag = false;
-        this.email = result.user.email
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    },
+    next:function(){
+        firebase.auth().getRedirectResult().then(
+          result=> {
+          if (result.credential) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            var token = result.credential.accessToken;
+            // ...
+          }
+          // The signed-in user info.
+          this.user = result.user;
+          this.flag = false;
+          this.email = user.email
       }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
@@ -106,7 +111,8 @@ export default {
         result=> {
         // Sign-out successful.
         this.flag = true;
-        this.user = []
+        this.user = [];
+        this.email = '';
       }).catch(function(error) {
         // An error happened.
         alert(error.message);
