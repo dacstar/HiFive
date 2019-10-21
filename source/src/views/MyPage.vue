@@ -1,14 +1,5 @@
 <template>
   <div class="app">
-      this is my info page
-      저는 이 매장에 이만큼 기여했어요!
-  </div>
-</template>
-
-<script>
-export default {
-<template>
-  <div class="app">
     <div class="container">
        <div class="row">
          <div><h1>내 방문장소</h1></div>
