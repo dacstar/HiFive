@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
         // 접근은 각 컴포넌트에서 this.$store.state.hifiveCnt 로 사용가능합니다
         X: 0,
         Y: 0,
-
+        user_test_img: '',
+        isLogin: false
 
     },
     mutations: {
@@ -20,6 +21,6 @@ export const store = new Vuex.Store({
         doubleX(state, X) {
             state.Y = X;
         }
-
     }
+    
 });
