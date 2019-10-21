@@ -93,8 +93,9 @@ export default {
       var infowindow = new kakao.maps.InfoWindow({
         content : positions[i].content // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
       });
-      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+      kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+      // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+      // kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
     }
     function makeOverListener(map, marker, infowindow) {
       return function() {
