@@ -17,6 +17,11 @@ var firebaseConfig = {
   appId: "1:734773107278:web:79eab00ba8c03a1b"
 };
 
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('d5e4fbca80b67f3a6a75614545dd6b7b');
+        
+
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 

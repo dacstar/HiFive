@@ -12,16 +12,16 @@
 1. router-view
    
 - 따로 폴더를 만들어 관리하는 것도 괜찮은 방법
-   
+  
 2. missing script 오류를 해결할 때 , 그리고 package.json 에 대해 배운 점 공유
    - package.json은 설치된 라이브러리의 버전을 저장해놓는 도서관의 기능을 수행한다. 이것의 목차본은 package-lock.json 이고, 때문에 
      package.json을 함부로 지우면 안된다...ㅠㅠ missing script 에러가 날 수 있다.
    - 그럼에도 불구하고 실수로 지울 수 있다. 그러면 npm init으로 새로 만들어 주고, 기억을 더듬어... 다시 설치해야한다. npm install -g @vue/cli부터 시작해보면 될듯.. 
 
 3. 화살표 함수를 사용하는 이유 공유합니다.
-    
+   
 - 함수 내부와 외부의 바인딩을 그대로 가져가기 위해 사용함.
-    
+  
 4. 회원가입 및 로그인 #firebase 구현 완료
 
 5. 로그인 및 회원가입 완료 후 페이지 넘어가지 않던 오류 해결한거 공유합니다.
@@ -62,6 +62,27 @@
     ```
 
     - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다.
+    
+6. git pull reject 에러
+
+    - feature에서 개발을 끝낸 후 push 하려고 했는데 다음과 같은 에러가 발생하였습니다.
+
+    ```bash
+    error: failed to push some refs to 'ssh://git@coderepo.com:7999/repo/myproject.git'
+    hint: Updates were rejected because the tip of your current branch is behind
+    hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+    hint: before pushing again.
+    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+    ```
+
+    - remote에서 pull 해줄 때 같은 브랜치에서 pull 해주어야합니다.
+    - 저같은 경우 feature브랜치에 있는 상황에서 develop 브랜치를 pull 받으려 했기 때문에 에러가 났습니다.
+    - remote branch에 feature branch와 같은 브랜치가 존재한다면, remote에 있는 feature branch를 삭제해주어야합니다.
+    
+7. social login
+
+    - facebook login : https://sh-itstory.tistory.com/61 참고
+    - google login : mounted 처리하는게 중요하다
 
 ## 현우
 1. 카카오맵 여러개 마커에 이벤트 부여하기(19/10/17)
