@@ -19,7 +19,7 @@
               <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
                 </i> 구글 로그인
               </a>
-              <a id="kakao-login-btn">ㅁㄴㅇㅁㄴㅇㅁㄴㅇ</a>
+              <a id="kakao-login-btn"></a>
               <a href="http://developers.kakao.com/logout"></a>
             </div>
 
@@ -64,7 +64,8 @@ export default {
       email:'',
       password:'',
       user:[],
-      flag:true
+      flag:true,
+      user_img:''
     }
   },
   methods:{
@@ -107,15 +108,27 @@ export default {
   },
   mounted(){
     // 카카오 로그인 버튼을 생성합니다.
-    Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      success: function (authObj) {
-        alert(JSON.stringify(authObj));
-      },
-      fail: function (err) {
-        alert(JSON.stringify(err));
-      }
-    });
+      Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+          // 로그인 성공시, API를 호출합니다.
+          Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              console.log(JSON.stringify(res.kaccount_email));
+              console.log(JSON.stringify(res.id));
+              console.log(JSON.stringify(res.properties.profile_image));
+              console.log(JSON.stringify(res.properties.nickname));
+            },
+            fail: function(error) {
+              alert(JSON.stringify(error));
+            }
+          });
+        },
+        fail: function(err) {
+          alert(JSON.stringify(err));
+        }
+      });
     // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
     firebase.auth().getRedirectResult().then(
       result=> {
@@ -126,7 +139,7 @@ export default {
   }
   // The signed-in user info.
   var user = result.user;
-  console.log('이거슨 user',user);
+  // console.log('이거슨 user',user);
   // console.log('user displayname:',user.displayName);
   if(user){
     this.email = user.displayName;
