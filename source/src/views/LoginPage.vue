@@ -98,7 +98,7 @@ export default {
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
           console.log(user);
-          scope.$store.state.user_nickname = "싸피인";
+          scope.$store.state.user_nickname = "싸피인!!";
           scope.flag = false;
           // ...
         } else {
