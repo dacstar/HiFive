@@ -77,7 +77,7 @@ export default {
           //this.$router.push("map");
           this.flag=false;
           this.user = res.user
-          this.email = user.email
+          scope.$store.state.user_nickname = user.email
         }).catch(function(error) {
           //alert(error.message)
         }
