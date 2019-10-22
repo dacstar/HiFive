@@ -4,10 +4,12 @@
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
       <div v-if="validationSuccess" class="validation-success">
-          <router-link to="/login" class="accepted">
-            하이파이브 하시겠습니까??
-            alert("하이파이브 하시겠습니까?")
-          </router-link> |
+          <router-link v-if="this.$store.state.user_nickname!=''" to="/mypage" class="accepted">
+            하이파이브 하시겠습니까??????? 마이페이지로
+          </router-link>
+          <router-link v-else to="/login" class="accepted">
+            하이파이브 하시겠습니까 로그인 페이지로
+          </router-link>
       </div>
 
       <div v-if="validationFailure" class="validation-failure">
@@ -21,7 +23,7 @@
         잠시만 기다려주세요.
       </div>
     </qrcode-stream>
-      <div class="recommend">
+      <div class="recommend" v-if="this.$store.state.user_nickname==''">
         아직 회원이 아니신가요? 
         <a href="/login" class="loginmove">로그인하기</a>
       </div>
@@ -80,7 +82,7 @@ export default {
       // pretend it's taking really long
       // 일치하는지 유효성 검사하는 곳
       await this.timeout(3000)
-      this.isValid = content.startsWith('하')
+      this.isValid = content.startsWith('h')
 
       // some more delay, so users have time to read the message
       await this.timeout(2000)

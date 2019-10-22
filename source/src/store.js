@@ -11,8 +11,8 @@ export const store = new Vuex.Store({
         X: 0,
         Y: 0,
         user_test_img: '',
-        isLogin: false
-
+        isLogin: false,
+        user_nickname:'tmp'
     },
     mutations: {
         doubleY(state, Y) {

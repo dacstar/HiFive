@@ -13,8 +13,8 @@
               <a href="#" class="fb btn" v-on:click="facebook_login">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
               </a>
-              <a href="#" class="twitter btn">
-                <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+              <a href="#" class="twitter btn" v-on:click="ananymous_login">
+                <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
               <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
                 </i> 구글 로그인
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div v-else>
-      {{this.email}}님 안녕하세요!
+      {{this.$store.state.user_nickname}}님 안녕하세요!
       <input type="submit" value="로그아웃" v-on:click="logout">
     </div>
   </div>
@@ -83,6 +83,30 @@ export default {
         }
       );
     },
+    ananymous_login:function(){
+      var scope = this;
+      firebase.auth().signInAnonymously().catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+      firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          // User is signed in.
+          var isAnonymous = user.isAnonymous;
+          var uid = user.uid;
+          console.log(user);
+          scope.$store.state.user_nickname = "싸피인";
+          scope.flag = false;
+          // ...
+        } else {
+          // User is signed out.
+          // ...
+        }
+        // ...
+      });
+    },
     facebook_login:function(){
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
@@ -99,7 +123,7 @@ export default {
         
         this.flag = true;
         this.user = [];
-        this.email = '';
+        this.$store.state.user_nickname = '';
       }).catch(function(error) {
         // An error happened.
         alert(error.message);
@@ -107,6 +131,13 @@ export default {
     }
   },
   mounted(){
+    var scope = this;
+    if(this.flag){
+      // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
+    }else{
+      alert(this.user);
+    }
+    
     // 카카오 로그인 버튼을 생성합니다.
       Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
@@ -119,6 +150,8 @@ export default {
               console.log(JSON.stringify(res.id));
               console.log(JSON.stringify(res.properties.profile_image));
               console.log(JSON.stringify(res.properties.nickname));
+              scope.$store.state.user_nickname = res.properties.nickname;
+              scope.flag = false;
             },
             fail: function(error) {
               alert(JSON.stringify(error));
@@ -129,8 +162,7 @@ export default {
           alert(JSON.stringify(err));
         }
       });
-    // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
-    firebase.auth().getRedirectResult().then(
+     firebase.auth().getRedirectResult().then(
       result=> {
   if (result.credential) {
     // This gives you a Google Access Token. You can use it to access the Google API.
@@ -142,7 +174,7 @@ export default {
   // console.log('이거슨 user',user);
   // console.log('user displayname:',user.displayName);
   if(user){
-    this.email = user.displayName;
+    this.$store.state.user_nickname = user.displayName;
     this.flag = false;
   }
   
@@ -155,25 +187,6 @@ export default {
   // The firebase.auth.AuthCredential type that was used.
   var credential = error.credential;
   // ...
-});
-
-// {
-//     status: 'connected',
-//     authResponse: {
-//         accessToken: '...',
-//         expiresIn:'...',
-//         signedRequest:'...',
-//         userID:'...'
-//     }
-// }
-FB.getLoginStatus(function(response) {
-    statusChangeCallback(response).then(
-      res=>{
-          if(res.status=='not_authorized'){
-            this.email = res.userID;
-          }
-      }
-    );
 });
   }
 }
