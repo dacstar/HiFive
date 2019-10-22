@@ -172,7 +172,25 @@
 
 ## 길준
 
+- 2019-10-22
 
+  - kakao map을 사용하여 검색기능 구현 완료
+
+    - 로직 수정 필요( 문제점 발견 )
+      - ex) 동일한 가게가 2개 이상 있을 시, 앞에 있는 가게의 위치로 이동한다.
+
+  - Javascript : let, const, var 차이점
+
+    - let
+      - block scope
+      - 변수 재할당 가능
+    - const
+      - block scope
+      - 변수 재선언, 재할당 불가능
+    - var
+      - function scope
+
+    
 
 ## 종찬
 
