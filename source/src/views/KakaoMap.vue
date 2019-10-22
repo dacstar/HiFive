@@ -22,6 +22,7 @@
 
 <script>
 import { fetchStoreList } from "../api/index.js";
+import { functions } from 'firebase';
 export default {
   data() {
     return {
@@ -132,6 +133,36 @@ export default {
       }
       this.mapinfo.setBounds(bounds);
     }
+    make_info(data) {
+      // 커스텀 오버레이에 표시할 컨텐츠 입니다
+      var result = '<div class="wrap">' + 
+            '    <div class="info">' + 
+            '        <div class="title">' + data.title + 
+            '            <div class="close" @onclick="closeOverlay()" title="닫기"></div>' + 
+            '        </div>' + 
+            '        <div class="body">' + 
+            '            <div class="img">' +
+            '                <img src="'+ data.image_url +'" width="73" height="70">' +
+            '           </div>' + 
+            '            <div class="desc">' + 
+            '                <div class="ellipsis">'+ data.address + '</div>' + 
+            // '                <h6>'+ data.address + '</h6>' + 
+            // '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
+            '            </div>' + 
+            '        </div>' + 
+            '    </div>' +    
+            '</div>';
+            return result;
+    },
+    // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+    // closeOverlay:function(){
+    //   alert("hI")
+    //   overlay.setMap(NULL);
+    // }
+    closeOverlay() {
+        alert("hi");
+        overlay.setMap(null);     
+      }
   },
   mounted() {
     var mapContainer = document.getElementById("map");
@@ -153,7 +184,10 @@ export default {
       {
         title: "Rom122",
         content: "<div>Rom122</div>",
-        latlng: new kakao.maps.LatLng(36.34530266111805, 127.30434520596424)
+        latlng: new kakao.maps.LatLng(36.34530266111805, 127.30434520596424),
+        // image_url:
+        address: "대전광역시 유성구 학하서로 166"
+        // hifive_count: 
       },
       {
         title: "수통골감나무집",
@@ -194,7 +228,8 @@ export default {
         // image: markerImage // 마커 이미지
       });
       var infowindow = new kakao.maps.InfoWindow({
-        content: positions[i].content // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        content : this.make_info(positions[i]) // 정보 띄우기
+        // content : positions[i].content // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
       });
       kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
       // kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
@@ -208,6 +243,12 @@ export default {
     function makeOutListener(infowindow) {
       return function () {
         infowindow.close();
+      };
+    }
+    // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+      function closeOverlay() {
+        return function(){
+          overlay.setMap(null);     
       };
     }
 
@@ -239,4 +280,21 @@ input[type="text"] {
 input[type="text"]:focus {
   width: 100%;
 }
+
+/* 커스텀 오버레이 */
+.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+.wrap * {padding: 0;margin: 0;}
+.wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+.wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+.info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+.info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+.info .close:hover {cursor: pointer;}
+.info .body {position: relative;overflow: hidden;}
+.info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+.info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+.info .link {color: #5085BB;}
+
 </style>

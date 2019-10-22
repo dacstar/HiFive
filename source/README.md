@@ -62,141 +62,113 @@
     ```
 
     - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다.
-    
-6. git pull reject 에러
-
-    - feature에서 개발을 끝낸 후 push 하려고 했는데 다음과 같은 에러가 발생하였습니다.
-
-    ```bash
-    error: failed to push some refs to 'ssh://git@coderepo.com:7999/repo/myproject.git'
-    hint: Updates were rejected because the tip of your current branch is behind
-    hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
-    hint: before pushing again.
-    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-    ```
-
-    - remote에서 pull 해줄 때 같은 브랜치에서 pull 해주어야합니다.
-    - 저같은 경우 feature브랜치에 있는 상황에서 develop 브랜치를 pull 받으려 했기 때문에 에러가 났습니다.
-    - remote branch에 feature branch와 같은 브랜치가 존재한다면, remote에 있는 feature branch를 삭제해주어야합니다.
-    
-7. social login
-
-    - facebook login : https://sh-itstory.tistory.com/61 참고
-    - google login : mounted 처리하는게 중요하다
 
 ## 현우
-- 카카오맵 여러개 마커에 이벤트 부여하기(19/10/17)
+1. 카카오맵 여러개 마커에 이벤트 부여하기(19/10/17)
 
-  *하나짜리 마커에 이벤트를 부여하는 것과 여러개 마커에 이벤트를 부여하는건 차이가 조금 있습니다.*
+   하나짜리 마커에 이벤트를 부여하는 것과 여러개 마커에 이벤트를 부여하는건 차이가 조금 있습니다.
 
-  1. 하나 일 때
+   - 하나 일 때는
 
-  ```jsp
-  <script>
-  // (1) 마커를 생성하고
-  var marker = new kakao.maps.Marker({
-    position: position
-  });
-  
-  // (2) 마커를 지도에 표시한 후에
-  marker.setMap(map);
-  
-  // (3) 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우 내용을 넣어주고
-  var iwContent = '<div style="padding:5px;">Hello World!</div>';
-  
-  // (4) 인포윈도우를 생성하면 됩니다.
-  var infowindow = new kakao.maps.InfoWindow({
-      content : iwContent
-  });
-  
-  // (5) 이때 마우스오버 이벤트와
-  kakao.maps.event.addListener(marker, 'mouseover', function() {
-    // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-      infowindow.open(map, marker);
-  });
-  
-  // (6) 마우스아웃 이벤트를 등록하면 됩니다.
-  kakao.maps.event.addListener(marker, 'mouseout', function() {
-      // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
-      infowindow.close();
-  });
-  </script>
-  ```
+   ```javascript
+   // (1) 마커를 생성하고
+   var marker = new kakao.maps.Marker({
+     position: position
+   });
+   
+   // (2) 마커를 지도에 표시한 후에
+   marker.setMap(map);
+   
+   // (3) 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우 내용을 넣어주고
+   var iwContent = '<div style="padding:5px;">Hello World!</div>';
+   
+   // (4) 인포윈도우를 생성하면 됩니다.
+   var infowindow = new kakao.maps.InfoWindow({
+       content : iwContent
+   });
+   
+   // (5) 이때 마우스오버 이벤트와
+   kakao.maps.event.addListener(marker, 'mouseover', function() {
+     // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+       infowindow.open(map, marker);
+   });
+   
+   // (6) 마우스아웃 이벤트를 등록하면 됩니다.
+   kakao.maps.event.addListener(marker, 'mouseout', function() {
+       // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+       infowindow.close();
+   });
+   ```
 
-  2. 여러 개
+   - 여러 개 일때는 조금 다릅니다.
 
-  ```jsp
-  <script>
-  for (var i = 0; i < positions.length; i ++) {
-      // for문으로 각각의 마커를 생성하고
-      var marker = new kakao.maps.Marker({
-          map: map,
-          position: positions[i].latlng // 마커의 위치
-      });
-  
-      // 마커에 표시할 인포윈도우를 생성한 후에
-      var infowindow = new kakao.maps.InfoWindow({
-          content: positions[i].content // 마우스오버시 출력할 내용
-      });
-  
-      // 마커에 마우스오버 이벤트와 마우스 이벤트를 등록합니다
-      // 이때 클로저를 만들어 등록하는데,
-      // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-      kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-      kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-  }
-  
-  // 인포윈도우 오픈 함수
-  function makeOverListener(map, marker, infowindow) {
-      return function() {
-          infowindow.open(map, marker);
-      };
-  }
-  
-  // 인포윈도우 클로즈 함수
-  function makeOutListener(infowindow) {
-      return function() {
-          infowindow.close();
-      };
-  }
-  
-  // 또는 마커에 이벤트를 등록하는 함수를 만들고 즉시 호출하여 클로저를 만드는 방법도 있습니다.
-  (function(marker, infowindow) {
-  	kakao.maps.event.addListener(marker, 'mouseover', function() {
-      	infowindow.open(map, marker);
-      });
-  
-      kakao.maps.event.addListener(marker, 'mouseout', function() {
-  		infowindow.close();
-  	});
-  })(marker, infowindow);
-  </script>
-  ```
+   ```javascript
+   for (var i = 0; i < positions.length; i ++) {
+       // for문으로 각각의 마커를 생성하고
+       var marker = new kakao.maps.Marker({
+           map: map,
+           position: positions[i].latlng // 마커의 위치
+       });
+   
+       // 마커에 표시할 인포윈도우를 생성한 후에
+       var infowindow = new kakao.maps.InfoWindow({
+           content: positions[i].content // 마우스오버시 출력할 내용
+       });
+   
+       // 마커에 마우스오버 이벤트와 마우스 이벤트를 등록합니다
+       // 이때 클로저를 만들어 등록하는데,
+       // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+       kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+       kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+   }
+   
+   // 인포윈도우 오픈 함수
+   function makeOverListener(map, marker, infowindow) {
+       return function() {
+           infowindow.open(map, marker);
+       };
+   }
+   
+   // 인포윈도우 클로즈 함수
+   function makeOutListener(infowindow) {
+       return function() {
+           infowindow.close();
+       };
+   }
+   
+   // 또는 마커에 이벤트를 등록하는 함수를 만들고 즉시 호출하여 클로저를 만드는 방법도 있습니다.
+   (function(marker, infowindow) {
+   	kakao.maps.event.addListener(marker, 'mouseover', function() {
+       	infowindow.open(map, marker);
+       });
+   
+       kakao.maps.event.addListener(marker, 'mouseout', function() {
+   		infowindow.close();
+   	});
+   })(marker, infowindow);
+   ```
 
-  3. 현재 해결못한 문제
-     - 외부값을 받아와서 마우스오버할 때 보여주지못하는 부분
-     - vue와 자바스크립트 예제 코드간 다른 점을 수정하는 부분
+ 현재 해결못한 문제
 
-- vuex 적용(19/10/18)
-  1. store.js 생성
+- 외부값을 받아와서 마우스오버할 때 보여주지못하는 부분
+- vue와 자바스크립트 예제 코드간 다른 점을 수정하는 부분
 
-```jsp
-<script>
-import Vue from 'vue'
-import Vuex from 'vuex'
+2. vuex 적용(19/10/18)
+- store.js 생성
+   ```
+   import Vue from 'vue'
+   import Vuex from 'vuex'
 
-Vue.use(Vuex);
+   Vue.use(Vuex);
 
-export const store = new Vuex.Store({
-    state: {
-        // 여기에 컴포넌트 간에 공유할 변수 선언
-        // ex) hifiveCnt : 0
-        // 접근은 각 컴포넌트에서 this.$store.state.hifiveCnt 로 사용가능합니다
-    }
-});
-</script>
-```
-
+   export const store = new Vuex.Store({
+       state: {
+           // 여기에 컴포넌트 간에 공유할 변수 선언
+           // ex) hifiveCnt : 0
+           // 접근은 각 컴포넌트에서 this.$store.state.hifiveCnt 로 사용가능합니다
+       }
+   });
+   ```
 
 ## 길준
 
@@ -208,4 +180,74 @@ export const store = new Vuex.Store({
 
 ## 채원
 
- 
+* Git - commit message rule, branch naming rule 상위 폴더 README에 업로드 하였습니다.
+
+* Hifive Welcome Kit 제작(상점에 제공할 계획)  - 후보 6개 중 1개 선정(회의 폴더에 파일 업로드 완료)
+
+* Kakaomap Customizing - 1. 지도 확대/축소 제어바 추가(2019.10.18)
+
+  ```javascript
+  // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
+      var zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+  ```
+
+
+
+* Kakaomap Customizing - 2. Marker 클릭 했을 때 이벤트(make_) 발생하도록 동작 설정
+
+  ```javascript
+  // 마커 for문 안에 동작 설정
+  var infowindow = new kakao.maps.InfoWindow({
+          content : this.make_info(positions[i]) // 정보 띄우기
+          // content : positions[i].content // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        });
+  kakao.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+  ```
+
+  
+
+* methods에 make_info 함수 추가 - Marker 클릭 시 오버레이로 store 정보 보여주기
+
+  ```javascript
+  methods : {
+      make_info(data) {
+        // 커스텀 오버레이에 표시할 컨텐츠 입니다
+        var result = '<div class="wrap">' + 
+              '    <div class="info">' + 
+              '        <div class="title">' + 
+              data.title + 
+              '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+              '        </div>' + 
+              '        <div class="body">' + 
+              '            <div class="img">' +
+              '                <img src="'+ data.image_url +'" width="73" height="70">' +
+              '           </div>' + 
+              '            <div class="desc">' + 
+              '                <div class="ellipsis">'+ data.address + '</div>' + 
+              // '                <h6>'+ data.address + '</h6>' + 
+              // '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
+              '            </div>' + 
+              '        </div>' + 
+              '    </div>' +    
+              '</div>';
+              return result;
+      },
+      // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+      // closeOverlay:function(){
+      //   alert("hI")
+      //   overlay.setMap(NULL);
+      // }
+      closeOverlay() {
+          alert("hi");
+            overlay.setMap(null);     
+        }
+    },
+  ```
+
+  
+
+* 추후 해야할 것
+  * 오버레이 닫기 기능 수행되도록 함수와 연동해야 함
+  * positions에 기본 정보 추가해야 함 - title, latlng, address, hifive_count, image_url 등
+  * 오버레이에 CSS 적용하기 
