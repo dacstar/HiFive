@@ -29,7 +29,7 @@
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required>
               <input type="password" name="password" placeholder="Password" v-model="password" required>
-              <input type="submit" value="Login" v-on:click="login">
+              <input type="submit" value="Login" v-on:click="로그인">
             </div>
           </div>
         </div>
