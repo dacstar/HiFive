@@ -10,15 +10,17 @@
             </div>
 
             <div class="col">
-              <a href="#" class="fb btn">
-                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+              <a href="#" class="fb btn" v-on:click="facebook_login">
+                <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
               </a>
-              <a href="#" class="twitter btn" v-on:click="next">
+              <a href="#" class="twitter btn">
                 <i class="fa fa-twitter fa-fw"></i> Login with Twitter
               </a>
               <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
                 </i> 구글 로그인
               </a>
+              <a id="kakao-login-btn"></a>
+              <a href="http://developers.kakao.com/logout"></a>
             </div>
 
             <div class="col">
@@ -53,6 +55,7 @@
 
 <script>
 import firebase from "firebase";
+import { allSettled } from 'q';
 
 export default {
   name:'login',
@@ -61,14 +64,15 @@ export default {
       email:'',
       password:'',
       user:[],
-      flag:true
+      flag:true,
+      user_img:''
     }
   },
   methods:{
     login:function(){
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
         res=> {
-          console.log(res);
+          // console.log(res);
           //alert("로그인 잘 되었습니다.")
           //this.$router.push("map");
           this.flag=false;
@@ -79,37 +83,20 @@ export default {
         }
       );
     },
+    facebook_login:function(){
+      var provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    },
     google_login:function(){
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
-    },
-    next:function(){
-        firebase.auth().getRedirectResult().then(
-          result=> {
-          if (result.credential) {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            var token = result.credential.accessToken;
-            // ...
-          }
-          // The signed-in user info.
-          this.user = result.user;
-          this.flag = false;
-          this.email = user.email
-      }).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
-      });
     },
     logout:function(){
       firebase.auth().signOut().then(
         result=> {
         // Sign-out successful.
+        // console.log('로그아웃 된거야?');
+        
         this.flag = true;
         this.user = [];
         this.email = '';
@@ -120,7 +107,74 @@ export default {
     }
   },
   mounted(){
+    // 카카오 로그인 버튼을 생성합니다.
+      Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+          // 로그인 성공시, API를 호출합니다.
+          Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              console.log(JSON.stringify(res.kaccount_email));
+              console.log(JSON.stringify(res.id));
+              console.log(JSON.stringify(res.properties.profile_image));
+              console.log(JSON.stringify(res.properties.nickname));
+            },
+            fail: function(error) {
+              alert(JSON.stringify(error));
+            }
+          });
+        },
+        fail: function(err) {
+          alert(JSON.stringify(err));
+        }
+      });
     // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
+    firebase.auth().getRedirectResult().then(
+      result=> {
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // ...
+  }
+  // The signed-in user info.
+  var user = result.user;
+  // console.log('이거슨 user',user);
+  // console.log('user displayname:',user.displayName);
+  if(user){
+    this.email = user.displayName;
+    this.flag = false;
+  }
+  
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+
+// {
+//     status: 'connected',
+//     authResponse: {
+//         accessToken: '...',
+//         expiresIn:'...',
+//         signedRequest:'...',
+//         userID:'...'
+//     }
+// }
+FB.getLoginStatus(function(response) {
+    statusChangeCallback(response).then(
+      res=>{
+          if(res.status=='not_authorized'){
+            this.email = res.userID;
+          }
+      }
+    );
+});
   }
 }
 </script>
