@@ -132,7 +132,7 @@ export default {
         // 해당 부분까지 완료. ---2019.10.21
       }
       this.mapinfo.setBounds(bounds);
-    }
+    },
     make_info(data) {
       // 커스텀 오버레이에 표시할 컨텐츠 입니다
       var result = '<div class="wrap">' + 
