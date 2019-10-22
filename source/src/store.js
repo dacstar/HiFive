@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { fetchStoreList } from "./api/index.js";
 
 Vue.use(Vuex);
 
@@ -12,7 +13,7 @@ export const store = new Vuex.Store({
         Y: 0,
         user_test_img: '',
         isLogin: false,
-        user_nickname:'tmp'
+        user_nickname:''
     },
     mutations: {
         doubleY(state, Y) {
@@ -20,6 +21,24 @@ export const store = new Vuex.Store({
         },
         doubleX(state, X) {
             state.Y = X;
+        },
+        SET_STORES(state,data){
+            state.stores = data;
+        }
+    },
+    actions:{
+        // 상점 리스트를 가져오는 함수입니다.
+        // FETCH_STORES(context){
+        FETCH_STORES({commit}){
+            fetchStoreList()
+            .then(res=>{
+                console.log(res);
+                // context.commit('SET_STORES',res.data);
+                commit("SET_STORES",res.data);
+            })
+            .catch(error=>{
+                console.log(error);
+            })
         }
     }
     

@@ -69,7 +69,7 @@ export default {
     }
   },
   methods:{
-    login:function(){
+    login(){
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
         res=> {
           // console.log(res);
@@ -83,7 +83,8 @@ export default {
         }
       );
     },
-    ananymous_login:function(){
+    // ananymous_login:function(){
+    ananymous_login(){
       var scope = this;
       firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -107,15 +108,16 @@ export default {
         // ...
       });
     },
-    facebook_login:function(){
+    facebook_login(){
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
-    google_login:function(){
+    // google_login:function(){
+    google_login(){
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
-    logout:function(){
+    logout(){
       firebase.auth().signOut().then(
         result=> {
         // Sign-out successful.

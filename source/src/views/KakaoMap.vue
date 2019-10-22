@@ -17,12 +17,17 @@
         </li>
       </ul>
     </div>
+    <div class="store_list">
+      <!-- <div v-for="st in this.$store.state.stores">{{st.title}}</div> -->
+      <div v-for="st in storea">{{st.title}}</div>
+    </div>
   </div>
 </template>
 
 <script>
 import { fetchStoreList } from "../api/index.js";
 import { functions } from 'firebase';
+import {mapGetters,mapState} from 'vuex';
 export default {
   data() {
     return {
@@ -62,17 +67,28 @@ export default {
       ]
     };
   },
+  computed:{
+    // stores(){
+    //   return this.$store.status.stores;
+    // },
+    ...mapState({
+      storea: state => state.stores
+    })
+  },
   created() {
-    var scope = this;
-    fetchStoreList()
-      .then(function (response) {
-        console.log(response);
-        scope.stores = response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert(error.message);
-      });
+    // var scope = this;
+    // fetchStoreList()
+    //   .then(function (response) {
+    //     console.log(response);
+    //     scope.stores = response.data;
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //     alert(error.message);
+    //   });
+    // 이걸 밑의 코드로 변형 가능하게 할 수 있습니다.
+    // store.js에서 묶음으로 확인 가능합니다.
+    this.$store.dispatch('FETCH_STORES')
   },
   methods: {
     submitForm: function () {

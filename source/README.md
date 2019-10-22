@@ -63,22 +63,26 @@
 
     - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다. -> 해결함(6번)
     
-6. 20191022 this 콜백이 받아지지 않는 이유 해결
+6. (19/10/22) this 콜백이 받아지지 않는 이유 해결
 
     - var scope = this 를 밖에서 선언해주고, 이걸 탐색하는 방식으로 바꾸면 해결되었음.
 
-    ```javascript
-    ananymous_login:function(){
-          var scope = this;	// 전역으로 선언해준다는 느낌?
-          firebase.auth().signInAnonymously().catch(function(error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-            // scope.email=''
-          });
-    ```
-
+    - 캡틴판교 자바스크립트 this 4가지와 화살표 함수의 this 부분 참고
+    
+      ```javascript
+      created(){
+          //var scope = this;
+          fetchNewsList()
+              //.then(function(response){
+              .then(response => {
+                  console.log('호출 후: ', this);
+                  scope.users = response.data;
+              })
+    },
+      ```
+    
+      
+    
     
 
 ## 현우
