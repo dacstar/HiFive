@@ -36,11 +36,11 @@ export default {
   },
   methods : {
     make_info(data) {
+      // 커스텀 오버레이에 표시할 컨텐츠 입니다
       var result = '<div class="wrap">' + 
             '    <div class="info">' + 
-            '        <div class="title">' + 
-            data.title + 
-            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+            '        <div class="title">' + data.title + 
+            '            <div class="close" @onclick="closeOverlay()" title="닫기"></div>' + 
             '        </div>' + 
             '        <div class="body">' + 
             '            <div class="img">' +
@@ -63,7 +63,7 @@ export default {
     // }
     closeOverlay() {
         alert("hi");
-          overlay.setMap(null);     
+        overlay.setMap(null);     
       }
   },
   mounted() {
