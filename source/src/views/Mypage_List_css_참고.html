@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: #ff3772;
+    font-family: sans-serif;
+}
+
+ul {
+    position: relative;
+    width: 450px;
+    margin: 100px auto 0;
+    padding: 10px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, .1);
+    box-shadow: inset 0 0 15px rgba(0,0,0,.2);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+ul li {
+    display: flex;
+    background: rgba(255, 255, 255, .1);
+    padding: 10px 20px;
+    color: #fff;
+    margin: 5px 0;
+    transition: .5s;
+}
+ul li:nth-child(1) {
+    background: rgba(255, 255, 255, .6)
+}
+ul li:nth-child(2) {
+    background: rgba(255, 255, 255, .4)
+}
+ul li:nth-child(3) {
+    background: rgba(255, 255, 255, .2)
+}
+/* ul li:nth-child(4) {
+    background: rgba(255, 255, 255, .1)
+}
+ul li:nth-child(5) {
+    background: rgba(255, 255, 255, .1)
+} */
+
+ul li span:nth-child(1) {
+    width: 30px;
+}
+ul li span:nth-child(2) {
+    width: 200px;
+}
+ul li span:nth-child(3) {
+    width: 100px;
+    text-align: right;
+}
+ul li span:nth-child(4) {
+    width: 70px;
+    text-align: right;
+}
+ul li:hover {
+    transform:scale(1.06);
+    background: #ff3772;
+}
+</style>
+<body>
+    <ul>
+        <li>
+            <span class="number">1</span>
+            <span class="name">store_name1</span>
+            <span class="hifive_count">15회</span>
+            <span class="badge"><i class="fa fa-trophy" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <span class="number">2</span>
+            <span class="name">store_name2</span>
+            <span class="hifive_count">13회</span>
+            <span class="badge"><i class="fa fa-trophy" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <span class="number">3</span>
+            <span class="name">store_name3</span>
+            <span class="hifive_count">12회</span>
+            <span class="badge"><i class="fa fa-trophy" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <span class="number">4</span>
+            <span class="name">store_name4</span>
+            <span class="hifive_count">8회</span>
+            <span class="badge"><i class="fa fa-shield" aria-hidden="true"></i></span>
+        </li>
+        <li>
+            <span class="number">5</span>
+            <span class="name">store_name5</span>
+            <span class="hifive_count">5회</span>
+            <span class="badge"><i class="fa fa-shield" aria-hidden="true"></i></span>
+        </li>
+    </ul>
+</body>
+</html>
