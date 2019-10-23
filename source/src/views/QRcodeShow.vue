@@ -1,15 +1,18 @@
 <template>
   <div>
-    <p class="decode-result">좋은하루입니다! 하이파이브할까요?: <b>{{ result }}</b></p>
+    <p class="decode-result">
+      좋은하루입니다! 하이파이브할까요?:
+      <b>{{ result }}</b>
+    </p>
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
       <div v-if="validationSuccess" class="validation-success">
-          <router-link v-if="this.$store.state.user_nickname!=''" to="/mypage" class="accepted">
-            하이파이브 하시겠습니까??????? 마이페이지로
-          </router-link>
-          <router-link v-else to="/login" class="accepted">
-            하이파이브 하시겠습니까 로그인 페이지로
-          </router-link>
+        <router-link
+          v-if="this.$store.state.user_nickname!=''"
+          to="/mypage"
+          class="accepted"
+        >하이파이브 하시겠습니까??????? 마이페이지로</router-link>
+        <router-link v-else to="/login" class="accepted">하이파이브 하시겠습니까 로그인 페이지로</router-link>
       </div>
 
       <div v-if="validationFailure" class="validation-failure">
@@ -23,10 +26,10 @@
         잠시만 기다려주세요.
       </div>
     </qrcode-stream>
-      <div class="recommend" v-if="this.$store.state.user_nickname==''">
-        아직 회원이 아니신가요? 
-        <a href="/login" class="loginmove">로그인하기</a>
-      </div>
+    <div class="recommend" v-if="this.$store.state.user_nickname==''">
+      아직 회원이 아니신가요?
+      <a href="/login" class="loginmove">로그인하기</a>
+    </div>
   </div>
 </template>
 
@@ -37,7 +40,7 @@ export default {
 
   components: { QrcodeStream },
 
-  data () {
+  data() {
     return {
       isValid: undefined,
       camera: 'auto',
@@ -46,38 +49,43 @@ export default {
   },
 
   computed: {
-    validationPending () {
+    validationPending() {
       return this.isValid === undefined
         && this.camera === 'off'
     },
 
-    validationSuccess () {
+    validationSuccess() {
       return this.isValid === true
     },
 
-    validationFailure () {
+    validationFailure() {
       return this.isValid === false
-    }
+    },
+
+
   },
 
   methods: {
 
-    onInit (promise) {
+    onInit(promise) {
       promise
         .catch(console.error)
         .then(this.resetValidationState)
     },
 
-    resetValidationState () {
+    resetValidationState() {
       this.isValid = undefined
     },
 
-    async onDecode (content) {
+    async onDecode(content) {
 
       // content : 하이파이브 하시겠습니까?? 
       console.log(content)
       this.result = content
       this.turnCameraOff()
+
+      // QRCODE READER
+      this.$store.dispatch('READ_QRCODE', content);
 
       // pretend it's taking really long
       // 일치하는지 유효성 검사하는 곳
@@ -90,15 +98,15 @@ export default {
       this.turnCameraOn()
     },
 
-    turnCameraOn () {
+    turnCameraOn() {
       this.camera = 'auto'
     },
 
-    turnCameraOff () {
+    turnCameraOff() {
       this.camera = 'off'
     },
 
-    timeout (ms) {
+    timeout(ms) {
       return new Promise(resolve => {
         window.setTimeout(resolve, ms)
       })
@@ -115,7 +123,7 @@ export default {
   width: 100%;
   height: 100%;
 
-  background-color: rgba(255, 255, 255, .8);
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   font-weight: bold;
   font-size: 1.4rem;
