@@ -29,7 +29,7 @@
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required>
               <input type="password" name="password" placeholder="Password" v-model="password" required>
-              <input type="submit" value="Login" v-on:click="로그인">
+              <input type="submit" value="로그인" v-on:click="login">
             </div>
           </div>
         </div>
@@ -70,6 +70,7 @@ export default {
   },
   methods:{
     login(){
+      var scope = this;
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
         res=> {
           // console.log(res);
@@ -77,7 +78,7 @@ export default {
           //this.$router.push("map");
           this.flag=false;
           this.user = res.user
-          scope.$store.state.user_nickname = user.email
+          scope.$store.state.user_nickname = res.user.email
         }).catch(function(error) {
           //alert(error.message)
         }
