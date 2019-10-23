@@ -2,9 +2,10 @@
   <v-container>
     <div class="app">
       <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
+      <!-- 검색 버튼 -->
       <form v-on:submit.prevent="submitForm">
-        <input type="text" name="search" placeholder="공간 검색하기!!!" v-model.lazy="keyword" />
-        <button type="submit">검색하기</button>
+        <input type="text" name="search" placeholder="하이파이브존 검색하기!" v-model.lazy="keyword"/>
+        <button type="submit">하이파이브존 GO!</button>
       </form>
 
       <div class="map_wrap">
@@ -264,6 +265,7 @@ export default {
 .hifive_zone_info {
   font-size: 25px;
   font-family: 'Jua', sans-serif;
+  margin-bottom: 10px;
 }
 
 .map_wrap {
@@ -271,13 +273,17 @@ export default {
   overflow: hidden;
   width: 100%;
   height: 500px;
+  margin-top: 15px;
 }
+
+/* 검색 박스 */
 input[type="text"] {
   width: 200px;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  font-family: 'Do Hyeon', sans-serif;
   background-color: white;
   /* background-image: url('searchicon.png'); */
   background-position: 10px 10px;
@@ -285,9 +291,51 @@ input[type="text"] {
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 15px;
 }
 input[type="text"]:focus {
   width: 100%;
+}
+
+/* 버튼 */
+button{
+  background:#a120ec;
+  color:#fff;
+  border:none;
+  position:relative;
+  height: 30px;
+  font-size:1.0em;
+  padding:0 1 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+  font-family: 'Do Hyeon', sans-serif;
+}
+button:hover{
+  background:#fff;
+  color:#a120ec;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #a120ec;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
 }
 
 /* 커스텀 오버레이 */
