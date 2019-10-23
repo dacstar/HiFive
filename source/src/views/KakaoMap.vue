@@ -1,27 +1,29 @@
 <template>
-  <div class="app">
-    this is kakao map service & searching page
-    <form v-on:submit.prevent="submitForm">
-      <input type="text" name="search" placeholder="공간 검색하기!!!" v-model.lazy="keyword" />
-      <button type="submit">검색하기</button>
-    </form>
+  <v-container>
+    <div class="app">
+      <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
+      <form v-on:submit.prevent="submitForm">
+        <input type="text" name="search" placeholder="공간 검색하기!!!" v-model.lazy="keyword" />
+        <button type="submit">검색하기</button>
+      </form>
 
-    <div class="map_wrap">
-      <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+      <div class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+      </div>
+      <div class="store_list">
+        <ul>
+          <li class="store-item" v-for="shop in shops" v-bind:key="shop">
+            <p class="text">{{shop.title}}</p>
+            <p class="location">{{shop.latlng}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="store_list">
+        <!-- <div v-for="st in this.$store.state.stores">{{st.title}}</div> -->
+        <div v-for="st in storea">{{st.title}}</div>
+      </div>
     </div>
-    <div class="store_list">
-      <ul>
-        <li class="store-item" v-for="shop in shops" v-bind:key="shop">
-          <p class="text">{{shop.title}}</p>
-          <p class="location">{{shop.latlng}}</p>
-        </li>
-      </ul>
-    </div>
-    <div class="store_list">
-      <!-- <div v-for="st in this.$store.state.stores">{{st.title}}</div> -->
-      <div v-for="st in storea">{{st.title}}</div>
-    </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -171,8 +173,8 @@ export default {
   mounted() {
     var mapContainer = document.getElementById("map");
     var mapOptions = {
-      center: new kakao.maps.LatLng(36.346726, 127.297847),
-      level: 4 // 1 to 13
+      center: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
+      level: 3 // 1 to 13
     };
     var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
 
@@ -186,37 +188,35 @@ export default {
 
     var positions = [
       {
-        title: "Rom122",
-        content: "<div>Rom122</div>",
-        latlng: new kakao.maps.LatLng(36.34530266111805, 127.30434520596424),
+        title: "카페 데일리",
+        latlng: new kakao.maps.LatLng(36.348771954596096, 127.29800436467848),
+        address: "대전 유성구 학하서로121번길 130(덕명동 591-6)",
+        hifive_count: 132
+      },
+      {
+        title: "O'neul(카페 오늘)",
+        latlng: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
+        address: "대전 유성구 학하서로121번길 71-8(덕명동 158-3)",
+        hifive_count: 92
+      },
+      {
+        title: "카페 인누와",
+        latlng: new kakao.maps.LatLng(36.34969294908846, 127.29872976493839),
+        address: "대전 유성구 학하서로121번길 51(덕명동 589-5)",
+        hifive_count: 49
+      },
+      {
+        title: "카페니치 한밭대점",
+        latlng: new kakao.maps.LatLng(36.34961122142392, 127.2982571051557),
         // image_url:
-        address: "대전광역시 유성구 학하서로 166"
-        // hifive_count: 
+        address: "대전광역시 유성구 학하서로121번길 55-9 1층(덕명동 589-2)",
+        hifive_count: 78
       },
       {
-        title: "수통골감나무집",
-        content: "<div>수통골감나무집</div>",
-        latlng: new kakao.maps.LatLng(36.347029157492265, 127.29139398715604)
-      },
-      {
-        title: "삼거리식당",
-        content: "<div>삼거리식당</div>",
-        latlng: new kakao.maps.LatLng(36.34992230895572, 127.29491619641085)
-      },
-      {
-        title: "동죽이네",
-        content: "<div>동죽이네</div>",
-        latlng: new kakao.maps.LatLng(36.347481083397234, 127.29232251668599)
-      },
-      {
-        title: "국민돼지국밥",
-        content: "<div>국민돼지국밥</div>",
-        latlng: new kakao.maps.LatLng(36.349580368085796, 127.29761976411594)
-      },
-      {
-        title: "제주고기국수하르방",
-        content: "<div>제주고기국수하르방</div>",
-        latlng: new kakao.maps.LatLng(36.34851424918655, 127.29726813490997)
+        title: "더카페 지오 한밭대점",
+        latlng: new kakao.maps.LatLng(36.349125599049245, 127.29929351989453),
+        address: "대전 유성구 학하서로121번길 39-3(덕명동 599-1)",
+        hifive_count: 188
       }
     ];
     // Marker
@@ -261,6 +261,11 @@ export default {
 </script>
 
 <style scoped>
+.hifive_zone_info {
+  font-size: 25px;
+  font-family: 'Jua', sans-serif;
+}
+
 .map_wrap {
   position: relative;
   overflow: hidden;
