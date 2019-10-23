@@ -1,54 +1,37 @@
 <template>
-
-       
-         
-         <v-container>
-           <div class="row">
-            <div class="my_hifive_info">내 하이파이브 정보</div>
-              <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
-                <div :key=store class="store_list">
-                  <ul>
-                    <template v-if="visit === true">
-                      <template v-for="(store, index) in Lank">
-                        <li>
-                          <div>
-                            <span class="number">{{ index+1 }}</span>
-                            <img src="https://post-phinf.pstatic.net/MjAxNzA2MDlfMjE3/MDAxNDk2OTg3ODIzODA5.MyG6GA71J-5DQE2UIusK6Zl9LyekZXHS4vzSkvSKRZkg.mTjbmTr-iLdD3idvOt5haiN90Iw0IV6Lb5hUkomEX7Eg.JPEG/%EA%B3%B5%EC%9C%A0.jpg?type=w1200" style="width:50px; height:50px;">
-                            <span class="name" v-on:click="sendlocation(store.Y,store.X)">{{ store.title }}</span>
-                          </div>
-                          <div>
-                            
-                            <span class="hifive_count">하이파이브 지수 : {{ store.count }}</span>
-                            
-                          </div>
-                        </li>
-                      </template>
-                    </template>
-                  </ul> 
-                </div>
-
-
-              <!-- <div :key=index class="left">
-                <div style="float:left;">
-                  <img src="https://post-phinf.pstatic.net/MjAxNzA2MDlfMjE3/MDAxNDk2OTg3ODIzODA5.MyG6GA71J-5DQE2UIusK6Zl9LyekZXHS4vzSkvSKRZkg.mTjbmTr-iLdD3idvOt5haiN90Iw0IV6Lb5hUkomEX7Eg.JPEG/%EA%B3%B5%EC%9C%A0.jpg?type=w1200" style="width:500px; height:500px; float:left;">
-                  <div class="right">  
-                    <h2 v-on:click="sendlocation(index.Y,index.X)">{{index.title}}</h2>
-                    <h2>{{index.count}}</h2>
-                  </div>  
-                </div>   
-              </div> -->
-
+   <v-container>
+     <div class="row">
+      <div class="my_hifive_info">내 하이파이브 정보</div>
+        <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
+          <div :key=store class="store_list">
+            <ul>
+              <template v-if="visit === true">
+                <template v-for="(store, index) in Lank">
+                  <li>
+                    <div>
+                      <span class="number">{{ index+1 }}</span>
+                      <img src="https://post-phinf.pstatic.net/MjAxNzA2MDlfMjE3/MDAxNDk2OTg3ODIzODA5.MyG6GA71J-5DQE2UIusK6Zl9LyekZXHS4vzSkvSKRZkg.mTjbmTr-iLdD3idvOt5haiN90Iw0IV6Lb5hUkomEX7Eg.JPEG/%EA%B3%B5%EC%9C%A0.jpg?type=w1200" style="width:50px; height:50px;">
+                      <span class="name" v-on:click="sendlocation(store.Y,store.X)">{{ store.title }}</span>
+                    </div>
+                    <div>
+                      <span class="hifive_count">하이파이브 지수 : {{ store.count }}</span>
+                    </div>
+                  </li>
+                </template>
+              </template>
+            </ul> 
           </div>
-        </v-container>
-        
-
+    </div>
+  </v-container>
 </template>
 
 <script>
+import db from "@/firebase";
 
 export default {
   data() {
     return {
+
      location:[
        {title: "국민돼지국밥", Y : 127.29761976411594 , X : 36.349580368085796, count: 10},
        {title: "제주고기국수하르방", Y : 127.29726813490997 , X : 36.34851424918655, count: 12},
@@ -90,9 +73,57 @@ export default {
      
   }, mounted() {
      this.update();
-  },
-}
 
+      Lank: [],
+      visit: true,
+      userVisitStore: []
+    };
+  },
+  methods: {
+    sendlocation(Y, X) {
+      this.$store.commit("doubleY", Y);
+      this.$store.commit("doubleX", X);
+      this.$router.push("map");
+    },
+
+    update() {
+      var scope = this;
+      scope.visit = true;
+
+      // console.log('####', scope.userVisitStore[0].length);
+      for(var i=0; i < scope.userVisitStore[0].length; i++) {
+        scope.Lank[i] = scope.userVisitStore[0][i];
+      }
+
+      scope.Lank.sort(function(a,b){
+        return a.count > b.count ? -1 : 1;
+      });
+    },
+
+  },
+  mounted() {
+
+  },
+  created() {
+    var scope = this;
+    var user = "user1"; // 여기에 사용자 아이디 넣기
+    var docRef = db.collection("users").doc(user);
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        scope.userVisitStore.push(doc.data().store);
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+  },
+  watch : {
+    userVisitStore : function () {
+      this.update()
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -167,5 +198,4 @@ ul li:hover {
     transform:scale(1.06);
     background: #a120ec;
 }
-
 </style>

@@ -61,7 +61,29 @@
     },
     ```
 
-    - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다.
+    - this 를 함수 내부적으로도 유지시키기 위함인 것 같은데 공부를 조금 더 해봐야 알 것 같습니다. -> 해결함(6번)
+    
+6. (19/10/22) this 콜백이 받아지지 않는 이유 해결
+
+    - var scope = this 를 밖에서 선언해주고, 이걸 탐색하는 방식으로 바꾸면 해결되었음.
+
+    - 캡틴판교 자바스크립트 this 4가지와 화살표 함수의 this 부분 참고
+    
+      ```javascript
+      created(){
+          //var scope = this;
+          fetchNewsList()
+              //.then(function(response){
+              .then(response => {
+                  console.log('호출 후: ', this);
+                  scope.users = response.data;
+              })
+    },
+      ```
+    
+      
+    
+    
 
 ## 현우
 1. 카카오맵 여러개 마커에 이벤트 부여하기(19/10/17)
@@ -172,7 +194,25 @@
 
 ## 길준
 
+- 2019-10-22
 
+  - kakao map을 사용하여 검색기능 구현 완료
+
+    - 로직 수정 필요( 문제점 발견 )
+      - ex) 동일한 가게가 2개 이상 있을 시, 앞에 있는 가게의 위치로 이동한다.
+
+  - Javascript : let, const, var 차이점
+
+    - let
+      - block scope
+      - 변수 재할당 가능
+    - const
+      - block scope
+      - 변수 재선언, 재할당 불가능
+    - var
+      - function scope
+
+    
 
 ## 종찬
 
