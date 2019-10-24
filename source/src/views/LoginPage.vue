@@ -10,13 +10,13 @@
             </div>
 
             <div class="col">
-              <a href="#" class="fb btn" v-on:click="facebook_login">
+              <a href="#" class="fb btn" v-on:click="facebook_login()">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
               </a>
-              <a href="#" class="twitter btn" v-on:click="ananymous_login">
+              <a href="#" class="twitter btn" v-on:click="ananymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
-              <a href="#" class="google btn" v-on:click="google_login"><i class="fa fa-google fa-fw">
+              <a href="#" class="google btn" v-on:click="google_login()"><i class="fa fa-google fa-fw">
                 </i> 구글 로그인
               </a>
               <a id="kakao-login-btn"></a>
@@ -54,7 +54,9 @@
 </template>
 
 <script>
-import firebase from "firebase";
+// import firebase from '@/FirebaseService';
+import db from "@/FirebaseService";
+import firebase from 'firebase';
 import { allSettled } from 'q';
 
 export default {
@@ -69,6 +71,30 @@ export default {
     }
   },
   methods:{
+    addUserToDB(){
+      var userEmail = this.$store.state.user_nickname; // 사용자 식별자 넣기
+      var docRef = db.collection("users").doc(userEmail);
+      
+      var docData = {
+        store: [],
+        userID: null,
+        userName: userEmail,
+      };
+      
+      docRef.get().then(function(doc) {
+        if (doc.exists) {
+          console.log("UserData already exist!")
+        } else {
+          docRef.set(docData).then(function(doc) {
+            console.log("Document successfully written!")
+          }).catch(function(error) {
+            console.log("Error setting document:", error);
+          });
+        }
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
+      });
+    },
     login(){
       var scope = this;
       firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
@@ -131,7 +157,7 @@ export default {
         // An error happened.
         alert(error.message);
       });
-    }
+    },
   },
   mounted(){
     var scope = this;
@@ -179,6 +205,7 @@ export default {
   if(user){
     this.$store.state.user_nickname = user.displayName;
     this.flag = false;
+    this.addUserToDB();    
   }
   
 }).catch(function(error) {

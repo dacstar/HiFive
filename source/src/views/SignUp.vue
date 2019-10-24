@@ -22,8 +22,8 @@
         <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
 
         <div class="clearfix">
-          <button type="button" class="cancelbtn" v-on:click="cancel">뒤로가기</button>
-          <button type="submit" class="signupbtn" v-on:click="signUp">회원가입</button>
+          <button type="button" class="cancelbtn" v-on:click="cancel()">뒤로가기</button>
+          <button type="submit" class="signupbtn" v-on:click="signUp(); addUserToDB();">회원가입</button>
         </div>
       </div>
     </div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import db from "@/FirebaseService";
 import firebase from 'firebase';
 import router from '../routes/index.js'
 import { log } from 'util';
@@ -55,6 +56,21 @@ export default {
           alert(err.message)
         }
       );
+    },
+    addUserToDB(){
+      var userEmail = this.email; // 사용자 식별자 넣기
+      var docData = {
+        store: [],
+        userID: null,
+        userName: userEmail,
+      };
+
+      var docRef = db.collection("users").doc(userEmail);
+      docRef.set(docData).then(function(doc) {
+        console.log("Document successfully written!")
+      }).catch(function(error) {
+        console.log("Error setting document:", error);
+      });
     },
     cancel: function(){
       this.$router.go(-1)

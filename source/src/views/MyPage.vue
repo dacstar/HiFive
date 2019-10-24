@@ -3,18 +3,18 @@
     <div class="row">
       <div class="my_hifive_info">내 하이파이브 정보</div>
       <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
-        <div :key=store class="store_list">
+        <div class="store_list">
           <ul>
             <template v-if="visit === true">
-              <template v-for="(store, index) in Lank">
-                <li>
+              <template v-for="(place, index) in Lank">
+                <li :key=place.storeName>
                   <div>
                     <span class="number">{{ index+1 }}</span>
                     <img src="https://post-phinf.pstatic.net/MjAxNzA2MDlfMjE3/MDAxNDk2OTg3ODIzODA5.MyG6GA71J-5DQE2UIusK6Zl9LyekZXHS4vzSkvSKRZkg.mTjbmTr-iLdD3idvOt5haiN90Iw0IV6Lb5hUkomEX7Eg.JPEG/%EA%B3%B5%EC%9C%A0.jpg?type=w1200" style="width:50px; height:50px;">
-                    <span class="name" v-on:click="sendlocation(store.Y,store.X)">{{ store.title }}</span>
+                    <span class="name" v-on:click="sendlocation(place.location._lat,place.location._long)">{{ place.storeName }}</span>
                   </div>
                   <div>
-                    <span class="hifive_count">하이파이브 :: {{ store.count }}회</span>
+                    <span class="hifive_count">하이파이브 :: {{ place.count }}회</span>
                   </div>
                 </li>
               </template>
@@ -26,54 +26,100 @@
 </template>
 
 <script>
+import db from "@/FirebaseService";
 
 export default {
   data() {
     return {
-     location:[
-       {title: "국민돼지국밥", Y : 127.29761976411594 , X : 36.349580368085796, count: 10},
-       {title: "제주고기국수하르방", Y : 127.29726813490997 , X : 36.34851424918655, count: 12},
-       {title: "동죽이네", Y : 127.29232251668599 , X : 36.347481083397234,  count: 25},
-     ],
-     count:3,
-     Lank:[],
-     visit:false,
-    }
-  }, 
-  methods : {
-    sendlocation:function(Y, X) {
-      // alert(Y);
-      // alert(X);
-      this.$store.commit('doubleY',Y);
-      this.$store.commit('doubleX',X);
-      // alert("성공"+this.$store.state.Y);
+      Lank: [],
+      visit: true,
+      userVisitStore: []
+    };
+  },
+  methods: {
+    sendlocation(Y, X) {
+      this.$store.commit("doubleY", Y);
+      this.$store.commit("doubleX", X);
       this.$router.push("map");
     },
-    
-     /////순위 결정 데이터 오름차순 정렬 부분
-     update : function() {
-       var scope = this;
-      scope.visit=true;
-       ////여기서 location에 데이터를 넣어야 한다.
-        console.log("들왔오")
-        //location에 들어가는 예상 data(장소이름,좌표,하이파이브횟수)
-        //내림차순 정렬
-        //1등부터 3등 데이터 입력
-         console.log("들왔오2")
-        scope.Lank[0]=scope.location[0];
-        scope.Lank[1]=scope.location[1];
-        scope.Lank[2]=scope.location[2]; 
-        scope.Lank.sort(function(a, b) {
-          return a.count > b.count ? -1 : 1;
-        });
-        console.log(scope.Lank)
-     }
-     
-  }, mounted() {
-     this.update();
+
+    update() {
+      var scope = this;
+      scope.visit = true;
+
+      // console.log('####', scope.userVisitStore[0].length);
+      for(var i=0; i < scope.userVisitStore[0].length; i++) {
+        scope.Lank[i] = scope.userVisitStore[0][i];
+      }
+
+      scope.Lank.sort(function(a,b){
+        return a.count > b.count ? -1 : 1;
+      });
+    },
   },
+  mounted() {
+
+  },
+  created() {
+    var scope = this;
+    var user = this.$store.state.user_nickname; // 여기에 사용자 아이디 넣기
+    var docRef = db.collection("users").doc(user);
+    docRef.get().then(function(doc) {
+      if (doc.exists) {
+        scope.userVisitStore.push(doc.data().store);
+      } else {
+        console.log("No such document!");
+      }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+  },
+  watch : {
+    userVisitStore : function () {
+      this.update()
+    }
+  }
 }
 
+    // updateUserToDB(){
+    //   var scope = this;
+      
+    //   var userID = "newUser"; // 사용자 식별자 넣기
+    //   var storeDB = [
+    //     {
+    //         count: count+1, // 기존 userDB에서 가져오기
+    //         lastVisit: {    // 현재 시간함수로 가져오기
+    //           seconds: 0,
+    //           nanoseconds: 0,
+    //         },
+    //         location: {     // 기존 storeDB에서 가져오기(1)
+    //           _lat: 0.0,
+    //           _long: 0.0,
+    //         },
+    //         storeName: "Rom122", // 기존 storeDB에서 가져오기(2)
+    //     },
+    //     {
+    //         count: count+1,
+    //         lastVisit: {
+    //           seconds: 0,
+    //           nanoseconds: 0,
+    //         },
+    //         location: {
+    //           _lat: 0.0, 
+    //           _long: 0.0,
+    //         },
+    //         storeName: "동죽이네",
+    //     }
+    //   ]
+    //   var docRef = db.collection("user").doc(userID);
+    //   return docRef.update({
+    //     store: storeDB,
+    //   }).then(function(doc) {
+    //     console.log("Document successfully updated!")
+    //   }).catch(function(error) {
+    //     console.log("Error updating document:", error);
+    //   });
+    // }
 </script>
 
 <style scoped>
