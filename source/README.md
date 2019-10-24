@@ -215,6 +215,85 @@
     
 
 ## 종찬
+1. KaKaomap maker 다중 마커 커스텀 오버레이 달기
+
+
+
+- result에 HTML 코드를 String로 삽입해서 커스텀 오버레이
+
+```javascript
+ var result = '<div class="wrap">' +
+        '    <div class="info">' +
+        '        <div class="title">' + data.title +
+        '            <div class="close" @onclick="closeOverlay()" title="닫기"></div>' +
+        '        </div>' +
+        '        <div class="body">' +
+        '            <div class="img">' +
+        '                <img src="' + data.image_url + '" width="73" height="70">' +
+        '           </div>' +
+        '            <div class="desc">' +
+        '                <div class="ellipsis">' + data.address + '</div>' +
+        // '                <h6>'+ data.address + '</h6>' + 
+        // '                <div><a href="http://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' + 
+        '            </div>' +
+        '        </div>' +
+        '    </div>' +
+        '</div>';
+      return result;
+```
+
+ 문제
+
+​	ㅇString으로 인한 HTML삽입은 수정/삭제가 힘들다
+
+​	ㅇVue.js의 문법이 통하지 않다.
+
+
+
+- 문제 해결 방법
+
+  ```javascript
+  //1.DOM 객체로 바인딩
+  //2. Class 삽입
+  //3.상위객체 선언해주기
+  //4.객체별 이벤트 등록
+  var content = document.createElement('div')
+  
+        content.className = 'wrap'
+        var info = document.createElement('div');
+        info.className = 'info';
+  
+        content.appendChild(info);
+        var title = document.createElement('div');;
+        title.className='title'
+        title.innerHTML=positions[i].title;
+        info.appendChild(title);
+        var body=document.createElement('div');
+        body.className='body';
+        info.appendChild(body);
+          var close = document.createElement('div');
+        close.className='close';
+         title.appendChild(close);
+          overlay = new kakao.maps.CustomOverlay({
+             content: content,
+             position: marker.getPosition(),   
+            });
+        close.onclick=makeOutListener(overlay);
+          kakao.maps.event.addListener(marker, 'click', makeOverListener(map,overlay));
+  ```
+
+  
+
+효과
+
+- Vue.js 문법 사용가능
+- 손쉬운 HTML 코드 수정과 접근이 가능하다
+- Foeach 활용으로 다중으로 커스텀 오버레이를 사용할수 있다.
+
+주의할점
+
+- 이벤트 등록을 동기적으로 하지 않으면 결국 가장 마지막 오버레이만 동작.
+- 매 반복시마다 휘발성이 가능하도록 해야한다.
 
 
 
