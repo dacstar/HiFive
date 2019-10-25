@@ -370,3 +370,25 @@
   * 오버레이 닫기 기능 수행되도록 함수와 연동해야 함
   * positions에 기본 정보 추가해야 함 - title, latlng, address, hifive_count, image_url 등
   * 오버레이에 CSS 적용하기 
+
+
+
+* `v-for`는 또한 현재 항목의 인덱스에 대한 두 번째 전달인자 옵션을 제공합니다.
+  * 하이파이브 지수로 정렬된 리스트에 Top3 순위를 매기기 위해 사용하였습니다.
+  * 참고링크 - <https://kr.vuejs.org/v2/guide/list.html>
+
+```html
+<template v-for="(place, index) in Lank">
+  <li :key=place.storeName>
+     <div>
+       <span class="number">{{ index+1 }}</span>
+         <img src="" style="width:50px; height:50px;">
+           <span class="name" v-on:click="sendlocation(place.location._lat,place.location._long)">{{ place.storeName }}</span>
+           </div>
+       <div>
+        <span class="hifive_count">하이파이브 :: {{ place.count }}회</span>
+       </div>
+   </li>
+ </template>
+```
+
