@@ -383,11 +383,11 @@
      <div>
        <span class="number">{{ index+1 }}</span>
          <img src="" style="width:50px; height:50px;">
-           <span class="name" v-on:click="sendlocation(place.location._lat,place.location._long)">{{ place.storeName }}</span>
-           </div>
-       <div>
-        <span class="hifive_count">하이파이브 :: {{ place.count }}회</span>
-       </div>
+         <span class="name" v-on:click="sendlocation(place.location._lat,place.location._long)">{{ place.storeName }}</span>
+      </div>
+      <div>
+       <span class="hifive_count">하이파이브 :: {{ place.count }}회</span>
+      </div>
    </li>
  </template>
 ```
