@@ -22,7 +22,8 @@ export const store = new Vuex.Store({
     Y: 0,
     user_test_img: "",
     isLogin: false,
-    user_nickname: ""
+    user_nickname: "",
+    userDataFromDB: "",
   },
   mutations: {
     increment(state) {
@@ -39,8 +40,11 @@ export const store = new Vuex.Store({
     },
 
     SET_STOREINFO(state, store) {
-      console.log("SET_STOREINFO: " + store)
-      state.QRcode_Store = JSON.parse(store)
+      if (store.startsWith('{')){
+        state.QRcode_Store = JSON.parse(store);
+      } else {
+        state.QRcode_Store = '';
+      }
     }
   },
   actions: {
