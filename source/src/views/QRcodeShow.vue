@@ -36,6 +36,7 @@
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
 import db from "@/FirebaseService";
+import firebase from 'firebase/app'
 
 export default {
 
@@ -84,11 +85,10 @@ export default {
 
       // QRCODE READER
       this.$store.dispatch('READ_QRCODE', content);
-      // console.log('#QRcode',this.$store.state.QRcode_Store.id);
-      // console.log('#DB USER',this.userFromDB[0].length);
-      // console.log('#DB STORE',this.storeFromDB);
-      await this.updateUserToDB();
 
+      await this.getUserFromDB();
+      await this.getStoreFromDB();
+      await this.updateDataToDB(this.userFromDB, this.storeFromDB);
       // 바로 카메라가 켜지지않도록 5초의 시간을 준다
       await this.timeout(5000)
 
@@ -109,11 +109,10 @@ export default {
       })
     },
 
-    async updateUserToDB() {
+    async getUserFromDB() {
       var scope = this;
-      console.log('#QRcodeID:',this.$store.state.QRcode_Store.id);
       // DB에서 유저정보 가져오기
-      var user = this.$store.state.user_nickname;     // 여기에 사용자 이름 가져와서
+      var user = this.$store.state.user_nickname;
       var userDocRef = db.collection("users").doc(user);  
       await userDocRef.get().then(function(doc) {
         if (doc.exists) {
@@ -124,106 +123,67 @@ export default {
       }).catch(function(error) {
           console.log("Error getting user document:", error);
       });
+    },
 
+    async getStoreFromDB() {
+      var scope = this;
       // DB에서 가게정보 가져오기(QRcode에 있는 가게정보)
       var store = this.$store.state.QRcode_Store.id;
       var storeDocRef = db.collection("stores");
       await storeDocRef.where("storeID", "==", String(store))
         .get().then(function(querySnapshot){
           querySnapshot.forEach(function(doc) {
-            scope.storeFromDB.push(doc.data);
-            console.log(doc.id, " => ", doc.data());
+            scope.storeFromDB.push(doc.data());
           });
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
-
-      // await scope.compareUserStore();
     },
 
-    async compareUserStore() {
+    updateDataToDB(userObj, storeObj) {
       var scope = this;
       // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
-      var tmp = scope.storeFromDB.storeID;
+      var tmp = storeObj[0].storeID;
       var idx = 0;
       var flag = false;
-      console.log('tmp:',tmp,' flag:', flag);
-      for(var i=0; i < scope.userFromDB[0].length; i++) {
-        if (tmp == scope.userFromDB[0][i].storeID) {
+      console.log('tmp:',tmp,' flag:', flag, 'idx:', idx);
+      for(var i=0; i < userObj[0].length; i++) {
+        if (tmp == userObj[0][i].storeID) {
           console.log('$compare success')
           flag = true;
           idx = i;
           break;
         }
       }
-      
+      console.log('tmp:',tmp,' flag:', flag, 'idx:', idx);
+
       var user = this.$store.state.user_nickname;
       var userDocRef = db.collection("users").doc(user);
       if (flag) {
         // DB 업데이트
-        var props = store[idx].count;
-        await userDocRef.update({
-          prop : scope.userFromDB[idx].count + 1,
+        // ! 업데이트 말고 배열을 통째로 불러와서 원하는 부분만 수정하고 다시 set해주기
+        userDocRef.update({
+          rrr: "123",
         });
       } else {
         // DB 추가
-        var newStore = "{count: 1,lastVisit: {seconds: 1341234123, nanoseconds: 0,}, location: { _lat: 36.34961122142392, _long: 127.2982571051557, }, storeName: '카페니치 한밭대점',}";
-        await userDocRef.update({
-          store: firebase.firestore.FieldValue.arrayUnion(newStore)
+        userDocRef.update({
+          store: firebase.firestore.FieldValue.arrayUnion({
+            count: 1,
+            lastVisit: firebase.firestore.Timestamp.fromDate(new Date("15:03:03 October 20, 2019")),
+            location:new firebase.firestore.GeoPoint(36.34961122142392, 127.2982571051557),
+            storeID: '2',
+            storeName: '카페니치 한밭대점'
+          })
         });
       }
 
       var storeDocRef = db.collection("stores").doc("store1");
-      await storeDocRef.update({
+      storeDocRef.update({
         count: firebase.firestore.FieldValue.increment(1)
       });
     }
-    // updateUserToDB(){
-    //   var scope = this;
-      
-    //   var userID = "newUser"; // 사용자 식별자 넣기
-    //   var storeDB = [
-    //     {
-    //         count: count+1, // 기존 userDB에서 가져오기
-    //         lastVisit: {    // 현재 시간함수로 가져오기
-    //           seconds: 0,
-    //           nanoseconds: 0,
-    //         },
-    //         location: {     // 기존 storeDB에서 가져오기(1)
-    //           _lat: 0.0,
-    //           _long: 0.0,
-    //         },
-    //         storeName: "Rom122", // 기존 storeDB에서 가져오기(2)
-    //     },
-    //     {
-    //         count: 1,
-    //         lastVisit: {
-    //           seconds: 1341234123,
-    //           nanoseconds: 0,
-    //         },
-    //         location: {
-    //           _lat: 36.34961122142392, 
-    //           _long: 127.2982571051557,
-    //         },
-    //         storeName: "카페니치 한밭대점",
-    //     }
-      //     {
-          //   title: "카페니치 한밭대점",
-          //   latlng: new kakao.maps.LatLng(36.34961122142392, 127.2982571051557),
-          //   address: "대전광역시 유성구 학하서로121번길 55-9 1층(덕명동 589-2)",
-          //   hifive_count: 78
-          // },
-    //   ]
-    //   var docRef = db.collection("user").doc(userID);
-    //   return docRef.update({
-    //     store: storeDB,
-    //   }).then(function(doc) {
-    //     console.log("Document successfully updated!")
-    //   }).catch(function(error) {
-    //     console.log("Error updating document:", error);
-    //   });
-    // }
   },
 }
 </script>
