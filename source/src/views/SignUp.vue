@@ -2,8 +2,9 @@
   <div class="app">
     <div style="border:1px solid #ccc">
       <div class="container">
+        <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
         <h1>Sign Up</h1>
-        <p>Please fill in this form to create an account.</p>
+        <p>이곳을 작성하시고 하이파이브의 회원이 되어주세요^0^</p>
         <hr>
 
         <label for="email"><b>Email</b></label>
@@ -81,6 +82,23 @@ export default {
 
 <style scoped>
   * {box-sizing: border-box}
+
+.container {
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+h1 {
+  font-family: 'Jua', sans-serif;
+  font-size: 2.4vh;
+  margin-bottom: 20px;
+  text-transform:  uppercase;
+}
+
+p {
+  font-family: 'Jua', sans-serif;
+  font-size: 2vh;
+  margin-bottom: 20px;
+}
 
 /* Full-width input fields */
   input[type=text], input[type=password] {
