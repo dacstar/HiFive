@@ -9,8 +9,11 @@
   "dependencies": {
     "axios": "^0.18.1",
     "core-js": "^2.6.5",
+    "dns": "^0.2.2",
     "file-loader": "^4.2.0",
-    "firebase": "^5.9.3",
+    "firebase": "^5.11.1",
+    "firebase-admin": "^8.6.1",
+    "http2": "^3.3.7",
     "register-service-worker": "^1.6.2",
     "v-markdown": "^1.0.2",
     "v-markdown-editor": "^1.0.8",

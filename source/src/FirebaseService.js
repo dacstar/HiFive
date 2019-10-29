@@ -11,8 +11,16 @@ var firebaseConfig = {
     messagingSenderId: "734773107278",
     appId: "1:734773107278:web:79eab00ba8c03a1b"
   };
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+
+  const admin = require('firebase-admin');
+
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: "https://hifive-211dd.firebaseio.com",
+  });
 
 export default db;

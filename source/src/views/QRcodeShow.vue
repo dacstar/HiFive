@@ -84,8 +84,8 @@ export default {
       this.turnCameraOff();
 
       // QRCODE READER
-      this.$store.dispatch('READ_QRCODE', content);
-
+      await this.$store.dispatch('READ_QRCODE', content);
+      
       await this.getUserFromDB();
       await this.getStoreFromDB();
       await this.updateDataToDB(this.userFromDB, this.storeFromDB);
@@ -110,10 +110,11 @@ export default {
     },
 
     async getUserFromDB() {
+      console.log('유저 가져오기');
       var scope = this;
       // DB에서 유저정보 가져오기
-      var user = this.$store.state.user_nickname;
-      var userDocRef = db.collection("users").doc(user);  
+      var userName = this.$store.state.user_nickname;
+      var userDocRef = db.collection("users").doc(userName);  
       await userDocRef.get().then(function(doc) {
         if (doc.exists) {
           scope.userFromDB.push(doc.data().store);
@@ -123,50 +124,81 @@ export default {
       }).catch(function(error) {
           console.log("Error getting user document:", error);
       });
+      console.log('유저 가져오기끝');
     },
 
     async getStoreFromDB() {
+      console.log('가게 가져오기');
       var scope = this;
       // DB에서 가게정보 가져오기(QRcode에 있는 가게정보)
-      var store = this.$store.state.QRcode_Store.id;
+      // !!!!!!!!!!!!!!!!!!!!!!!!
+      // storeID 부분 확실한 수정 필요!
+      // !!!!!!!!!!!!!!!!!!!!!!!!
+
+      var store = 'store'+this.$store.state.QRcode_Store.id;
       var storeDocRef = db.collection("stores");
-      await storeDocRef.where("storeID", "==", String(store))
+      await storeDocRef.where("storeID", "==", store)
         .get().then(function(querySnapshot){
-          querySnapshot.forEach(function(doc) {
-            scope.storeFromDB.push(doc.data());
-          });
+          if(querySnapshot.empty){
+            scope.storeFromDB = [];
+          } else {
+            querySnapshot.forEach(function(doc) {
+              scope.storeFromDB.push(doc.data());
+            });
+          }
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
+      console.log('가게 가져오기끝');
     },
 
     updateDataToDB(userObj, storeObj) {
+      console.log('메인함수');
       var scope = this;
       // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
-      var tmp = storeObj[0].storeID;
+      console.log(typeof(storeObj));
+
+      if (storeObj == null) {
+        console.log('null값 확인됨');
+        return ;
+      }
+      var currentStoreID = storeObj[0].storeID;
       var idx = 0;
       var flag = false;
-      console.log('tmp:',tmp,' flag:', flag, 'idx:', idx);
+      console.log('for문 시작');
       for(var i=0; i < userObj[0].length; i++) {
-        if (tmp == userObj[0][i].storeID) {
+        if (currentStoreID == userObj[0][i].storeID) {
           console.log('$compare success')
           flag = true;
           idx = i;
           break;
         }
       }
-      console.log('tmp:',tmp,' flag:', flag, 'idx:', idx);
+      console.log('StoreID:',currentStoreID,' flag:', flag, 'idx:', idx);
 
-      var user = this.$store.state.user_nickname;
-      var userDocRef = db.collection("users").doc(user);
+      var userName = this.$store.state.user_nickname;
+      var userDocRef = db.collection("users").doc(userName);
       if (flag) {
+        console.log('#flag is true');
         // DB 업데이트
-        // ! 업데이트 말고 배열을 통째로 불러와서 원하는 부분만 수정하고 다시 set해주기
-        userDocRef.update({
-          rrr: "123",
+        var storeData = userObj[0];
+        storeData[idx].count = storeData[idx].count + 1;
+        var docData = {
+          store: storeData,
+          userID: null,
+          userName: userName,
+        };
+
+        userDocRef.set(docData)
+        .then(function() {
+          console.log("Store successfully updated!");
+        })
+        .catch(function(error) {
+          console.error("Error updating store: ", error);
         });
       } else {
+        console.log('#flag is false');
         // DB 추가
         userDocRef.update({
           store: firebase.firestore.FieldValue.arrayUnion({
@@ -176,13 +208,26 @@ export default {
             storeID: '2',
             storeName: '카페니치 한밭대점'
           })
+        })
+        .then(function() {
+          console.log("Store successfully added!");
+        })
+        .catch(function(error) {
+          console.error("Error adding store: ", error);
         });
       }
 
-      var storeDocRef = db.collection("stores").doc("store1");
+      var storeDocRef = db.collection("stores").doc(currentStoreID);
       storeDocRef.update({
         count: firebase.firestore.FieldValue.increment(1)
       });
+
+      scope.QRcodeInit();
+      console.log('메인함수끝');
+    },
+
+    QRcodeInit() {
+      this.$store.state.QRcode_Store = "None";
     }
   },
 }
