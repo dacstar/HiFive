@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div class="container">
     <div class="row">
       <div class="my_hifive_info">내 하이파이브 정보</div>
       <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
@@ -22,7 +22,7 @@
           </ul> 
       </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>

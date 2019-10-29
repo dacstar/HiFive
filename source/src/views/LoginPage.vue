@@ -12,15 +12,14 @@
             </div>
 
             <div class="col">
-              <a href="#" class="twitter btn" v-on:click="ananymous_login()">
+              <a href="#" class="twitter btn" v-on:click="anonymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
-              </a>
+              </a><br>
               <a href="#" class="fb btn" v-on:click="facebook_login()">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
-              </a>
-              
-              <a href="#" class="google btn" v-on:click="google_login()"><i class="fa fa-google fa-fw">
-                </i> 구글 로그인
+              </a><br>
+              <a href="#" class="google btn" v-on:click="google_login()">
+                <i class="fab fa-google"></i>구글 로그인
               </a>
               <a id="kakao-login-btn"></a>
               <a href="http://developers.kakao.com/logout"></a>
@@ -115,8 +114,8 @@ export default {
         }
       );
     },
-    // ananymous_login:function(){
-    ananymous_login(){
+    // anonymous_login:function(){
+    anonymous_login(){
       var scope = this;
       firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -241,11 +240,12 @@ body {
   position: relative;
   /* border-radius: 5px; */
   background-color: white;
-  padding: 20px 0 30px 0;
+  padding: 30px 0;
   font-family: 'Do Hyeon', sans-serif;
 }
 
 h1 {
+  font-weight: bold;
   font-family: 'Jua', sans-serif;
   font-size: 2.4vh;
   text-transform:  uppercase;
@@ -292,6 +292,11 @@ input:hover,
   color: white;
 }
 
+/* .kakao {
+  background-color: #f5dd04 !important;
+  color: white;
+} */
+
 /* style the submit button */
 input[type=submit] {
   background-color: #45a049;
@@ -331,7 +336,7 @@ input[type=submit]:hover {
   left: 50%;
   transform: translate(-50%);
   border: 2px solid #ddd;
-  height: 175px;
+  height: 200px;
 }
 
 /* text inside the vertical line */
