@@ -3,24 +3,28 @@
     <div v-if="this.flag==true">
       <div class="container">
         <div>
+          <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
+          <h1>LogIn</h1>
+          <h2 style="text-align:center">더 많은 정보를 얻으시려면 하이파이브 로그인해주세요!</h2>
           <div class="row">
-            <h2 style="text-align:center">this is login & sign in show page</h2>
             <div class="vl">
               <span class="vl-innertext">or</span>
             </div>
 
             <div class="col">
-              <a href="#" class="fb btn" v-on:click="facebook_login()">
-                <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
-              </a>
               <a href="#" class="twitter btn" v-on:click="ananymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
+              <a href="#" class="fb btn" v-on:click="facebook_login()">
+                <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
+              </a>
+              
               <a href="#" class="google btn" v-on:click="google_login()"><i class="fa fa-google fa-fw">
                 </i> 구글 로그인
               </a>
               <a id="kakao-login-btn"></a>
               <a href="http://developers.kakao.com/logout"></a>
+              
             </div>
 
             <div class="col">
@@ -29,7 +33,8 @@
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required>
               <input type="password" name="password" placeholder="Password" v-model="password" required>
-              <input type="submit" value="로그인" v-on:click="login">
+              <input type="submit" class="submitbutton" value="하이파이브 로그인" v-on:click="login">
+              
             </div>
           </div>
         </div>
@@ -222,7 +227,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -234,10 +239,22 @@ body {
 /* style the container */
 .container {
   position: relative;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   background-color: white;
   padding: 20px 0 30px 0;
-} 
+  font-family: 'Do Hyeon', sans-serif;
+}
+
+h1 {
+  font-family: 'Jua', sans-serif;
+  font-size: 2.4vh;
+  text-transform:  uppercase;
+}
+
+h2 {
+  font-family: 'Jua', sans-serif;
+  font-size: 2.4vh;
+}
 
 /* style inputs and link buttons */
 input,
@@ -277,13 +294,15 @@ input:hover,
 
 /* style the submit button */
 input[type=submit] {
-  background-color: #4CAF50;
+  background-color: #45a049;
+  font-family: 'Jua', sans-serif;
   color: white;
   cursor: pointer;
+  transition: 500ms ease all;
 }
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: #a120ec;
 }
 
 /* Two-column layout */
@@ -296,6 +315,10 @@ input[type=submit]:hover {
 }
 
 /* Clear floats after the columns */
+.row {
+  margin-top: 20px;
+}
+
 .row:after {
   content: "";
   display: table;
@@ -316,10 +339,11 @@ input[type=submit]:hover {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
+  background-color: #a120ec;
+  border: 3px solid #ccc;
   border-radius: 50%;
   padding: 8px 10px;
+  color: #fff
 }
 
 /* hide some text on medium and large screens */
