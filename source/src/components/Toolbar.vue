@@ -3,11 +3,12 @@
     <nav>
       <div class="container">
         <div class="header_container">
-          <div id="hifive">
-            <a href="/"><img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px"></a>
-            HiFive
-          </div>
-          
+          <a href="/" class='logo'>
+            <div class='icon'>
+              <img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px">
+            </div>
+            <div>HiFive</div>
+          </a>
           <ul>
             <div class="dropdown">
               <li class="dropbtn"><router-link to="/" class="active">HiFive</router-link></li>
@@ -169,7 +170,21 @@ nav ul li a:hover {
   color: #fff;
   background-color: #a120ec;
 }
+.header_container .logo{
+  vertical-align: middle;
+  display: flex;
+}
 
+#header > nav > div > div > a:link{
+  text-decoration: none;
+}
+#header > nav > div > div > a > div:nth-child(1){
+  margin-right: 10px;
+}
+#header > nav > div > div > a > div:nth-child(2){
+  color: #a120ec;
+  font-size: 30px;
+}
 @media screen and (max-width: 768px) {
   .header_container {justify-content: center;}
   .header_container ul {display: none;}

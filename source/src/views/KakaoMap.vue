@@ -9,7 +9,7 @@
       </form>
       <!-- 카카오지도 -->
       <div class="map_wrap">
-        <div id="map" style="height:100%;position:relative;overflow:hidden;"></div>
+        <div id="map"></div>
       </div>
       <div class="store_list">
         <ul>
@@ -330,6 +330,13 @@ export default {
   width: 100%;
   height: 500px;
   margin-top: 15px;
+}
+.map_wrap #map{
+  width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 }
 
 /* 검색 박스 */
