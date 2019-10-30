@@ -5,7 +5,7 @@
       <b>주소 : {{ result }}</b>
     </p>
 
-    <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
+    <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit" id="qrcamera">
       
       <div v-if="validationSuccess" class="validation-success">
         <router-link
@@ -124,7 +124,14 @@ export default {
   font-family: 'Do Hyeon', sans-serif;
   font-size: 3vh;
 }
-
+#qrcamera{
+  display: block;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+}
 .validation-success,
 .validation-failure,
 .validation-pending {
