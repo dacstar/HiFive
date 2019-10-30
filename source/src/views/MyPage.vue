@@ -137,7 +137,8 @@ export default {
 
 ul {
     position: relative;
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     padding: 10px;
     box-sizing: border-box;
     background: rgba(200, 25, 253, 0.1);
