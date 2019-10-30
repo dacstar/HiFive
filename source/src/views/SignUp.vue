@@ -3,7 +3,7 @@
     <div style="border:1px solid #ccc">
       <div class="container">
         <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
-        <h1>Sign Up</h1>
+        <h1>SignUp</h1>
         <p>이곳을 작성하시고 하이파이브의 회원이 되어주세요^0^</p>
         <hr>
 
@@ -90,6 +90,7 @@ export default {
 h1 {
   font-family: 'Jua', sans-serif;
   font-size: 2.4vh;
+  font-weight: bold;
   margin-bottom: 20px;
   text-transform:  uppercase;
 }
@@ -124,7 +125,7 @@ hr {
 button {
   background-color: #4CAF50;
   color: white;
-  padding: 14px 20px;
+  padding: 0px 20px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
@@ -138,7 +139,7 @@ button:hover {
 
 /* Extra styles for the cancel button */
 .cancelbtn {
-  padding: 14px 20px;
+  padding: 0px 20px;
   background-color: #f44336;
 }
 

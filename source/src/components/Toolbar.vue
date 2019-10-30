@@ -110,7 +110,7 @@ nav ul li a {
   list-style: 80px;
   /* color: #a120ec; */
   color: black;
-  padding: 5px 20px;
+  padding: 5px 15px;
   text-decoration: none;
   text-transform:  uppercase;
   transition: .5s;
@@ -122,7 +122,7 @@ nav ul li a:hover {
   background-color: #a120ec;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 830px) {
   .header_container {justify-content: center;}
   .header_container ul {display: none;}
   nav #hifive img {display: none;}

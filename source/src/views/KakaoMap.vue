@@ -282,13 +282,12 @@ export default {
       title.className='title'
       title.innerHTML=positions[i].title;
       info.appendChild(title);
-     
    
       var body=document.createElement('div');
     
       body.className='body';
       info.appendChild(body);
-        var close = document.createElement('div');
+      var close = document.createElement('div');
       close.className='close';
        title.appendChild(close);
         overlay = new kakao.maps.CustomOverlay({
