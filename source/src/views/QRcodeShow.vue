@@ -16,9 +16,7 @@
       </div>
 
       <div v-if="validationFailure" class="validation-failure">
-        1. 8시간 이내에 인식하신적이 있습니까?
-        2. 장소 내에 있습니까?
-        아니라면 고객센터에 연락주세요.
+        올바른 하이파이브 QRcode가 아닙니다!
       </div>
 
       <div v-if="validationPending" class="validation-pending">
@@ -44,7 +42,7 @@ export default {
 
   data() {
     return {
-      isValid: undefined,
+      // isValid: undefined,
       camera: 'auto',
       result: null,
       userFromDB: [],
@@ -54,16 +52,23 @@ export default {
 
   computed: {
     validationPending() {
-      return this.isValid === undefined
+      // return this.isValid === undefined
+      //   && this.camera === 'off'v
+      console.log('validationPending');
+      return this.$store.state.isValid === undefined
         && this.camera === 'off'
     },
 
     validationSuccess() {
-      return this.isValid === true
+      // return this.isValid === true
+      console.log('validationSuccess');
+      return this.$store.state.isValid === true
     },
 
     validationFailure() {
-      return this.isValid === false
+      // return this.isValid === false
+      console.log('validationFailure');
+      return this.$store.state.isValid === false
     },
   },
 
@@ -76,9 +81,10 @@ export default {
     },
 
     resetValidationState() {
-      this.isValid = undefined
+      this.$store.state.isValid = undefined;
+      console.log('카메라 초기화!!');
     },
-
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!함수 시작
     async onDecode(content) {
       this.result = content;
       this.turnCameraOff();
@@ -110,10 +116,14 @@ export default {
     },
 
     async getUserFromDB() {
-      console.log('유저 가져오기');
       var scope = this;
       // DB에서 유저정보 가져오기
       var userName = this.$store.state.user_nickname;
+      if (userName == "") {
+        console.log("유저가 로그인 하지않았습니다!");
+        return ;
+      }
+
       var userDocRef = db.collection("users").doc(userName);  
       await userDocRef.get().then(function(doc) {
         if (doc.exists) {
@@ -124,11 +134,9 @@ export default {
       }).catch(function(error) {
           console.log("Error getting user document:", error);
       });
-      console.log('유저 가져오기끝');
     },
 
     async getStoreFromDB() {
-      console.log('가게 가져오기');
       var scope = this;
       // DB에서 가게정보 가져오기(QRcode에 있는 가게정보)
       // !!!!!!!!!!!!!!!!!!!!!!!!
@@ -144,26 +152,28 @@ export default {
           } else {
             querySnapshot.forEach(function(doc) {
               scope.storeFromDB.push(doc.data());
+              console.log('가져온 데이터',doc.data())
             });
           }
         })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
-      console.log('가게 가져오기끝');
     },
 
-    updateDataToDB(userObj, storeObj) {
+    async updateDataToDB(userObj, storeObj) {
       console.log('메인함수');
       var scope = this;
-      // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
-      console.log(typeof(storeObj));
 
-      if (storeObj == null) {
-        console.log('null값 확인됨');
+      if (userObj.length == 0) {
+        return ;
+      } else if (storeObj.length == 0) {
+        console.log('store가 비어있음');
         return ;
       }
-      var currentStoreID = storeObj[0].storeID;
+    
+      // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
+      var currentStoreID = await storeObj[0].storeID;
       var idx = 0;
       var flag = false;
       console.log('for문 시작');
@@ -180,7 +190,7 @@ export default {
       var userName = this.$store.state.user_nickname;
       var userDocRef = db.collection("users").doc(userName);
       if (flag) {
-        console.log('#flag is true');
+        console.log('#flag is true, DBupdate');
         // DB 업데이트
         var storeData = userObj[0];
         storeData[idx].count = storeData[idx].count + 1;
@@ -198,14 +208,14 @@ export default {
           console.error("Error updating store: ", error);
         });
       } else {
-        console.log('#flag is false');
+        console.log('#flag is false, DBadd');
         // DB 추가
         userDocRef.update({
           store: firebase.firestore.FieldValue.arrayUnion({
             count: 1,
-            lastVisit: firebase.firestore.Timestamp.fromDate(new Date("15:03:03 October 20, 2019")),
-            location:new firebase.firestore.GeoPoint(36.34961122142392, 127.2982571051557),
-            storeID: '2',
+            lastVisit: firebase.firestore.Timestamp.fromDate(new Date("15:03:03 October 20, 2019")),  // new Date안에 현재 시간 불러오기
+            location:new firebase.firestore.GeoPoint(36.34961122142392, 127.2982571051557), // storeObj에 있는 좌표값 넣어주기
+            storeID: '2', // storesw
             storeName: '카페니치 한밭대점'
           })
         })
@@ -228,6 +238,8 @@ export default {
 
     QRcodeInit() {
       this.$store.state.QRcode_Store = "None";
+      this.userFromDB = [];
+      this.storeFromDB = [];
     }
   },
 }
