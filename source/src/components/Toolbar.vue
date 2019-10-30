@@ -1,19 +1,33 @@
 <template>
   <div id="header">
     <nav>
-      <div class="header_container">
-        <div id="hifive">
-          <a href="/"><img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px"></a>
-          HiFive
+      <div class="container">
+        <div class="header_container">
+          <div id="hifive">
+            <a href="/"><img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px"></a>
+            HiFive
+          </div>
+          
+          <ul>
+            <div class="dropdown">
+              <li class="dropbtn"><router-link to="/" class="active">HiFive</router-link></li>
+              <div class="dropdown-content">
+                <li><router-link to="/qrcode">Go HiFive</router-link></li>
+                <li><router-link to="/map">HiFiveZone</router-link></li>
+                <li><router-link to="/about">About</router-link></li>
+                <li><router-link to="/howto">HowTo</router-link></li>
+              </div>
+            </div>
+            <li><router-link to="/mypage">MyHifive</router-link></li>
+            <div class="dropdown">
+              <li class="dropbtn"><router-link to="/login">Join</router-link></li>
+              <div class="dropdown-content">
+                <li><router-link to="/login">LogIn</router-link></li>
+                <li><router-link to="/signup">SignUp</router-link></li>
+              </div>
+            </div>
+          </ul>
         </div>
-        
-        <ul>
-          <li><router-link to="/qrcode" class="active">Go HiFive</router-link></li>
-          <li><router-link to="/map">HiFiveZone</router-link></li>
-          <li><router-link to="/mypage">MyHifive</router-link></li>
-          <li><router-link to="/login">LogIn</router-link></li>
-          <li><router-link to="/signup">SignUp</router-link></li>
-        </ul>
       </div>
     </nav>
 
@@ -24,6 +38,7 @@
     <div class="login_navbar" v-else>
       로그인이 필요합니다!
     </div> -->
+
   </div>
 </template>
 
@@ -34,10 +49,9 @@ export default {
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         document.getElementById("header").style.height = "80px";
         document.getElementById("hifive").style.fontSize = "25px";
-        // document.getElementById("hifive_logo").style.marginTop = "5px";
         document.getElementById("hifive_logo").style.width = "25px";
         document.getElementById("hifive_logo").style.height = "25px";
-        document.getElementById("hifive_logo").style.transition = "all .5s";        
+        // document.getElementById("hifive_logo").style.transition = "all .5s";
       } else {
         document.getElementById("header").style.height = "100px";
         document.getElementById("hifive").style.fontSize = "35px";
@@ -58,7 +72,6 @@ export default {
     padding: 8px;
     margin: 0;
     padding: 0;
-    font-family: 'Jua', sans-serif;
     height: 200px;
   }
   #header{
@@ -69,13 +82,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Jua', sans-serif;
   }
   nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 30px 100px;
+  padding: 10px 100px;
   box-sizing: border-box;
   transition: .5s;
   /* background: linear-gradient(to right, #ff5858, #f857a6); */
@@ -87,7 +101,6 @@ nav #hifive {
   font-size: 2.3rem;
   color: #a120ec;
   float: left;
-
   transition: .5s;
 }
 
@@ -106,6 +119,40 @@ nav ul li {
   list-style: none;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content{
+  display: none;
+}
+.dropdown:hover .dropdown-content {
+  display: none;
+  position: absolute;
+  margin-top: 5px;
+  background-color: rgba(200, 25, 253, 0.1);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content a{
+  background-color: #fff;
+}
+
+.dropdown-content a:hover {
+  background-color: #a120ec;
+  }
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 nav ul li a {
   list-style: 80px;
   /* color: #a120ec; */
@@ -114,6 +161,7 @@ nav ul li a {
   text-decoration: none;
   text-transform:  uppercase;
   transition: .5s;
+  cursor: pointer;
 }
 
 nav ul li a.active,
@@ -122,7 +170,7 @@ nav ul li a:hover {
   background-color: #a120ec;
 }
 
-@media screen and (max-width: 830px) {
+@media screen and (max-width: 768px) {
   .header_container {justify-content: center;}
   .header_container ul {display: none;}
   nav #hifive img {display: none;}

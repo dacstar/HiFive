@@ -4,7 +4,7 @@
       <div class="container">
         <div>
           <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
-          <h1>LogIn</h1>
+          <h1>LOGIN</h1>
           <h2 style="text-align:center">더 많은 정보를 얻으시려면 하이파이브 로그인해주세요!</h2>
           <div class="row">
             <div class="vl">
@@ -245,14 +245,15 @@ body {
 }
 
 h1 {
-  font-weight: bold;
-  font-family: 'Jua', sans-serif;
-  font-size: 2.4vh;
-  text-transform:  uppercase;
+  font-weight: bold !important;
+  font-family: 'Jua', sans-serif!important;
+  font-size: 3vh !important;
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
 }
 
 h2 {
-  font-family: 'Jua', sans-serif;
+  font-family: 'Jua', sans-serif!important;
   font-size: 2.4vh;
 }
 
