@@ -9,7 +9,7 @@
       </form>
       <!-- 카카오지도 -->
       <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+        <div id="map" style="width:50%;height:100%;margin:0 auto;"></div>
       </div>
       <div class="store_list">
         <ul>
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { fetchStoreList } from "../api/index.js";
 import { functions } from 'firebase';
 import {mapGetters,mapState} from 'vuex';
 export default {
@@ -65,14 +64,6 @@ export default {
         }
       ]
     };
-  },
-  computed:{
-    // stores(){
-    //   return this.$store.status.stores;
-    // },
-    ...mapState({
-      storea: state => state.stores
-    })
   },
   created() {
     // var scope = this;

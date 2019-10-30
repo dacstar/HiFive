@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <p class="decode-result">
-      좋은 하루입니다! 하이파이브할까요?<br>
+      좋은 하루입니다! 하이파이브할까요?
+      <br />
       <b>주소 : {{ result }}</b>
     </p>
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
-      
       <div v-if="validationSuccess" class="validation-success">
         <router-link
           v-if="this.$store.state.user_nickname!=''"
@@ -28,8 +28,9 @@
       </div>
     </qrcode-stream>
     <div class="recommend" v-if="this.$store.state.user_nickname==''">
-      아직 하이파이브 회원이 아니라구요?<br>
-      당신을 위한 더 많은 정보가 기다리고 있답니다.<br>
+      아직 하이파이브 회원이 아니라구요?
+      <br />당신을 위한 더 많은 정보가 기다리고 있답니다.
+      <br />
       <a href="/login" class="loginmove">로그인하기</a>
     </div>
   </div>
@@ -121,7 +122,7 @@ export default {
 .decode-result {
   margin-top: 50px;
   margin-bottom: 20px;
-  font-family: 'Do Hyeon', sans-serif;
+  font-family: "Do Hyeon", sans-serif;
   font-size: 3vh;
 }
 

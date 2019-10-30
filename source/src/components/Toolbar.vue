@@ -3,8 +3,9 @@
     <nav>
       <div class="header_container">
         <div id="hifive">
-          <a href="/"><img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px"></a>
-          HiFive
+          <a href="/"><img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px">
+          <span>HiFive</span>
+          </a>
         </div>
         
         <ul>
@@ -62,7 +63,7 @@ export default {
     height: 200px;
   }
   #header{
-    padding-bottom: 100px;
+    margin-bottom: 10px;
     font-family: 'Jua', sans-serif;
   }
   .header_container{
@@ -89,6 +90,10 @@ nav #hifive {
   float: left;
 
   transition: .5s;
+}
+
+#hifive > a{
+  text-decoration:none;
 }
 
 nav #hifive img {

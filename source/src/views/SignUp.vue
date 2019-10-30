@@ -34,7 +34,6 @@
 <script>
 import db from "@/FirebaseService";
 import firebase from 'firebase';
-import router from '../routes/index.js'
 import { log } from 'util';
 
 export default {
