@@ -3,8 +3,8 @@
     <div v-if="this.flag==true">
       <div class="container">
         <div>
-          <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px" />
-          <h1>LogIn</h1>
+          <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
+          <h1>LOGIN</h1>
           <h2 style="text-align:center">더 많은 정보를 얻으시려면 하이파이브 로그인해주세요!</h2>
           <div class="row">
             <div class="vl">
@@ -14,32 +14,26 @@
             <div class="col">
               <a href="#" class="twitter btn" v-on:click="anonymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
-              </a>
-              <br />
+              </a><br>
               <a href="#" class="fb btn" v-on:click="facebook_login()">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
-              </a>
-              <br />
+              </a><br>
               <a href="#" class="google btn" v-on:click="google_login()">
                 <i class="fab fa-google"></i>구글 로그인
               </a>
-              <a id="kakao-login-btn"></a>
-              <a href="http://developers.kakao.com/logout"></a>
+              <!-- 카카오계정 로그인 -->
+              <!-- <a id="kakao-login-btn"></a>
+              <a href="http://developers.kakao.com/logout"></a> -->
             </div>
 
             <div class="col">
               <div class="hide-md-lg">
                 <p>Or sign in manually:</p>
               </div>
-              <input type="text" name="username" placeholder="Username" v-model="email" required />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                v-model="password"
-                required
-              />
-              <input type="submit" class="submitbutton" value="하이파이브 로그인" v-on:click="login" />
+              <input type="text" name="username" placeholder="Username" v-model="email" required>
+              <input type="password" name="password" placeholder="Password" v-model="password" required>
+              <input type="submit" class="submitbutton" value="하이파이브 로그인" v-on:click="login">
+              
             </div>
           </div>
         </div>
@@ -58,11 +52,7 @@
     </div>
     <div v-else>
       {{this.$store.state.user_nickname}}님 안녕하세요!
-      <input
-        type="submit"
-        value="로그아웃"
-        v-on:click="logout"
-      />
+      <input type="submit" value="로그아웃" v-on:click="logout">
     </div>
   </div>
 </template>
@@ -74,67 +64,67 @@ import firebase from 'firebase';
 import { allSettled } from 'q';
 
 export default {
-  name: 'login',
-  data: function () {
+  name:'login',
+  data:function(){
     return {
-      email: '',
-      password: '',
-      user: [],
-      flag: true,
-      user_img: ''
+      email:'',
+      password:'',
+      user:[],
+      flag:true,
+      user_img:''
     }
   },
-  methods: {
-    addUserToDB() {
+  methods:{
+    addUserToDB(){
       var userEmail = this.$store.state.user_nickname; // 사용자 식별자 넣기
       var docRef = db.collection("users").doc(userEmail);
-
+      
       var docData = {
         store: [],
         userID: null,
         userName: userEmail,
       };
-
-      docRef.get().then(function (doc) {
+      
+      docRef.get().then(function(doc) {
         if (doc.exists) {
           console.log("UserData already exist!")
         } else {
-          docRef.set(docData).then(function (doc) {
+          docRef.set(docData).then(function(doc) {
             console.log("Document successfully written!")
-          }).catch(function (error) {
+          }).catch(function(error) {
             console.log("Error setting document:", error);
           });
         }
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
+      }).catch(function(error) {
+          console.log("Error getting document:", error);
       });
     },
-    login() {
+    login(){
       var scope = this;
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-        res => {
+      firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(
+        res=> {
           // console.log(res);
           //alert("로그인 잘 되었습니다.")
           //this.$router.push("map");
-          this.flag = false;
+          this.flag=false;
           this.user = res.user
           scope.$store.state.user_nickname = res.user.email
-        }).catch(function (error) {
+        }).catch(function(error) {
           //alert(error.message)
         }
-        );
+      );
     },
     // anonymous_login:function(){
-    anonymous_login() {
+    anonymous_login(){
       var scope = this;
-      firebase.auth().signInAnonymously().catch(function (error) {
+      firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
       });
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
+      firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
           // User is signed in.
           var isAnonymous = user.isAnonymous;
           var uid = user.uid;
@@ -149,89 +139,89 @@ export default {
         // ...
       });
     },
-    facebook_login() {
+    facebook_login(){
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
     // google_login:function(){
-    google_login() {
+    google_login(){
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
-    logout() {
+    logout(){
       firebase.auth().signOut().then(
-        result => {
-          // Sign-out successful.
-          // console.log('로그아웃 된거야?');
-
-          this.flag = true;
-          this.user = [];
-          this.$store.state.user_nickname = '';
-        }).catch(function (error) {
-          // An error happened.
-          alert(error.message);
-        });
+        result=> {
+        // Sign-out successful.
+        // console.log('로그아웃 된거야?');
+        
+        this.flag = true;
+        this.user = [];
+        this.$store.state.user_nickname = '';
+      }).catch(function(error) {
+        // An error happened.
+        alert(error.message);
+      });
     },
   },
-  mounted() {
+  mounted(){
     var scope = this;
-    if (this.flag) {
+    if(this.flag){
       // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
-    } else {
+    }else{
       alert(this.user);
     }
-
-    // // 카카오 로그인 버튼을 생성합니다.
-    // Kakao.Auth.createLoginButton({
-    //   container: '#kakao-login-btn',
-    //   success: function (authObj) {
-    //     // 로그인 성공시, API를 호출합니다.
-    //     Kakao.API.request({
-    //       url: '/v2/user/me',
-    //       success: function (res) {
-    //         console.log(JSON.stringify(res.kaccount_email));
-    //         console.log(JSON.stringify(res.id));
-    //         console.log(JSON.stringify(res.properties.profile_image));
-    //         console.log(JSON.stringify(res.properties.nickname));
-    //         scope.$store.state.user_nickname = res.properties.nickname;
-    //         scope.flag = false;
-    //       },
-    //       fail: function (error) {
-    //         alert(JSON.stringify(error));
-    //       }
-    //     });
-    //   },
-    //   fail: function (err) {
-    //     alert(JSON.stringify(err));
-    //   }
-    // });
-    firebase.auth().getRedirectResult().then(
-      result => {
-        if (result.credential) {
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = result.credential.accessToken;
-          // ...
+    
+    // 카카오 로그인 버튼을 생성합니다.
+      Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+          // 로그인 성공시, API를 호출합니다.
+          Kakao.API.request({
+            url: '/v2/user/me',
+            success: function(res) {
+              console.log(JSON.stringify(res.kaccount_email));
+              console.log(JSON.stringify(res.id));
+              console.log(JSON.stringify(res.properties.profile_image));
+              console.log(JSON.stringify(res.properties.nickname));
+              scope.$store.state.user_nickname = res.properties.nickname;
+              scope.flag = false;
+            },
+            fail: function(error) {
+              alert(JSON.stringify(error));
+            }
+          });
+        },
+        fail: function(err) {
+          alert(JSON.stringify(err));
         }
-        // The signed-in user info.
-        var user = result.user;
-        // console.log('이거슨 user',user);
-        // console.log('user displayname:',user.displayName);
-        if (user) {
-          this.$store.state.user_nickname = user.displayName;
-          this.flag = false;
-          this.addUserToDB();
-        }
-
-      }).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
       });
+     firebase.auth().getRedirectResult().then(
+      result=> {
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // ...
+  }
+  // The signed-in user info.
+  var user = result.user;
+  // console.log('이거슨 user',user);
+  // console.log('user displayname:',user.displayName);
+  if(user){
+    this.$store.state.user_nickname = user.displayName;
+    this.flag = false;
+    this.addUserToDB();    
+  }
+  
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
   }
 }
 </script>
@@ -251,18 +241,19 @@ body {
   /* border-radius: 5px; */
   background-color: white;
   padding: 30px 0;
-  font-family: "Do Hyeon", sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
 }
 
 h1 {
-  font-weight: bold;
-  font-family: "Jua", sans-serif;
-  font-size: 2.4vh;
-  text-transform: uppercase;
+  font-weight: bold !important;
+  font-family: 'Jua', sans-serif!important;
+  font-size: 3vh !important;
+  margin-top: 20px !important;
+  margin-bottom: 10px !important;
 }
 
 h2 {
-  font-family: "Jua", sans-serif;
+  font-family: 'Jua', sans-serif!important;
   font-size: 2.4vh;
 }
 
@@ -288,12 +279,12 @@ input:hover,
 
 /* add appropriate colors to fb, twitter and google buttons */
 .fb {
-  background-color: #3b5998;
+  background-color: #3B5998;
   color: white;
 }
 
 .twitter {
-  background-color: #55acee;
+  background-color: #55ACEE;
   color: white;
 }
 
@@ -308,15 +299,15 @@ input:hover,
 } */
 
 /* style the submit button */
-input[type="submit"] {
+input[type=submit] {
   background-color: #45a049;
-  font-family: "Jua", sans-serif;
+  font-family: 'Jua', sans-serif;
   color: white;
   cursor: pointer;
   transition: 500ms ease all;
 }
 
-input[type="submit"]:hover {
+input[type=submit]:hover {
   background-color: #a120ec;
 }
 
@@ -358,7 +349,7 @@ input[type="submit"]:hover {
   border: 3px solid #ccc;
   border-radius: 50%;
   padding: 8px 10px;
-  color: #fff;
+  color: #fff
 }
 
 /* hide some text on medium and large screens */

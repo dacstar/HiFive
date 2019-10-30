@@ -1,6 +1,7 @@
 <template>
-  <v-container>
-    <div class="app">
+  
+  <div class="app">
+    <div class="container">
       <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
       <!-- 검색 버튼 -->
       <form v-on:submit.prevent="submitForm">
@@ -9,7 +10,7 @@
       </form>
       <!-- 카카오지도 -->
       <div class="map_wrap">
-        <div id="map" style="width:50%;height:100%;margin:0 auto;"></div>
+        <div id="map" style="height:100%;position:relative;overflow:hidden;"></div>
       </div>
       <div class="store_list">
         <ul>
@@ -20,10 +21,11 @@
         </ul>
       </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
 <script>
+// import { fetchStoreList } from "../api/index.js";
 import { functions } from 'firebase';
 import {mapGetters,mapState} from 'vuex';
 export default {
@@ -64,6 +66,14 @@ export default {
         }
       ]
     };
+  },
+  computed:{
+    // stores(){
+    //   return this.$store.status.stores;
+    // },
+    ...mapState({
+      storea: state => state.stores
+    })
   },
   created() {
     // var scope = this;

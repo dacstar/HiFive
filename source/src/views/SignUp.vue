@@ -3,7 +3,7 @@
     <div style="border:1px solid #ccc">
       <div class="container">
         <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px">
-        <h1>SignUp</h1>
+        <h1>SIGNUP</h1>
         <p>이곳을 작성하시고 하이파이브의 회원이 되어주세요^0^</p>
         <hr>
 
@@ -34,6 +34,7 @@
 <script>
 import db from "@/FirebaseService";
 import firebase from 'firebase';
+import router from '../router/index.js'
 import { log } from 'util';
 
 export default {
@@ -80,18 +81,20 @@ export default {
 </script>
 
 <style scoped>
-  * {box-sizing: border-box}
+/* * {box-sizing: border-box} */
 
 .container {
+  margin-top: 20px;
   font-family: 'Do Hyeon', sans-serif;
+  height: 1500px;
 }
 
 h1 {
   font-family: 'Jua', sans-serif;
   font-size: 2.4vh;
   font-weight: bold;
+  margin-top: 20px;
   margin-bottom: 20px;
-  text-transform:  uppercase;
 }
 
 p {
