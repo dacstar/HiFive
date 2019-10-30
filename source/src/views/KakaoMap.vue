@@ -1,7 +1,7 @@
 <template>
-  
+  <v-container>
   <div class="app">
-    <div class="container">
+
       <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
       <!-- 검색 버튼 -->
       <form v-on:submit.prevent="submitForm">
@@ -20,8 +20,9 @@
           </li>
         </ul>
       </div>
-    </div>
+    
   </div>
+  </v-container>
 </template>
 
 <script>
@@ -323,6 +324,7 @@ export default {
 .hifive_zone_info {
   font-size: 25px;
   font-family: 'Jua', sans-serif;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -364,7 +366,7 @@ input[type="password"]:focus {
 /* 버튼 */
 button{
   background:#a120ec;
-  color:#fff;
+  color:#fff !important;
   border:none;
   position:relative;
   height: 30px;
