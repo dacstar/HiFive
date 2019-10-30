@@ -320,7 +320,8 @@ export default {
 <style>
 .hifive_zone_info {
   font-size: 25px;
-  font-family: "Jua", sans-serif;
+  font-family: 'Jua', sans-serif;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -368,11 +369,11 @@ input[type="password"]:focus {
 }
 
 /* 버튼 */
-button {
-  background: #a120ec;
-  color: #fff;
-  border: none;
-  position: relative;
+button{
+  background:#a120ec;
+  color:#fff !important;
+  border:none;
+  position:relative;
   height: 30px;
   font-size: 1em;
   padding: 0 1 2em;

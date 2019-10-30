@@ -20,6 +20,7 @@
               </div>
             </div>
             <li><router-link to="/mypage">MyHifive</router-link></li>
+            <!-- 로그인 안한 상태 -->
             <div class="dropdown">
               <li class="dropbtn"><router-link to="/login">Join</router-link></li>
               <div class="dropdown-content">
@@ -27,6 +28,10 @@
                 <li><router-link to="/signup">SignUp</router-link></li>
               </div>
             </div>
+            
+            <!-- 로그인 한 상태 -->
+            <li><router-link to="/signup">LogOut</router-link></li>
+
           </ul>
         </div>
       </div>
@@ -45,25 +50,26 @@
 
 <script>
 export default {
- methods: {
-   scrollFunction() {
-      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-        document.getElementById("header").style.height = "80px";
-        document.getElementById("hifive").style.fontSize = "25px";
-        document.getElementById("hifive_logo").style.width = "25px";
-        document.getElementById("hifive_logo").style.height = "25px";
-        // document.getElementById("hifive_logo").style.transition = "all .5s";
-      } else {
-        document.getElementById("header").style.height = "100px";
-        document.getElementById("hifive").style.fontSize = "35px";
-        document.getElementById("hifive_logo").style.width = "35px";
-        document.getElementById("hifive_logo").style.height = "35px";
-      }
-   }
- },
- created () {
-   window.addEventListener('scroll', this.scrollFunction);
- }
+  
+  methods: {
+    scrollFunction() {
+        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+          document.getElementById("header").style.height = "80px";
+          document.getElementById("hifive").style.fontSize = "25px";
+          document.getElementById("hifive_logo").style.width = "25px";
+          document.getElementById("hifive_logo").style.height = "25px";
+          // document.getElementById("hifive_logo").style.transition = "all .5s";
+        } else {
+          document.getElementById("header").style.height = "100px";
+          document.getElementById("hifive").style.fontSize = "35px";
+          document.getElementById("hifive_logo").style.width = "35px";
+          document.getElementById("hifive_logo").style.height = "35px";
+        }
+    }
+  },
+  created () {
+    window.addEventListener('scroll', this.scrollFunction);
+  }
 }
 </script>
 
