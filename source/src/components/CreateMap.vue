@@ -1,24 +1,22 @@
 <template>
-  <div id="app">
-    <div class="container">
-      <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
-      <!-- 검색 버튼 -->
-      <form v-on:submit.prevent="submitForm">
-        <input type="text" name="search" placeholder="하이파이브존 검색하기!" v-model.lazy="keyword" />
-        <button type="submit">하이파이브존 GO!</button>
-      </form>
-      <!-- 카카오지도 -->
-      <div class="map_wrap">
-        <div id="map"></div>
-      </div>
-      <div class="store_list">
-        <ul>
-          <li class="store-item" v-for="shop in shops" v-bind:key="shop">
-            <p class="text">{{shop.title}}</p>
-            <p class="location">{{shop.latlng}}</p>
-          </li>
-        </ul>
-      </div>
+  <div class="container">
+    <div class="hifive_zone_info">하이파이브존을 확인해주세요!</div>
+    <!-- 검색 버튼 -->
+    <form v-on:submit.prevent="submitForm">
+      <input type="text" name="search" placeholder="하이파이브존 검색하기!" v-model.lazy="keyword" />
+      <button type="submit">하이파이브존 GO!</button>
+    </form>
+    <!-- 카카오지도 -->
+    <div class="map_wrap">
+      <div id="map" style="height:100%;position:relative;overflow:hidden;"></div>
+    </div>
+    <div class="store_list">
+      <ul>
+        <li class="store-item" v-for="shop in shops" v-bind:key="shop">
+          <p class="text">{{shop.title}}</p>
+          <p class="location">{{shop.latlng}}</p>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -320,8 +318,7 @@ export default {
 <style>
 .hifive_zone_info {
   font-size: 25px;
-  font-family: 'Jua', sans-serif;
-  margin-top: 20px;
+  font-family: "Jua", sans-serif;
   margin-bottom: 10px;
 }
 
@@ -331,13 +328,6 @@ export default {
   width: 100%;
   height: 500px;
   margin-top: 15px;
-}
-.map_wrap #map{
-  width: 50%;
-    height: 100%;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
 }
 
 /* 검색 박스 */
@@ -369,11 +359,11 @@ input[type="password"]:focus {
 }
 
 /* 버튼 */
-button{
-  background:#a120ec;
-  color:#fff !important;
-  border:none;
-  position:relative;
+button {
+  background: #a120ec;
+  color: #fff;
+  border: none;
+  position: relative;
   height: 30px;
   font-size: 1em;
   padding: 0 1 2em;
