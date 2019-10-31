@@ -2,11 +2,8 @@
   <div id="app">
     <div class="container">
       <searchbar></searchbar>
-      <create-map></create-map>
       <!-- 카카오지도 -->
-      <!-- <div class="map_wrap">
-        <div id="map"></div>
-      </div>-->
+      <create-map></create-map>
     </div>
   </div>
 </template>
