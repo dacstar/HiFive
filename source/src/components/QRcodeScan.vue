@@ -12,14 +12,12 @@
           v-if="this.$store.state.user_nickname!=''"
           to="/mypage"
           class="accepted"
-        >하이파이브 하시겠습니까??????? 마이페이지로</router-link>
-        <router-link v-else to="/login" class="accepted">하이파이브 하시겠습니까 로그인 페이지로</router-link>
+        >하이파이브 하시겠습니까? 마이페이지로</router-link>
+        <router-link v-else to="/login" class="accepted">하이파이브 하시겠습니까? 로그인 페이지로</router-link>
       </div>
 
       <div v-if="validationFailure" class="validation-failure">
-        1. 8시간 이내에 인식하신적이 있습니까?
-        2. 장소 내에 있습니까?
-        아니라면 고객센터에 연락주세요.
+        올바른 하이파이브 QRcode가 아닙니다!
       </div>
 
       <div v-if="validationPending" class="validation-pending">
@@ -97,7 +95,7 @@ export default {
 
       await this.timeout(3000)
       // 프론트제어값 넣어주자
-      this.isValid = content.startsWith('h')
+      this.isValid = this.$store.state.isValid;
 
       // some more delay, so users have time to read the message
       await this.timeout(2000)
