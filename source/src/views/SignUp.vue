@@ -12,4 +12,7 @@ export default {
 </script>
 
 <style>
+sign-up {
+  height: 1000px;
+}
 </style>

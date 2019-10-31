@@ -2,18 +2,20 @@
   <div id="app">
     <!-- ToolBar 대체용품. 더 편하다@! -->
     <tool-bar></tool-bar>
-
+    <Footer></Footer>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 import ToolBar from './components/Toolbar.vue';
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'app',
   components: {
-    ToolBar
+    ToolBar,
+    Footer
   }
 }
 </script>

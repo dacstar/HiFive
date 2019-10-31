@@ -33,6 +33,7 @@
                 <p>Or sign in manually:</p>
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required />
+              <br>
               <input
                 type="password"
                 name="password"

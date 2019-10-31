@@ -111,7 +111,7 @@ button {
   border: none;
   position: relative;
   height: 30px;
-  font-size: 1em;
+  font-size: 0.8em;
   padding: 0 1 2em;
   cursor: pointer;
   transition: 800ms ease all;
@@ -121,7 +121,7 @@ button {
 
 button:hover {
   background: #fff;
-  color: #a120ec;
+  color: #a120ec !important;
 }
 
 button:before,
