@@ -112,18 +112,32 @@ export default {
     },
     login() {
       var scope = this;
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-        res => {
-          // console.log(res);
-          //alert("로그인 잘 되었습니다.")
-          //this.$router.push("map");
-          this.flag = false;
-          this.user = res.user
-          scope.$store.state.user_nickname = res.user.email
-        }).catch(function (error) {
-          //alert(error.message)
-        }
-        );
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
+        }).then(function(result){
+          console.log("왔어")
+          console.log(result)
+          scope.test=result;
+          scope.flag=false;
+           scope.user = result.user
+           scope.$store.state.user_nickname = result.user.email
+
+        });
+
+
+
+      // firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+      //   res => {
+      //     // console.log(res);
+      //     //alert("로그인 잘 되었습니다.")
+      //     //this.$router.push("map");
+      //     this.flag = false;
+      //     this.user = res.user
+      //     scope.$store.state.user_nickname = res.user.email
+      //   }).catch(function (error) {
+      //     //alert(error.message)
+      //   }
+      //   );
     },
     // anonymous_login:function(){
     anonymous_login() {
@@ -181,6 +195,17 @@ export default {
     } else {
       alert(this.user);
     }
+      firebase.auth().onAuthStateChanged(function(user) {
+     if (user) {
+                   console.log(user)
+                   scope.flag=false;
+                   scope.$store.state.user_nickname =user.email
+                  // User is signed in.
+       } else {
+    // No user is signed in.
+         }
+    });
+    
 
     // 카카오 로그인 버튼을 생성합니다.
     // Kakao.Auth.createLoginButton({
