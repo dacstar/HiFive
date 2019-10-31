@@ -2,16 +2,16 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import QRcodeShow from "../views/QRcodeShow.vue"
 import LoginPage from "../views/LoginPage.vue"
-import KakaoMap from '../views/KakaoMap.vue'
-import MyPage from '../views/MyPage.vue'
-import SignUp from '../views/SignUp.vue'
+import KakaoMap from "../views/KakaoMap.vue"
+import MyPage from "../views/MyPage.vue"
+import SignUp from "../views/SignUp.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: "/",
-    name: "qrcode",
+    name: "home",
     component: QRcodeShow
   },
   {
@@ -20,7 +20,7 @@ const routes = [
     component: LoginPage
   },
   {
-    path: '/map',
+    path: "/map",
     component: KakaoMap
   },
   {
@@ -29,13 +29,13 @@ const routes = [
     component: QRcodeShow
   },
   {
-    path: '/mypage',
+    path: "/mypage",
     component: MyPage
   },
   {
-    path: '/signup',
+    path: "/signup",
     component: SignUp
-  },
+  }
 ]
 
 const router = new VueRouter({
