@@ -33,6 +33,7 @@
 
 <script>
 import db from "@/FirebaseService";
+import firebase from 'firebase/app';
 
 export default {
   data() {
@@ -64,6 +65,18 @@ export default {
     },
   },
   mounted() {
+        var scope=this;
+      firebase.auth().onAuthStateChanged(function(user) {
+       if (user) {
+       console.log(user)
+       scope.$store.state.user_nickname =user.email
+       console.log(scope.$store.state.user_nickname)
+    // User is signed in.
+  } else {
+    // No user is signed in.
+  }
+});
+
 
   },
   created() {
