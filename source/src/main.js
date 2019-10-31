@@ -1,12 +1,16 @@
-import Vue from 'vue';
-import App from './App.vue';
-import {router} from './router/index.js';
+import Vue from 'vue'
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 
-
+// 사용할 앱의 JavaScript 키를 설정해 주세요.
+// Kakao.init('d5e4fbca80b67f3a6a75614545dd6b7b');
 
 new Vue({
-  render: h => h(App),
   router,
+  store,
+  render: h => h(App)
 }).$mount('#app')

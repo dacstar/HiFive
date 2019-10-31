@@ -1,39 +1,47 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import KakaoMap from '../views/KakaoMap.vue';
-import LoginPage from '../views/LoginPage.vue';
-import MyPage from '../views/MyPage.vue';
-import QRcodeShow from '../views/QRcodeShow.vue';
-import SignIn from '../views/SignIn.vue';
+import Vue from "vue"
+import VueRouter from "vue-router"
+import QRcodeShow from "../views/QRcodeShow.vue"
+import LoginPage from "../views/LoginPage.vue"
+import KakaoMap from "../views/KakaoMap.vue"
+import MyPage from "../views/MyPage.vue"
+import SignUp from "../views/SignUp.vue"
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: QRcodeShow
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginPage
+  },
+  {
+    path: "/map",
+    component: KakaoMap
+  },
+  {
+    path: "/qrcode",
+    name: "qrcode",
+    component: QRcodeShow
+  },
+  {
+    path: "/mypage",
+    component: MyPage
+  },
+  {
+    path: "/signup",
+    component: SignUp
+  }
+]
 
-export const router = new VueRouter({
-    routes:[
-        {
-            path: '/',
-            redirect: '/qrcode'
-        },
-        {
-            path:'/map',
-            component: KakaoMap
-        },
-        {
-            path: '/login',
-            component: LoginPage
-        },
-        {
-            path: '/mypage',
-            component: MyPage
-        },
-        {
-            path: '/qrcode',
-            component: QRcodeShow
-        },
-        {
-            path: '/signin',
-            component: SignIn
-        },
-    ]
+const router = new VueRouter({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router
