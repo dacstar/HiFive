@@ -38,6 +38,8 @@
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
+import db from "@/FirebaseService";
+import firebase from 'firebase/app'
 
 export default {
 
@@ -48,6 +50,8 @@ export default {
       isValid: undefined,
       camera: 'auto',
       result: null,
+      userFromDB: [],
+      storeFromDB: [],
     }
   },
 
@@ -81,18 +85,18 @@ export default {
     },
 
     async onDecode(content) {
-
-      // content : 하이파이브 하시겠습니까?? 
-      console.log(content)
       this.result = content
       this.turnCameraOff()
 
       // QRCODE READER
-      this.$store.dispatch('READ_QRCODE', content);
+      await this.$store.dispatch('READ_QRCODE', content);
 
-      // pretend it's taking really long
-      // 일치하는지 유효성 검사하는 곳
+      await this.getUserFromDB();
+      await this.getStoreFromDB();
+      await this.updateDataToDB(this.userFromDB, this.storeFromDB);
+
       await this.timeout(3000)
+      // 프론트제어값 넣어주자
       this.isValid = content.startsWith('h')
 
       // some more delay, so users have time to read the message
@@ -113,6 +117,133 @@ export default {
       return new Promise(resolve => {
         window.setTimeout(resolve, ms)
       })
+    },
+
+    async getUserFromDB() {
+      var scope = this;
+      // DB에서 유저정보 가져오기
+      var userName = this.$store.state.user_nickname;
+      if (userName == "") {
+        console.log("유저가 로그인 하지않았습니다!");
+        return ;
+      }
+
+      var userDocRef = db.collection("users").doc(userName);  
+      await userDocRef.get().then(function(doc) {
+        if (doc.exists) {
+          scope.userFromDB.push(doc.data().store);
+        } else {
+          console.log("No such User document!");
+        }
+      }).catch(function(error) {
+          console.log("Error getting user document:", error);
+      });
+    },
+
+    async getStoreFromDB() {
+      var scope = this;
+      // DB에서 가게정보 가져오기(QRcode에 있는 가게정보)
+      // !!!!!!!!!!!!!!!!!!!!!!!!
+      // storeID 부분 확실한 수정 필요!
+      // !!!!!!!!!!!!!!!!!!!!!!!!
+
+      var store = 'store'+this.$store.state.QRcode_Store.id;
+      var storeDocRef = db.collection("stores");
+      await storeDocRef.where("storeID", "==", store)
+        .get().then(function(querySnapshot){
+          if(querySnapshot.empty){
+            scope.storeFromDB = [];
+          } else {
+            querySnapshot.forEach(function(doc) {
+              scope.storeFromDB.push(doc.data());
+              console.log('가져온 데이터',doc.data())
+            });
+          }
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    },
+
+    async updateDataToDB(userObj, storeObj) {
+      console.log('메인함수');
+      var scope = this;
+
+      if (userObj.length == 0) {
+        return ;
+      } else if (storeObj.length == 0) {
+        console.log('store가 비어있음');
+        return ;
+      }
+    
+      // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
+      var currentStoreID = await storeObj[0].storeID;
+      var idx = 0;
+      var flag = false;
+      console.log('for문 시작');
+      for(var i=0; i < userObj[0].length; i++) {
+        if (currentStoreID == userObj[0][i].storeID) {
+          console.log('$compare success')
+          flag = true;
+          idx = i;
+          break;
+        }
+      }
+      console.log('StoreID:',currentStoreID,' flag:', flag, 'idx:', idx);
+
+      var userName = this.$store.state.user_nickname;
+      var userDocRef = db.collection("users").doc(userName);
+      if (flag) {
+        console.log('#flag is true, DBupdate');
+        // DB 업데이트
+        var storeData = userObj[0];
+        storeData[idx].count = storeData[idx].count + 1;
+        var docData = {
+          store: storeData,
+          userID: null,
+          userName: userName,
+        };
+
+        userDocRef.set(docData)
+        .then(function() {
+          console.log("Store successfully updated!");
+        })
+        .catch(function(error) {
+          console.error("Error updating store: ", error);
+        });
+      } else {
+        console.log('#flag is false, DBadd');
+        // DB 추가
+        userDocRef.update({
+          store: firebase.firestore.FieldValue.arrayUnion({
+            count: 1,
+            lastVisit: firebase.firestore.Timestamp.fromDate(new Date("15:03:03 October 20, 2019")),  // new Date안에 현재 시간 불러오기
+            location:new firebase.firestore.GeoPoint(36.34961122142392, 127.2982571051557), // storeObj에 있는 좌표값 넣어주기
+            storeID: '2', // storesw
+            storeName: '카페니치 한밭대점'
+          })
+        })
+        .then(function() {
+          console.log("Store successfully added!");
+        })
+        .catch(function(error) {
+          console.error("Error adding store: ", error);
+        });
+      }
+
+      var storeDocRef = db.collection("stores").doc(currentStoreID);
+      storeDocRef.update({
+        count: firebase.firestore.FieldValue.increment(1)
+      });
+
+      scope.QRcodeInit();
+      console.log('메인함수끝');
+    },
+
+    QRcodeInit() {
+      this.$store.state.QRcode_Store = "None";
+      this.userFromDB = [];
+      this.storeFromDB = [];
     }
   }
 }

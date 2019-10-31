@@ -7,7 +7,7 @@
             <div class='icon'>
               <img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px">
             </div>
-            <div>HiFive</div>
+            <div id="hifive">HiFive</div>
           </a>
           <ul>
             <div class="dropdown">
