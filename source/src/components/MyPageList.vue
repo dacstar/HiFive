@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="my_hifive_info">내 하이파이브 정보</div>
+      <div v-if="this.$store.state.user_nickname!=='' ">
+        <div class="my_hifive_info">{{this.$store.state.user_nickname}}님의 하이파이브 정보</div>
+      </div>
+      <div v-else>
+        <div class="my_hifive_info">내 하이파이브 정보를 보려면 로그인해주세요!</div>
+      </div>
       <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
       <div class="store_list">
         <ul>
@@ -97,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  margin-top: 20px;
+  /* font-family: "Do Hyeon", sans-serif; */
+  height: 720px;
+}
+
 .my_hifive_info {
   font-size: 30px;
   font-family: "Jua", sans-serif;
@@ -166,5 +177,28 @@ ul li span:nth-child(4) {
 ul li:hover {
   transform: scale(1.06);
   background: #a120ec;
+  color: white;
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .store_list {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .store_list {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
 </style>

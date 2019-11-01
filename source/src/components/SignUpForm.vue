@@ -1,12 +1,11 @@
 <template>
   <div class="app">
-    <div style="border:1px solid #ccc">
+    <div>
       <div class="container">
         <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px" />
         <h1>SIGNUP</h1>
         <p>이곳을 작성하시고 하이파이브의 회원이 되어주세요^0^</p>
-        <hr />
-
+        <hr>
         <label for="email">
           <b>Email</b>
         </label>
@@ -28,7 +27,10 @@
 
         <p>
           By creating an account you agree to our
-          <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
+          <a
+            href="#"
+            style="color:dodgerblue"
+          >Terms & Privacy</a>.
         </p>
 
         <div class="clearfix">
@@ -102,12 +104,11 @@ export default {
 </script>
 
 <style scoped>
-/* * {box-sizing: border-box} */
 
 .container {
   margin-top: 20px;
   font-family: "Do Hyeon", sans-serif;
-  height: 1500px;
+  height: 720px;
 }
 
 h1 {
@@ -192,6 +193,39 @@ button:hover {
   .cancelbtn,
   .signupbtn {
     width: 100%;
+  }
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : TABLET, IPAD
+    SIZE : 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    width: 90%;
+    margin: 0 auto;
   }
 }
 </style>

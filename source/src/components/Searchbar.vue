@@ -97,11 +97,7 @@ input[type="password"] {
 }
 
 input[type="text"]:focus {
-  width: 100%;
-}
-
-input[type="password"]:focus {
-  width: 100%;
+  width: 40%;
 }
 
 /* 버튼 */

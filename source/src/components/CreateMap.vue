@@ -7,6 +7,9 @@
 <script>
 import { functions } from 'firebase';
 import { mapGetters, mapState } from 'vuex';
+import db from "@/FirebaseService";
+import firebase from 'firebase/app';
+import { async } from 'q';
 
 export default {
   data() {
@@ -39,58 +42,33 @@ export default {
     // this.$store.dispatch('FETCH_STORES')
   },
   methods: {
-    create_customover() {
+
+    async create_customover() {
+      // firebase database -> get store data
+      const snapshot = await db.collection('stores').get();
+      snapshot.forEach(store => {
+        this.stores.push(store.data());
+      });
+
       var mapContainer = document.getElementById("map");
       var mapOptions = {
         center: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
         level: 3 // 1 to 13
       };
-      var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
-      console.log(map);
-      this.mapinfo = map;
+      var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성 
 
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
       var zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
       // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 
+      var positions = this.stores;
 
-      var positions = [
-        {
-          title: "카페 데일리",
-          latlng: new kakao.maps.LatLng(36.348771954596096, 127.29800436467848),
-          address: "대전 유성구 학하서로121번길 130(덕명동 591-6)",
-          hifive_count: 132
-        },
-        {
-          title: "O'neul(카페 오늘)",
-          latlng: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
-          address: "대전 유성구 학하서로121번길 71-8(덕명동 158-3)",
-          hifive_count: 92
-        },
-        {
-          title: "카페 인누와",
-          latlng: new kakao.maps.LatLng(36.34969294908846, 127.29872976493839),
-          address: "대전 유성구 학하서로121번길 51(덕명동 589-5)",
-          hifive_count: 49
-        },
-        {
-          title: "카페니치 한밭대점",
-          latlng: new kakao.maps.LatLng(36.34961122142392, 127.2982571051557),
-          // image_url:
-          address: "대전광역시 유성구 학하서로121번길 55-9 1층(덕명동 589-2)",
-          hifive_count: 78
-        },
-        {
-          title: "더카페 지오 한밭대점",
-          latlng: new kakao.maps.LatLng(36.349125599049245, 127.29929351989453),
-          address: "대전 유성구 학하서로121번길 39-3(덕명동 599-1)",
-          hifive_count: 188
-        }
-      ];
+      console.log(positions)
+      console.log(positions[0].location.latitude, positions[0].location.longitude)
+
       // Marker
       var imageSrc = "https://www.iconsdb.com/icons/preview/violet/hand-cursor-xl.png"; // 마커 이미지 링크
-      // var imageSrc = "../assets/hifive_purple.png";
       var imageSize = new kakao.maps.Size(30, 30);
       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
       var clickedOverlay = null;
@@ -98,9 +76,8 @@ export default {
       for (var i = 0; i < positions.length; i++) {
         var marker = new kakao.maps.Marker({
           map: map, // 마커를 표시할 지도
-          position: positions[i].latlng, // 마커를 표시할 위치
-          title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-          // image: markerImage // 마커 이미지
+          position: new kakao.maps.LatLng(positions[i].location.latitude, positions[i].location.longitude), // 마커를 표시할 위치
+          title: positions[i].storeName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         });
 
         var overlay = null;
@@ -166,7 +143,7 @@ export default {
     closeOverlay() {
       alert("hi");
       overlay.setMap(null);
-    }
+    },
   },
   mounted() {
     this.create_customover();
@@ -184,7 +161,7 @@ export default {
 }
 
 .map_wrap #map {
-  width: 50%;
+  width: 100%;
   height: 100%;
   margin: 0 auto;
   position: relative;
@@ -212,13 +189,6 @@ input[type="password"] {
   margin-bottom: 15px;
 }
 
-input[type="text"]:focus {
-  width: 100%;
-}
-
-input[type="password"]:focus {
-  width: 100%;
-}
 
 /* 버튼 */
 button {
@@ -227,7 +197,7 @@ button {
   border: none;
   position: relative;
   height: 30px;
-  font-size: 1em;
+  font-size: 0.8em !important;
   padding: 0 1 2em;
   cursor: pointer;
   transition: 800ms ease all;
@@ -370,5 +340,27 @@ button:hover:after {
 
 .info .link {
   color: #5085bb;
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .map_wrap {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .map_wrap {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
 </style>

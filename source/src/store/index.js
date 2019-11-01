@@ -22,6 +22,7 @@ export default new Vuex.Store({
     isLogin: false,
     user_nickname: "",
     isValid: undefined,
+    stores: []
   },
   mutations: {
     increment(state) {
@@ -38,12 +39,12 @@ export default new Vuex.Store({
     },
 
     SET_STOREINFO(state, store) {
-      if (store.startsWith('{')){
-        state.QRcode_Store = JSON.parse(store);
-        state.isValid = true;
+      if (store.startsWith("{")) {
+        state.QRcode_Store = JSON.parse(store)
+        state.isValid = true
       } else {
-        state.QRcode_Store = '';
-        state.isValid = false;
+        state.QRcode_Store = ""
+        state.isValid = false
       }
     }
   },

@@ -16,9 +16,7 @@
         <router-link v-else to="/login" class="accepted">하이파이브 하시겠습니까? 로그인 페이지로</router-link>
       </div>
 
-      <div v-if="validationFailure" class="validation-failure">
-        올바른 하이파이브 QRcode가 아닙니다!
-      </div>
+      <div v-if="validationFailure" class="validation-failure">올바른 하이파이브 QRcode가 아닙니다!</div>
 
       <div v-if="validationPending" class="validation-pending">
         8시간 이내에 인식하신적이 있는지, 혹은 장소 내에 있는지 분석중입니다...
@@ -66,12 +64,9 @@ export default {
     validationFailure() {
       return this.isValid === false
     },
-
-
   },
 
   methods: {
-
     onInit(promise) {
       promise
         .catch(console.error)
@@ -88,7 +83,6 @@ export default {
 
       // QRCODE READER
       await this.$store.dispatch('READ_QRCODE', content);
-
       await this.getUserFromDB();
       await this.getStoreFromDB();
       await this.updateDataToDB(this.userFromDB, this.storeFromDB);
@@ -99,7 +93,6 @@ export default {
 
       // some more delay, so users have time to read the message
       await this.timeout(2000)
-
       this.turnCameraOn()
     },
 
@@ -123,9 +116,9 @@ export default {
       var userName = this.$store.state.user_nickname;
       if (userName == "") {
         console.log("유저가 로그인 하지않았습니다!");
-        return ;
+        return;
       }
-
+      console.log(userName);
       var userDocRef = db.collection("users").doc(userName);  
       await userDocRef.get().then(function(doc) {
         if (doc.exists) {
@@ -133,8 +126,8 @@ export default {
         } else {
           console.log("No such User document!");
         }
-      }).catch(function(error) {
-          console.log("Error getting user document:", error);
+      }).catch(function (error) {
+        console.log("Error getting user document:", error);
       });
     },
 
@@ -145,21 +138,21 @@ export default {
       // storeID 부분 확실한 수정 필요!
       // !!!!!!!!!!!!!!!!!!!!!!!!
 
-      var store = 'store'+this.$store.state.QRcode_Store.id;
+      var store = 'store' + this.$store.state.QRcode_Store.id;
       var storeDocRef = db.collection("stores");
       await storeDocRef.where("storeID", "==", store)
-        .get().then(function(querySnapshot){
-          if(querySnapshot.empty){
+        .get().then(function (querySnapshot) {
+          if (querySnapshot.empty) {
             scope.storeFromDB = [];
           } else {
-            querySnapshot.forEach(function(doc) {
+            querySnapshot.forEach(function (doc) {
               scope.storeFromDB.push(doc.data());
-              console.log('가져온 데이터',doc.data())
+              console.log('가져온 데이터', doc.data())
             });
           }
         })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
         });
     },
 
@@ -168,12 +161,12 @@ export default {
       var scope = this;
 
       if (userObj.length == 0) {
-        return ;
+        return;
       } else if (storeObj.length == 0) {
         console.log('store가 비어있음');
-        return ;
+        return;
       }
-    
+
       // 유저정보와 비교해서 있으면 업데이트, 없으면 추가
       var currentStoreID = await storeObj[0].storeID;
       var idx = 0;
@@ -186,7 +179,7 @@ export default {
           break;
         }
       }
-      console.log('StoreID:',currentStoreID,' flag:', flag, 'idx:', idx);
+      console.log('StoreID:', currentStoreID, ' flag:', flag, 'idx:', idx);
 
       var userName = this.$store.state.user_nickname;
       var userDocRef = db.collection("users").doc(userName);
@@ -202,12 +195,12 @@ export default {
         };
 
         userDocRef.set(docData)
-        .then(function() {
-          console.log("Store successfully updated!");
-        })
-        .catch(function(error) {
-          console.error("Error updating store: ", error);
-        });
+          .then(function () {
+            console.log("Store successfully updated!");
+          })
+          .catch(function (error) {
+            console.error("Error updating store: ", error);
+          });
       } else {
         console.log('#flag is false, DBadd');
         // DB 추가
@@ -220,12 +213,12 @@ export default {
             storeName: storeObj[0].storeName,
           })
         })
-        .then(function() {
-          console.log("Store successfully added!");
-        })
-        .catch(function(error) {
-          console.error("Error adding store: ", error);
-        });
+          .then(function () {
+            console.log("Store successfully added!");
+          })
+          .catch(function (error) {
+            console.error("Error adding store: ", error);
+          });
       }
 
       var storeDocRef = db.collection("stores").doc(currentStoreID);
@@ -290,5 +283,26 @@ export default {
 
 .recommend {
   margin-top: 30px;
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
 </style>
