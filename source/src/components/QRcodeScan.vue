@@ -176,8 +176,7 @@ export default {
       var currentStoreID = await storeObj[0].storeID;
       var idx = 0;
       var flag = false;
-      console.log('for문 시작');
-      for (var i = 0; i < userObj[0].length; i++) {
+      for(var i=0; i < userObj[0].length; i++) {
         if (currentStoreID == userObj[0][i].storeID) {
           console.log('$compare success')
           flag = true;
@@ -213,10 +212,10 @@ export default {
         userDocRef.update({
           store: firebase.firestore.FieldValue.arrayUnion({
             count: 1,
-            lastVisit: firebase.firestore.Timestamp.fromDate(new Date("15:03:03 October 20, 2019")),  // new Date안에 현재 시간 불러오기
-            location: new firebase.firestore.GeoPoint(36.34961122142392, 127.2982571051557), // storeObj에 있는 좌표값 넣어주기
-            storeID: '2', // storesw
-            storeName: '카페니치 한밭대점'
+            lastVisit: firebase.firestore.Timestamp.fromDate(new Date()),  // new Date안에 현재 시간 불러오기
+            location:new firebase.firestore.GeoPoint(storeObj[0].location._lat, storeObj[0].location._long),
+            storeID: storeObj[0].storeID,
+            storeName: storeObj[0].storeName,
           })
         })
           .then(function () {
@@ -233,7 +232,6 @@ export default {
       });
 
       scope.QRcodeInit();
-      console.log('메인함수끝');
     },
 
     QRcodeInit() {
