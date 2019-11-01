@@ -116,6 +116,7 @@ nav {
   transition: 0.5s;
   /* background: linear-gradient(to right, #ff5858, #f857a6); */
   background: #fff;
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
   z-index: 100000000;
 }
 
