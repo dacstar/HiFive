@@ -212,13 +212,6 @@ input[type="password"] {
   margin-bottom: 15px;
 }
 
-input[type="text"]:focus {
-  width: 100%;
-}
-
-input[type="password"]:focus {
-  width: 100%;
-}
 
 /* 버튼 */
 button {
@@ -227,7 +220,7 @@ button {
   border: none;
   position: relative;
   height: 30px;
-  font-size: 1em;
+  font-size: 0.8em !important;
   padding: 0 1 2em;
   cursor: pointer;
   transition: 800ms ease all;

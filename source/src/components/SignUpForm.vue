@@ -1,12 +1,11 @@
 <template>
   <div class="app">
-    <div style="border:1px solid #ccc">
+    <div>
       <div class="container">
         <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px" />
         <h1>SIGNUP</h1>
         <p>이곳을 작성하시고 하이파이브의 회원이 되어주세요^0^</p>
-        <hr />
-
+        <hr>
         <label for="email">
           <b>Email</b>
         </label>
@@ -104,12 +103,11 @@ export default {
 </script>
 
 <style scoped>
-/* * {box-sizing: border-box} */
 
 .container {
   margin-top: 20px;
   font-family: "Do Hyeon", sans-serif;
-  height: 1500px;
+  height: 720px;
 }
 
 h1 {

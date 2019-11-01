@@ -2,8 +2,8 @@
   <div id="app">
     <!-- ToolBar 대체용품. 더 편하다@! -->
     <tool-bar></tool-bar>
-    <Footer></Footer>
     <router-view></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
 }
 
 body {
-  padding: 0;
-  margin: 0;
+  /* padding: 0;
+  margin: 0; */
 }
 </style>

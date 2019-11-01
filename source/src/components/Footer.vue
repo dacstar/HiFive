@@ -12,17 +12,17 @@
 .footer {
   font-family: "Jua", sans-serif;
   font-size: 2vh;
-  position: fixed;
+  /* position: fixed; */
   left: 0;
-  bottom: 0;
+  /* bottom: 0; */
+  margin-top: 20px !important;
   width: 100%;
-  height: 50px;
   align-items: center;
-  background-color: #a120ec;
+  background-color: #5e2a7c;
   /* background: linear-gradient(#f8fa9c,#a120ec); */
   color: white;
-  padding: 50px 0;
-  z-index: 1000000;
-  margin-top:auto; margin-bottom:auto;
+  padding: 40px 0;
+  z-index: 10000;
+  /* margin-top:auto; margin-bottom:auto; */
 }
 </style>
