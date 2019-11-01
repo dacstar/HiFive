@@ -33,7 +33,6 @@
                 <p>Or sign in manually:</p>
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required />
-              <br>
               <input
                 type="password"
                 name="password"
@@ -112,7 +111,7 @@ export default {
       }).catch(function (error) {
         console.log("Error getting document:", error);
       });
-    },
+    }
     login() {
       var scope = this;
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
@@ -208,7 +207,6 @@ export default {
          }
     });
 
-
     // 카카오 로그인 버튼을 생성합니다.
     // Kakao.Auth.createLoginButton({
     //   container: '#kakao-login-btn',
@@ -244,7 +242,7 @@ export default {
         var user = result.user;
         // console.log('user: ', user, 'user displayname:',user.displayName);
         if (user) {
-          this.$store.state.user_nickname = user.displayName;
+          this.$store.state.user_nickname = user.email;
           this.flag = true;
           this.addUserToDB();
         }

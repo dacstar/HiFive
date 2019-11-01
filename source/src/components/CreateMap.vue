@@ -55,7 +55,7 @@ export default {
         center: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
         level: 3 // 1 to 13
       };
-      var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
+      var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성 
 
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
       var zoomControl = new kakao.maps.ZoomControl();

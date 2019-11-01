@@ -239,9 +239,8 @@ export default {
     var scope=this;
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        console.log(user)
-        scope.$store.state.user_nickname = user.email
         // User is signed in.
+        scope.$store.state.user_nickname = user.email
       } else {
         // No user is signed in.
       }
