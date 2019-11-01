@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="my_hifive_info">내 하이파이브 정보</div>
+      <div class="my_hifive_info">{{this.$store.state.user_nickname}}님의 하이파이브 정보</div>
       <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
       <div class="store_list">
         <ul>

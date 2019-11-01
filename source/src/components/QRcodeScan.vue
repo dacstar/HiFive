@@ -64,12 +64,9 @@ export default {
     validationFailure() {
       return this.isValid === false
     },
-
-
   },
 
   methods: {
-
     onInit(promise) {
       promise
         .catch(console.error)
@@ -86,7 +83,6 @@ export default {
 
       // QRCODE READER
       await this.$store.dispatch('READ_QRCODE', content);
-
       await this.getUserFromDB();
       await this.getStoreFromDB();
       await this.updateDataToDB(this.userFromDB, this.storeFromDB);
@@ -97,7 +93,6 @@ export default {
 
       // some more delay, so users have time to read the message
       await this.timeout(2000)
-
       this.turnCameraOn()
     },
 
@@ -123,9 +118,9 @@ export default {
         console.log("유저가 로그인 하지않았습니다!");
         return;
       }
-
-      var userDocRef = db.collection("users").doc(userName);
-      await userDocRef.get().then(function (doc) {
+      console.log(userName);
+      var userDocRef = db.collection("users").doc(userName);  
+      await userDocRef.get().then(function(doc) {
         if (doc.exists) {
           scope.userFromDB.push(doc.data().store);
         } else {
@@ -240,9 +235,9 @@ export default {
       this.storeFromDB = [];
     }
   },
-  mounted() {
-    var scope = this;
-    firebase.auth().onAuthStateChanged(function (user) {
+  mounted(){
+    var scope=this;
+    firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         console.log(user)
         scope.$store.state.user_nickname = user.email
@@ -301,7 +296,6 @@ export default {
     margin: 0 auto;
   }
 }
-
 /* 
     SCREEN : LABTOP AND DESKTOP
     SIZE : 1025 ~ 1280px
