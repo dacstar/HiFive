@@ -9,44 +9,42 @@
             </div>
             <div id="hifive">HiFive</div>
           </a>
-          <ul>
-            <!-- 공통 -->
-            <div class="dropdown">
-              <li class="dropbtn">
-                <router-link to="/" class="active">HiFive</router-link>
-              </li>
-              <div class="dropdown-content">
-                <li><router-link to="/qrcode">Go HiFive</router-link></li>
-                <li><router-link to="/map">HiFiveZone</router-link></li>
-                <!-- <li><router-link to="/about">About</router-link></li>
-                <li><router-link to="/howto">HowTo</router-link></li> -->
-              </div>
-            </div>
-            <li><router-link to="/mypage">MyHifive</router-link></li>
-          
-            <!-- 로그인 한 상태 -->
-            <div class="flex" v-if="this.$store.state.user_nickname!=='' ">
-              <li>{{this.$store.state.user_nickname}}님 반갑습니다!</li>
-              <!-- <li><router-link to="/">LogOut</router-link></li> -->
-              <!-- <li v-on:click="logout">LogOut</li> -->
-              <input type="submit" value="로그아웃" v-on:click="logout"/>
-            </div>
-            
-            <!-- 로그인 안 한 상태 -->
-            <div v-else>
+          <div class="header_menu">
+            <ul>
+              <!-- 공통 -->
               <div class="dropdown">
-                <li class="dropbtn"><router-link to="/login">Join</router-link></li>
-              <div class="dropdown-content">
-                <li>
-                  <router-link to="/login">LogIn</router-link>
+                <li class="dropbtn">
+                  <router-link to="/" class="active">HiFive</router-link>
                 </li>
-                <li>
-                  <router-link to="/signup">SignUp</router-link>
-                </li>
+                <div class="dropdown-content">
+                  <li><router-link to="/qrcode">Go HiFive</router-link></li>
+                  <li><router-link to="/map">HiFiveZone</router-link></li>
+                </div>
               </div>
-            </div>
-            </div>
-          </ul>
+              <li><router-link to="/mypage">MyHifive</router-link></li>
+            
+              <!-- 로그인 한 상태 -->
+              <div v-if="this.$store.state.user_nickname!=='' ">
+                <li>{{this.$store.state.user_nickname}}님 반갑습니다!</li>
+                <li v-on:click="logout"><router-link to="/">LogOut</router-link></li>
+              </div>
+              
+              <!-- 로그인 안 한 상태 -->
+              <div v-else>
+                <div class="dropdown">
+                  <li class="dropbtn"><router-link to="/login">Join</router-link></li>
+                <div class="dropdown-content">
+                  <li>
+                    <router-link to="/login">LogIn</router-link>
+                  </li>
+                  <li>
+                    <router-link to="/signup">SignUp</router-link>
+                  </li>
+                </div>
+              </div>
+              </div>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -58,24 +56,23 @@ import firebase from 'firebase';
 
 export default {
   methods: {
-    scrollFunction() {
-        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-          document.getElementById("header").style.height = "80px";
-          document.getElementById("hifive").style.fontSize = "25px";
-          document.getElementById("hifive_logo").style.width = "25px";
-          document.getElementById("hifive_logo").style.height = "25px";
-        } else {
-          document.getElementById("header").style.height = "100px";
-          document.getElementById("hifive").style.fontSize = "35px";
-          document.getElementById("hifive_logo").style.width = "35px";
-          document.getElementById("hifive_logo").style.height = "35px";
-        }
-    },
+    // scrollFunction() {
+    //     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    //       document.getElementById("header").style.height = "80px";
+    //       document.getElementById("hifive").style.fontSize = "27px";
+    //       document.getElementById("hifive_logo").style.width = "25px";
+    //       document.getElementById("hifive_logo").style.height = "25px";
+    //     } else {
+    //       document.getElementById("header").style.height = "100px";
+    //       document.getElementById("hifive").style.fontSize = "36px";
+    //       document.getElementById("hifive_logo").style.width = "30px";
+    //       document.getElementById("hifive_logo").style.height = "32px";
+    //     }
+    // },
     logout() {
       firebase.auth().signOut().then(
         result => {
           // Sign-out successful.
-          // console.log('로그아웃 된거야?');
           alert('로그아웃 되었습니다!')
           this.$store.state.isLogin = false;
           this.$store.state.user_nickname = '';
@@ -114,7 +111,7 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 100px;
+  padding: 30px 100px;
   box-sizing: border-box;
   transition: 0.5s;
   /* background: linear-gradient(to right, #ff5858, #f857a6); */
@@ -123,14 +120,14 @@ nav {
 }
 
 nav #hifive {
-  font-size: 2.3rem;
+  font-size: 2.4rem;
   color: #a120ec;
   float: left;
   transition: 0.5s;
 }
 
-nav #hifive img {
-  transition: 0.5s;
+.header_menu {
+  display: inline;
 }
 
 nav ul {
@@ -180,7 +177,6 @@ nav ul li {
 
 nav ul li a {
   list-style: 80px;
-  /* color: #a120ec; */
   color: black;
   padding: 5px 15px;
   text-decoration: none;
@@ -194,6 +190,23 @@ nav ul li a:hover {
   color: #fff;
   background-color: #a120ec;
 }
+
+input[type="submit"] {
+  font-family: "Jua", sans-serif;
+  list-style: 80px;
+  color: black;
+  padding: 5px 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  color: #fff;
+  background-color: #a120ec;
+}
+
 .header_container .logo {
   vertical-align: middle;
   display: flex;
@@ -216,37 +229,7 @@ nav ul li a:hover {
   .header_container ul {
     display: none;
   }
-  nav #hifive img {
-    display: none;
-  }
 }
-
-/* .navbar {
-    height: 75px;
-    width: 100%;
-    background:rgba(0,0,0,0);
-    border:0px;
-    transition:ease-in-out 350ms;
-  }
-  .navbar .hifive {
-    font-family: 'Jua', sans-serif;
-    font-size: 1.8rem;
-    display: inline;
-  }
-  .login_navbar{
-    background-color:#8089df;
-    height: 1.4rem;
-    font-family: 'Jua', sans-serif;
-  }
-  .app a{
-    color: #a120ec;
-    font-size: 1rem;
-    font-family: 'Jua', sans-serif;
-  }
-  .app a:active{
-    color: rgb(141, 43, 233);
-  } */
-
 /* 
     SCREEN : DESKTOP
     SIZE : 1281px

@@ -15,11 +15,11 @@
               <a href="#" class="twitter btn" v-on:click="anonymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
-              <br />
+              <br>
               <a href="#" class="fb btn" v-on:click="facebook_login()">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
               </a>
-              <br />
+              <br>
               <a href="#" class="google btn" v-on:click="google_login()">
                 <i class="fab fa-google"></i>구글 로그인
               </a>
@@ -33,7 +33,7 @@
                 <p>Or sign in manually:</p>
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required />
-              <br />
+              <br>
               <input
                 type="password"
                 name="password"
@@ -44,20 +44,22 @@
               <input type="submit" class="submitbutton" value="하이파이브 로그인" v-on:click="login" />
             </div>
           </div>
+          <!-- Signup & Forgot? -->
+          <div class="bottom-container">
+            <div class="row">
+              <div class="col">
+                <a href="./SignUp" style="color:white" class="btn">Sign up</a>
+              </div>
+              <div class="col">
+                <a href="#" style="color:white" class="btn">Forgot password?</a>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
 
-      <div class="bottom-container">
-        <div class="row">
-          <div class="col">
-            <a href="./SignUp" style="color:white" class="btn">Sign up</a>
-          </div>
-          <div class="col">
-            <a href="#" style="color:white" class="btn">Forgot password?</a>
-          </div>
-        </div>
-      </div>
-    </div>
+      
     <!-- <div v-else>
       {{this.$store.state.user_nickname}}님 안녕하세요!
       <input
@@ -74,10 +76,11 @@
 import db from "@/FirebaseService";
 import firebase from 'firebase';
 import { allSettled } from 'q';
+import router from '../router/index.js'
 
 export default {
   name: 'login',
-  data: function () {
+  data: function() {
     return {
       email: '',
       password: '',
@@ -119,8 +122,9 @@ export default {
           console.log(result)
           scope.test=result;
           scope.flag=true;
-           scope.user = result.user
-           scope.$store.state.user_nickname = result.user.email
+          scope.user = result.user
+          scope.$store.state.user_nickname = result.user.email
+          router.push("/");
         });
 
 
@@ -259,7 +263,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -326,11 +330,13 @@ input:hover,
   color: white;
 }
 
-/* .kakao {
-  background-color: #f5dd04 !important;
-  color: white;
-} */
+input[type="text"]:focus {
+  width: 100%;
+}
 
+input[type="password"]:focus {
+  width: 100%;
+}
 /* style the submit button */
 input[type="submit"] {
   background-color: #45a049;
