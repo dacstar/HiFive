@@ -2,7 +2,7 @@
   <div class="app">
     <div v-if="this.flag==true">
       <div class="container">
-        <div>
+        <div class="login_container">
           <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px" />
           <h1>LOGIN</h1>
           <h2 style="text-align:center">더 많은 정보를 얻으시려면 하이파이브 로그인해주세요!</h2>
@@ -11,7 +11,7 @@
               <span class="vl-innertext">or</span>
             </div>
 
-            <div class="col">
+            <div class="col_left">
               <a href="#" class="twitter btn" v-on:click="anonymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
@@ -33,7 +33,7 @@
                 <p>Or sign in manually:</p>
               </div>
               <input type="text" name="username" placeholder="Username" v-model="email" required />
-              <br>
+              <br />
               <input
                 type="password"
                 name="password"
@@ -113,17 +113,17 @@ export default {
     },
     login() {
       var scope = this;
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
-            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
-        }).then(function(result){
-          console.log("왔어")
-          console.log(result)
-          scope.test=result;
-          scope.flag=false;
-           scope.user = result.user
-           scope.$store.state.user_nickname = result.user.email
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+        return firebase.auth().signInWithEmailAndPassword(scope.email, scope.password);
+      }).then(function (result) {
+        console.log("왔어")
+        console.log(result)
+        scope.test = result;
+        scope.flag = false;
+        scope.user = result.user
+        scope.$store.state.user_nickname = result.user.email
 
-        });
+      });
 
 
 
@@ -196,17 +196,17 @@ export default {
     } else {
       alert(this.user);
     }
-      firebase.auth().onAuthStateChanged(function(user) {
-     if (user) {
-                   console.log(user)
-                   scope.flag=false;
-                   scope.$store.state.user_nickname =user.email
-                  // User is signed in.
-       } else {
-    // No user is signed in.
-         }
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user)
+        scope.flag = false;
+        scope.$store.state.user_nickname = user.email
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
     });
-    
+
 
     // 카카오 로그인 버튼을 생성합니다.
     // Kakao.Auth.createLoginButton({
@@ -357,6 +357,15 @@ input[type="submit"]:hover {
   margin-top: 6px;
 }
 
+/* Two-column layout */
+.col_left {
+  float: left;
+  width: 50%;
+  margin: auto;
+  padding: 0 50px;
+  margin-top: 20px;
+}
+
 /* Clear floats after the columns */
 .row {
   margin-top: 20px;
@@ -415,6 +424,39 @@ input[type="submit"]:hover {
   .hide-md-lg {
     display: block;
     text-align: center;
+  }
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .login_container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .login_container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : TABLET, IPAD
+    SIZE : 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login_container {
+    width: 90%;
+    margin: 0 auto;
   }
 }
 </style>

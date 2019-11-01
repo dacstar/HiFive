@@ -28,7 +28,10 @@
 
         <p>
           By creating an account you agree to our
-          <a href="#" style="color:dodgerblue">Terms & Privacy</a>.
+          <a
+            href="#"
+            style="color:dodgerblue"
+          >Terms & Privacy</a>.
         </p>
 
         <div class="clearfix">
@@ -86,16 +89,16 @@ export default {
       this.$router.go(-1)
     }
   },
-  mounted(){
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    console.log(user)
-    scope.$store.state.user_nickname =user.email
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
+  mounted() {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user)
+        scope.$store.state.user_nickname = user.email
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
+    });
   },
 }
 </script>
@@ -191,6 +194,39 @@ button:hover {
   .cancelbtn,
   .signupbtn {
     width: 100%;
+  }
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : TABLET, IPAD
+    SIZE : 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    width: 90%;
+    margin: 0 auto;
   }
 }
 </style>
