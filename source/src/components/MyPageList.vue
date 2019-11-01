@@ -65,17 +65,17 @@ export default {
     },
   },
   mounted() {
-        var scope=this;
-      firebase.auth().onAuthStateChanged(function(user) {
-       if (user) {
-       console.log(user)
-       scope.$store.state.user_nickname =user.email
-       console.log(scope.$store.state.user_nickname)
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
+    var scope = this;
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user)
+        scope.$store.state.user_nickname = user.email
+        console.log(scope.$store.state.user_nickname)
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
+    });
 
 
   },
@@ -211,5 +211,27 @@ ul li span:nth-child(4) {
 ul li:hover {
   transform: scale(1.06);
   background: #a120ec;
+}
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .store_list {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025 ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .store_list {
+    width: 50%;
+    margin: 0 auto;
+  }
 }
 </style>

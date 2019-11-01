@@ -3,35 +3,54 @@
     <nav>
       <div class="container">
         <div class="header_container">
-          <a href="/" class='logo'>
-            <div class='icon'>
-              <img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px">
+          <a href="/" class="logo">
+            <div class="icon">
+              <img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px" />
             </div>
             <div id="hifive">HiFive</div>
           </a>
           <ul>
             <div class="dropdown">
-              <li class="dropbtn"><router-link to="/" class="active">HiFive</router-link></li>
+              <li class="dropbtn">
+                <router-link to="/" class="active">HiFive</router-link>
+              </li>
               <div class="dropdown-content">
-                <li><router-link to="/qrcode">Go HiFive</router-link></li>
-                <li><router-link to="/map">HiFiveZone</router-link></li>
-                <li><router-link to="/about">About</router-link></li>
-                <li><router-link to="/howto">HowTo</router-link></li>
+                <li>
+                  <router-link to="/qrcode">Go HiFive</router-link>
+                </li>
+                <li>
+                  <router-link to="/map">HiFiveZone</router-link>
+                </li>
+                <li>
+                  <router-link to="/about">About</router-link>
+                </li>
+                <li>
+                  <router-link to="/howto">HowTo</router-link>
+                </li>
               </div>
             </div>
-            <li><router-link to="/mypage">MyHifive</router-link></li>
+            <li>
+              <router-link to="/mypage">MyHifive</router-link>
+            </li>
             <!-- 로그인 안한 상태 -->
             <div class="dropdown">
-              <li class="dropbtn"><router-link to="/login">Join</router-link></li>
+              <li class="dropbtn">
+                <router-link to="/login">Join</router-link>
+              </li>
               <div class="dropdown-content">
-                <li><router-link to="/login">LogIn</router-link></li>
-                <li><router-link to="/signup">SignUp</router-link></li>
+                <li>
+                  <router-link to="/login">LogIn</router-link>
+                </li>
+                <li>
+                  <router-link to="/signup">SignUp</router-link>
+                </li>
               </div>
             </div>
-            
-            <!-- 로그인 한 상태 -->
-            <li><router-link to="/signup">LogOut</router-link></li>
 
+            <!-- 로그인 한 상태 -->
+            <li>
+              <router-link to="/signup">LogOut</router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -43,76 +62,75 @@
     </div>
     <div class="login_navbar" v-else>
       로그인이 필요합니다!
-    </div> -->
-
+    </div>-->
   </div>
 </template>
 
 <script>
 export default {
-  
+
   methods: {
     scrollFunction() {
-        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-          document.getElementById("header").style.height = "80px";
-          document.getElementById("hifive").style.fontSize = "25px";
-          document.getElementById("hifive_logo").style.width = "25px";
-          document.getElementById("hifive_logo").style.height = "25px";
-          // document.getElementById("hifive_logo").style.transition = "all .5s";
-        } else {
-          document.getElementById("header").style.height = "100px";
-          document.getElementById("hifive").style.fontSize = "35px";
-          document.getElementById("hifive_logo").style.width = "35px";
-          document.getElementById("hifive_logo").style.height = "35px";
-        }
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("header").style.height = "80px";
+        document.getElementById("hifive").style.fontSize = "25px";
+        document.getElementById("hifive_logo").style.width = "25px";
+        document.getElementById("hifive_logo").style.height = "25px";
+        // document.getElementById("hifive_logo").style.transition = "all .5s";
+      } else {
+        document.getElementById("header").style.height = "100px";
+        document.getElementById("hifive").style.fontSize = "35px";
+        document.getElementById("hifive_logo").style.width = "35px";
+        document.getElementById("hifive_logo").style.height = "35px";
+      }
     }
   },
-  created () {
+  created() {
     window.addEventListener('scroll', this.scrollFunction);
   }
 }
 </script>
 
 <style scoped>
-  .app{
-    color: #a120ec;
-    padding: 8px;
-    margin: 0;
-    padding: 0;
-    height: 200px;
-  }
-  #header{
-    padding-bottom: 100px;
-    font-family: 'Jua', sans-serif;
-  }
-  .header_container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Jua', sans-serif;
-  }
-  nav {
+.app {
+  color: #a120ec;
+  padding: 8px;
+  margin: 0;
+  padding: 0;
+  height: 200px;
+}
+#header {
+  padding-bottom: 100px;
+  font-family: "Jua", sans-serif;
+}
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Jua", sans-serif;
+}
+nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 10px 100px;
   box-sizing: border-box;
-  transition: .5s;
+  transition: 0.5s;
   /* background: linear-gradient(to right, #ff5858, #f857a6); */
   background: #fff;
-  z-index: 100000000; 
+  z-index: 100000000;
 }
 
 nav #hifive {
   font-size: 2.3rem;
   color: #a120ec;
   float: left;
-  transition: .5s;
+  transition: 0.5s;
 }
 
 nav #hifive img {
-  transition: .5s;
+  transition: 0.5s;
 }
 
 nav ul {
@@ -130,7 +148,7 @@ nav ul li {
   position: relative;
   display: inline-block;
 }
-.dropdown-content{
+.dropdown-content {
   display: none;
 }
 .dropdown:hover .dropdown-content {
@@ -139,7 +157,7 @@ nav ul li {
   margin-top: 5px;
   background-color: rgba(200, 25, 253, 0.1);
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .dropdown-content a {
@@ -148,13 +166,13 @@ nav ul li {
   text-decoration: none;
   display: block;
 }
-.dropdown-content a{
+.dropdown-content a {
   background-color: #fff;
 }
 
 .dropdown-content a:hover {
   background-color: #a120ec;
-  }
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -166,8 +184,8 @@ nav ul li a {
   color: black;
   padding: 5px 15px;
   text-decoration: none;
-  text-transform:  uppercase;
-  transition: .5s;
+  text-transform: uppercase;
+  transition: 0.5s;
   cursor: pointer;
 }
 
@@ -176,28 +194,34 @@ nav ul li a:hover {
   color: #fff;
   background-color: #a120ec;
 }
-.header_container .logo{
+.header_container .logo {
   vertical-align: middle;
   display: flex;
 }
 
-#header > nav > div > div > a:link{
+#header > nav > div > div > a:link {
   text-decoration: none;
 }
-#header > nav > div > div > a > div:nth-child(1){
+#header > nav > div > div > a > div:nth-child(1) {
   margin-right: 10px;
 }
-#header > nav > div > div > a > div:nth-child(2){
+#header > nav > div > div > a > div:nth-child(2) {
   color: #a120ec;
   font-size: 30px;
 }
 @media screen and (max-width: 768px) {
-  .header_container {justify-content: center;}
-  .header_container ul {display: none;}
-  nav #hifive img {display: none;}
+  .header_container {
+    justify-content: center;
+  }
+  .header_container ul {
+    display: none;
+  }
+  nav #hifive img {
+    display: none;
+  }
 }
 
-  /* .navbar {
+/* .navbar {
     height: 75px;
     width: 100%;
     background:rgba(0,0,0,0);
@@ -222,4 +246,37 @@ nav ul li a:hover {
   .app a:active{
     color: rgb(141, 43, 233);
   } */
+
+/* 
+    SCREEN : DESKTOP
+    SIZE : 1281px
+  */
+@media (min-width: 1281px) {
+  .header_container {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : LABTOP AND DESKTOP
+    SIZE : 1025px ~ 1280px
+  */
+@media (min-width: 1025px) and (max-width: 1281px) {
+  .header_container {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* 
+    SCREEN : TABLET, IPAD
+    SIZE : 768px to 1024px
+  */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .header_container {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
 </style>
