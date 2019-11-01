@@ -111,7 +111,7 @@ export default {
       }).catch(function (error) {
         console.log("Error getting document:", error);
       });
-    }
+    },
     login() {
       var scope = this;
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
