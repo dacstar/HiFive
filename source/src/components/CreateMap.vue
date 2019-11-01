@@ -12,12 +12,6 @@ import firebase from 'firebase/app';
 import { async } from 'q';
 
 export default {
-  data() {
-    return {
-      stores: [],
-      keyword: "",
-    }
-  },
   computed: {
     // stores(){
     //   return this.$store.status.stores;
@@ -41,15 +35,16 @@ export default {
     // store.js에서 묶음으로 확인 가능합니다.
     // this.$store.dispatch('FETCH_STORES')
   },
+  created() {
+    this.$store.dispatch('FETCH_STORES');
+  },
   methods: {
-
     async create_customover() {
       // firebase database -> get store data
-      const snapshot = await db.collection('stores').get();
-      snapshot.forEach(store => {
-        this.stores.push(store.data());
-      });
-
+      // const snapshot = await db.collection('stores').get();
+      // snapshot.forEach(store => {
+      //   this.stores.push(store.data());
+      // });
       var mapContainer = document.getElementById("map");
       var mapOptions = {
         center: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
@@ -57,15 +52,15 @@ export default {
       };
       var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
 
+      this.$store.commit('SET_MAP', map);
+
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
       var zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
       // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 
-      var positions = this.stores;
-
-      console.log(positions)
-      console.log(positions[0].location.latitude, positions[0].location.longitude)
+      var positions = this.$store.state.stores;
+      console.log(positions[0])
 
       // Marker
       var imageSrc = "https://www.iconsdb.com/icons/preview/violet/hand-cursor-xl.png"; // 마커 이미지 링크
@@ -81,14 +76,14 @@ export default {
         });
 
         var overlay = null;
-        var content = document.createElement('div')
-        content.className = 'wrap'
+        var content = document.createElement('div');
+        content.className = 'wrap';
         var info = document.createElement('div');
         info.className = 'info';
         content.appendChild(info);
         var title = document.createElement('div');;
         title.className = 'title'
-        title.innerHTML = positions[i].title;
+        title.innerHTML = positions[i].storeName;
         info.appendChild(title);
 
         var body = document.createElement('div');
@@ -188,7 +183,6 @@ input[type="password"] {
   margin-right: 10px;
   margin-bottom: 15px;
 }
-
 
 /* 버튼 */
 button {

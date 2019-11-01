@@ -18,10 +18,10 @@ export default {
   },
   methods: {
     submitForm: function () {
-
+      // 2019.11.01 검색 기능 작업중
       let keyword = this.keyword;
-      let kakao_map = this.mapinfo;
-      let stores = this.shops;
+      let kakao_map = this.$store.state.kakaomap;
+      let stores = this.$store.state.stores;
 
       // 키워드로 장소를 검색합니다.
       searchPlaces();
