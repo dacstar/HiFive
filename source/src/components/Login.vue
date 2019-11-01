@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <div v-if="this.flag==true">
+    <div v-if="this.flag==false">
       <div class="container">
         <div class="login_container">
           <img alt="하이파이브 logo" src="../assets/logo.png" height="120px" width="100px" />
@@ -58,14 +58,14 @@
         </div>
       </div>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       {{this.$store.state.user_nickname}}님 안녕하세요!
       <input
         type="submit"
         value="로그아웃"
         v-on:click="logout"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -81,8 +81,7 @@ export default {
     return {
       email: '',
       password: '',
-      user: [],
-      flag: true,
+      flag: this.$store.state.isLogin,
       user_img: ''
     }
   },
@@ -113,17 +112,16 @@ export default {
     },
     login() {
       var scope = this;
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
-        return firebase.auth().signInWithEmailAndPassword(scope.email, scope.password);
-      }).then(function (result) {
-        console.log("왔어")
-        console.log(result)
-        scope.test = result;
-        scope.flag = false;
-        scope.user = result.user
-        scope.$store.state.user_nickname = result.user.email
-
-      });
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
+        }).then(function(result){
+          alert(result.user.email + '님 로그인이 되었습니다. 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!')
+          console.log(result)
+          scope.test=result;
+          scope.flag=true;
+           scope.user = result.user
+           scope.$store.state.user_nickname = result.user.email
+        });
 
 
 
@@ -156,7 +154,7 @@ export default {
           var uid = user.uid;
           console.log(user);
           scope.$store.state.user_nickname = "싸피인!!";
-          scope.flag = false;
+          scope.flag = true;
           // ...
         } else {
           // User is signed out.
@@ -169,7 +167,6 @@ export default {
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
     },
-    // google_login:function(){
     google_login() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
@@ -180,8 +177,7 @@ export default {
           // Sign-out successful.
           // console.log('로그아웃 된거야?');
 
-          this.flag = true;
-          this.user = [];
+          this.flag = false;
           this.$store.state.user_nickname = '';
         }).catch(function (error) {
           // An error happened.
@@ -192,19 +188,20 @@ export default {
   mounted() {
     var scope = this;
     if (this.flag) {
-      // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
-    } else {
-      alert(this.user);
-    }
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        console.log(user)
-        scope.flag = false;
-        scope.$store.state.user_nickname = user.email
-        // User is signed in.
+      // 로그인 된 상태
+        alert(this.user);
       } else {
-        // No user is signed in.
-      }
+        // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
+    }
+      firebase.auth().onAuthStateChanged(function(user) {
+     if (user) {
+                   console.log(user)
+                   scope.flag=true;
+                   scope.$store.state.user_nickname = user.email
+                  // User is signed in.
+       } else {
+    // No user is signed in.
+         }
     });
 
 
@@ -241,11 +238,10 @@ export default {
         }
         // The signed-in user info.
         var user = result.user;
-        // console.log('이거슨 user',user);
-        // console.log('user displayname:',user.displayName);
+        // console.log('user: ', user, 'user displayname:',user.displayName);
         if (user) {
           this.$store.state.user_nickname = user.displayName;
-          this.flag = false;
+          this.flag = true;
           this.addUserToDB();
         }
 
