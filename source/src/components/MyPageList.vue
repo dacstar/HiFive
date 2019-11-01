@@ -54,7 +54,6 @@ export default {
       var scope = this;
       scope.visit = true;
 
-      // console.log('####', scope.userVisitStore[0].length);
       for (var i = 0; i < scope.userVisitStore[0].length; i++) {
         scope.Lank[i] = scope.userVisitStore[0][i];
       }
@@ -65,19 +64,15 @@ export default {
     },
   },
   mounted() {
-        var scope=this;
-      firebase.auth().onAuthStateChanged(function(user) {
-       if (user) {
-       console.log(user)
-       scope.$store.state.user_nickname =user.email
-       console.log(scope.$store.state.user_nickname)
-    // User is signed in.
-  } else {
-    // No user is signed in.
-  }
-});
-
-
+    var scope=this;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        scope.$store.state.user_nickname = user.email;
+      } else {
+        // No user is signed in.
+      }
+    });
   },
   created() {
     var scope = this;
@@ -99,46 +94,6 @@ export default {
     }
   }
 }
-
-    // updateUserToDB(){
-    //   var scope = this;
-
-    //   var userID = "newUser"; // 사용자 식별자 넣기
-    //   var storeDB = [
-    //     {
-    //         count: count+1, // 기존 userDB에서 가져오기
-    //         lastVisit: {    // 현재 시간함수로 가져오기
-    //           seconds: 0,
-    //           nanoseconds: 0,
-    //         },
-    //         location: {     // 기존 storeDB에서 가져오기(1)
-    //           _lat: 0.0,
-    //           _long: 0.0,
-    //         },
-    //         storeName: "Rom122", // 기존 storeDB에서 가져오기(2)
-    //     },
-    //     {
-    //         count: count+1,
-    //         lastVisit: {
-    //           seconds: 0,
-    //           nanoseconds: 0,
-    //         },
-    //         location: {
-    //           _lat: 0.0, 
-    //           _long: 0.0,
-    //         },
-    //         storeName: "동죽이네",
-    //     }
-    //   ]
-    //   var docRef = db.collection("user").doc(userID);
-    //   return docRef.update({
-    //     store: storeDB,
-    //   }).then(function(doc) {
-    //     console.log("Document successfully updated!")
-    //   }).catch(function(error) {
-    //     console.log("Error updating document:", error);
-    //   });
-    // }
 </script>
 
 <style scoped>

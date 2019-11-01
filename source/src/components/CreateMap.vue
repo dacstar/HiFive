@@ -46,7 +46,7 @@ export default {
         level: 3 // 1 to 13
       };
       var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
-
+      console.log(map);
       this.mapinfo = map;
 
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성

@@ -88,6 +88,7 @@ export default {
   },
   mounted(){
   firebase.auth().onAuthStateChanged(function(user) {
+  var scope = this;
   if (user) {
     console.log(user)
     scope.$store.state.user_nickname =user.email
