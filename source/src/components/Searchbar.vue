@@ -4,33 +4,36 @@
     <!-- 검색 버튼 -->
     <form v-on:submit.prevent="submitForm">
       <input type="text" name="search" placeholder="하이파이브존 검색하기!" v-model.lazy="keyword" />
-      <button type="submit">하이파이브존 GO!</button>
+      <button class="search_btn" type="submit">하이파이브존 GO!</button>
     </form>
   </div>
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
   data() {
     return {
-      keyword: "",
-    }
+      keyword: ""
+    };
   },
   methods: {
-    submitForm: function () {
-
+    submitForm: function() {
+      // 2019.11.01 검색 기능 작업중
       let keyword = this.keyword;
-      let kakao_map = this.mapinfo;
-      let stores = this.shops;
+      let kakao_map = this.$store.state.kakaomap;
+      let stores = this.$store.state.stores;
+
+      console.log(stores);
 
       // 키워드로 장소를 검색합니다.
       searchPlaces();
 
       // 키워드 검색을 요청하는 함수입니다.
       function searchPlaces() {
-
-        if (!keyword.replace(/^\s+|\s+$/g, '')) {
-          alert('키워드를 입력해주세요!');
+        if (!keyword.replace(/^\s+|\s+$/g, "")) {
+          Swal.fire("Nooooo!", "Input Keyword", "error");
           return false;
         }
 
@@ -39,7 +42,7 @@ export default {
         var isFind = false;
         var res;
         for (var i = 0; i < stores.length; i++) {
-          var store = stores[i].title;
+          var store = stores[i].storeName;
           if (store.includes(keyword)) {
             res = stores[i];
             isFind = true;
@@ -48,23 +51,23 @@ export default {
             continue;
           }
         }
-
         if (isFind == true) {
-          alert('검색하신 키워드를 찾았습니다.');
-          console.log(res.latlng.getLat());
-          console.log(res.latlng.getLng());
+          Swal.fire("검색 성공!", "", "success");
           // 이동할 위도 경도 위치를 생성합니다.
-          var moveLatLon = new kakao.maps.LatLng(res.latlng.getLat(), res.latlng.getLng());
+          var moveLatLon = new kakao.maps.LatLng(
+            res.location.latitude,
+            res.location.longitude
+          );
 
           // 지도 중심을 이동 시킵니다.
           kakao_map.setCenter(moveLatLon);
         } else {
-          alert('검색하신 키워드를 찾지 못하였습니다.');
+          Swal.fire("검색 실패!", "", "error");
         }
       }
-    },
+    }
   }
-}
+};
 </script>
 
 <style>
@@ -101,7 +104,7 @@ input[type="text"]:focus {
 }
 
 /* 버튼 */
-button {
+.search_btn {
   background: #a120ec;
   color: #fff !important;
   border: none;
@@ -115,13 +118,13 @@ button {
   font-family: "Do Hyeon", sans-serif;
 }
 
-button:hover {
+.search_btn:hover {
   background: #fff;
   color: #a120ec !important;
 }
 
-button:before,
-button:after {
+.search_btn:before,
+.search_btn:after {
   content: "";
   position: absolute;
   top: 0;
@@ -132,15 +135,15 @@ button:after {
   transition: 400ms ease all;
 }
 
-button:after {
+.search_btn:after {
   right: inherit;
   top: inherit;
   left: 0;
   bottom: 0;
 }
 
-button:hover:before,
-button:hover:after {
+.search_btn:hover:before,
+.search_btn:hover:after {
   width: 100%;
   transition: 800ms ease all;
 }
