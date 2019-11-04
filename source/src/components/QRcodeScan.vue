@@ -120,8 +120,8 @@ export default {
         return;
       }
       console.log(userName);
-      var userDocRef = db.collection("users").doc(userName);  
-      await userDocRef.get().then(function(doc) {
+      var userDocRef = db.collection("users").doc(userName);
+      await userDocRef.get().then(function (doc) {
         if (doc.exists) {
           scope.userFromDB.push(doc.data().store);
         } else {
@@ -172,7 +172,7 @@ export default {
       var currentStoreID = await storeObj[0].storeID;
       var idx = 0;
       var flag = false;
-      for(var i=0; i < userObj[0].length; i++) {
+      for (var i = 0; i < userObj[0].length; i++) {
         if (currentStoreID == userObj[0][i].storeID) {
           console.log('$compare success')
           flag = true;
@@ -209,7 +209,7 @@ export default {
           store: firebase.firestore.FieldValue.arrayUnion({
             count: 1,
             lastVisit: firebase.firestore.Timestamp.fromDate(new Date()),  // new Date안에 현재 시간 불러오기
-            location:new firebase.firestore.GeoPoint(storeObj[0].location._lat, storeObj[0].location._long),
+            location: new firebase.firestore.GeoPoint(storeObj[0].location._lat, storeObj[0].location._long),
             storeID: storeObj[0].storeID,
             storeName: storeObj[0].storeName,
           })
@@ -236,9 +236,9 @@ export default {
       this.storeFromDB = [];
     }
   },
-  mounted(){
-    var scope=this;
-    firebase.auth().onAuthStateChanged(function(user) {
+  mounted() {
+    var scope = this;
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
         scope.$store.state.user_nickname = user.email
@@ -246,6 +246,9 @@ export default {
         // No user is signed in.
       }
     });
+  },
+  created() {
+    this.$store.dispatch("FETCH_STORES");
   }
 }
 </script>
