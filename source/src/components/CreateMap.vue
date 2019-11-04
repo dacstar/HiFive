@@ -20,9 +20,6 @@ export default {
       storea: state => state.stores
     })
   },
-  created() {
-    this.$store.dispatch("FETCH_STORES");
-  },
   methods: {
     async create_customover() {
       // firebase database -> get store data
@@ -30,13 +27,14 @@ export default {
       // snapshot.forEach(store => {
       //   this.stores.push(store.data());
       // });
+
       var mapContainer = document.getElementById("map");
       var mapOptions = {
         center: new kakao.maps.LatLng(36.350185298428336, 127.29788497889939),
         level: 3 // 1 to 13
       };
       var map = new kakao.maps.Map(mapContainer, mapOptions); // 지도 생성
-      console.log(map);
+
       this.$store.commit("SET_MAP", map);
 
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
@@ -95,14 +93,14 @@ export default {
       }
 
       function makeOverListener(map, overlay) {
-        return function() {
+        return function () {
           overlay.setMap(map);
         };
       }
 
       // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다
       function makeOutListener(overlay) {
-        return function() {
+        return function () {
           overlay.setMap(null);
         };
       }
