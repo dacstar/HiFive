@@ -44,6 +44,19 @@
               </div>
               </div>
             </ul>
+
+            <!-- 햄버거 메뉴 -->
+            <div class="hamburger">
+              <label for="toggle">&#9776;</label>
+              <input type="checkbox" id="toggle"/>
+              <div class="menu">
+                <a href="#">hifive</a>
+                <a href="#">mypage</a>
+                <a href="#">login</a>
+                <a href="#">signup</a>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -212,6 +225,36 @@ input[type="submit"]:hover {
   display: flex;
 }
 
+.hamburger {
+  border-bottom: 1px solid #EAEAEB;
+  height: 70px;
+  display: none;
+}
+
+.menu {
+  margin: 0 30px 0 0;
+}
+
+.menu a {
+  clear: right;
+  text-decoration: none;
+  color: gray;
+  margin: 0 10px;
+  line-height: 70px;
+}
+
+label {
+  font-size: 26px;
+  line-height: 70px;
+  display: none;
+  width: 26px;
+  float: right;
+}
+
+#toggle {
+  display: none;
+}
+
 #header > nav > div > div > a:link {
   text-decoration: none;
 }
@@ -229,6 +272,27 @@ input[type="submit"]:hover {
   .header_container ul {
     display: none;
   }
+  .hamburger{
+    display: block;
+  }
+  label {
+    display: block;
+    cursor: pointer;
+  }
+  .menu {
+    text-align: center;
+    width: 100%;
+    display: none;
+  }
+  .menu a {
+    display: block;
+    border-bottom: 1px solid #EAEAEB;
+    margin: 0;
+  }
+  #toggle:checked + .menu {
+    display: block;
+  }
+
 }
 /* 
     SCREEN : DESKTOP

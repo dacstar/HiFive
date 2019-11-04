@@ -71,7 +71,6 @@
 </template>
 
 <script>
-// import firebase from '@/FirebaseService';
 import db from "@/FirebaseService";
 import firebase from 'firebase';
 import { allSettled } from 'q';
@@ -111,35 +110,27 @@ export default {
       }).catch(function (error) {
         console.log("Error getting document:", error);
       });
-    }
+    },
     login() {
       var scope = this;
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
-            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
-        }).then(function(result){
-          alert(result.user.email + '님 로그인이 되었습니다. 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!')
-          console.log(result)
-          scope.test=result;
-          scope.flag=true;
-          scope.user = result.user
-          scope.$store.state.user_nickname = result.user.email
-          router.push("/");
-        });
-
-
-
-      // firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-      //   res => {
-      //     // console.log(res);
-      //     //alert("로그인 잘 되었습니다.")
-      //     //this.$router.push("map");
-      //     this.flag = false;
-      //     this.user = res.user
-      //     scope.$store.state.user_nickname = res.user.email
-      //   }).catch(function (error) {
-      //     //alert(error.message)
-      //   }
-      //   );
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+        return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
+      }).then(function(result){
+        alert(result.user.email + '님 로그인이 되었습니다. 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!')
+        // console.log(result)
+        scope.test=result;
+        scope.flag=true;
+        scope.user = result.user
+        scope.$store.state.user_nickname = result.user.email
+        router.push("/");
+      }).catch(function(error){
+        const errorCode = error.code;
+        if (errorCode == "auth/invalid-email") {
+          alert("잘못된 이메일 형식입니다.");
+        } else if (errorCode == "auth/wrong-password") {
+          alert("비밀번호가 맞지않습니다.");
+        }
+      });
     },
     // anonymous_login:function(){
     anonymous_login() {
@@ -149,6 +140,7 @@ export default {
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
+        console.log('익명로그인 에러',errorCode, errorMessage);
       });
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -177,9 +169,6 @@ export default {
     logout() {
       firebase.auth().signOut().then(
         result => {
-          // Sign-out successful.
-          // console.log('로그아웃 된거야?');
-
           this.flag = false;
           this.$store.state.user_nickname = '';
         }).catch(function (error) {
