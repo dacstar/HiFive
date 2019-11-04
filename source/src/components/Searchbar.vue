@@ -3,7 +3,7 @@
     하이파이브존을 확인해주세요!
     <!-- 검색 버튼 -->
     <form v-on:submit.prevent="submitForm">
-      <input type="text" name="search" placeholder="하이파이브존 검색하기!" v-model.lazy="keyword" />
+      <input type="text" name="search" placeholder="하이파이브존 검색" v-model.lazy="keyword" />
       <button class="search_btn" type="submit">하이파이브존 GO!</button>
     </form>
   </div>

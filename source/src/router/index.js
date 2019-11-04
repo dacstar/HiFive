@@ -1,5 +1,6 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
+import MainPage from "../views/MainPage.vue"
 import QRcodeShow from "../views/QRcodeShow.vue"
 import LoginPage from "../views/LoginPage.vue"
 import KakaoMap from "../views/KakaoMap.vue"
@@ -12,7 +13,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: QRcodeShow
+    component: MainPage
   },
   {
     path: "/login",

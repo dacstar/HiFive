@@ -22,6 +22,6 @@
   padding: 40px 0;
   z-index: 10000;
   /* margin-top:auto; */ 
-  margin-bottom:auto;
+  /* margin-bottom:auto; */
 }
 </style>
