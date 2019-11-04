@@ -57,16 +57,6 @@
         </div>
         </div>
       </div>
-
-      
-    <!-- <div v-else>
-      {{this.$store.state.user_nickname}}님 안녕하세요!
-      <input
-        type="submit"
-        value="로그아웃"
-        v-on:click="logout"
-      />
-    </div> -->
   </div>
 </template>
 
@@ -129,9 +119,9 @@ export default {
         }).catch(function(error){
         const errorCode = error.code;
         if (errorCode == "auth/invalid-email") {
-          alert("잘못된 이메일 형식입니다.");
+          Swal.fire("잘못된 이메일 형식입니다.", "다시 확인해주세요.", "error");
         } else if (errorCode == "auth/wrong-password") {
-          alert("비밀번호가 맞지않습니다.");
+          Swal.fire("잘못된 비밀번호입니다.", "다시 확인해주세요.", "error");
         }
       });
     },
@@ -235,7 +225,7 @@ export default {
         }
         // The signed-in user info.
         var user = result.user;
-        // console.log('user: ', user, 'user displayname:',user.displayName);
+        // console.log('user: ', user, 'user displayname:', user.displayName);
         if (user) {
           this.$store.state.user_nickname = user.email;
           this.flag = true;

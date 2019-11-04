@@ -88,7 +88,6 @@ input[type="password"] {
   font-size: 16px;
   font-family: "Do Hyeon", sans-serif;
   background-color: white;
-  /* background-image: url('searchicon.png'); */
   background-position: 10px 10px;
   background-repeat: no-repeat;
   padding: 12px 20px 12px 40px;

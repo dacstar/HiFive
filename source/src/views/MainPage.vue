@@ -4,7 +4,7 @@
         <h1>This is MainPage!</h1>
       <!-- <searchbar></searchbar> -->
     </div>
-  </div>
+</div>
 
 
 
