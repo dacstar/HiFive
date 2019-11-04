@@ -106,7 +106,6 @@ export default {
 <style scoped>
 
 .container {
-  margin-top: 20px;
   font-family: "Do Hyeon", sans-serif;
   height: 720px;
 }
@@ -160,13 +159,16 @@ button {
 }
 
 button:hover {
-  opacity: 1;
+  /* opacity: 1; */
+  background-color: #a120ec;
+  transition: 500ms ease all;
+
 }
 
 /* Extra styles for the cancel button */
 .cancelbtn {
   padding: 0px 20px;
-  background-color: #f44336;
+  background-color: orange;
 }
 
 /* Float cancel and signup buttons and add an equal width */
@@ -174,6 +176,8 @@ button:hover {
 .signupbtn {
   float: left;
   width: 50%;
+  padding: 10px 20px;
+  font-family: "Do Hyeon", sans-serif;
 }
 
 /* Add padding to container elements */

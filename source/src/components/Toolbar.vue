@@ -5,7 +5,7 @@
         <div class="header_container">
           <a href="/" class="logo">
             <div class="icon">
-              <img id="hifive_logo" src="../assets/hifive_logo.png" width="28px" height="28px" />
+              <img id="hifive_logo" src="../assets/hifive_logo.png" width="27px" height="25px" />
             </div>
             <div id="hifive">HiFive</div>
           </a>
@@ -66,27 +66,30 @@
 
 <script>
 import firebase from 'firebase';
+import Swal from 'sweetalert2'
 
 export default {
+  
   methods: {
-    // scrollFunction() {
-    //     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-    //       document.getElementById("header").style.height = "80px";
-    //       document.getElementById("hifive").style.fontSize = "27px";
-    //       document.getElementById("hifive_logo").style.width = "25px";
-    //       document.getElementById("hifive_logo").style.height = "25px";
-    //     } else {
-    //       document.getElementById("header").style.height = "100px";
-    //       document.getElementById("hifive").style.fontSize = "36px";
-    //       document.getElementById("hifive_logo").style.width = "30px";
-    //       document.getElementById("hifive_logo").style.height = "32px";
-    //     }
-    // },
+    scrollFunction() {
+        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+          document.getElementById("header").style.height = "80px";
+          document.getElementById("hifive").style.fontSize = "27px";
+          document.getElementById("hifive_logo").style.width = "25px";
+          document.getElementById("hifive_logo").style.height = "25px";
+        } else {
+          document.getElementById("header").style.height = "100px";
+          document.getElementById("hifive").style.fontSize = "36px";
+          document.getElementById("hifive_logo").style.width = "32px";
+          document.getElementById("hifive_logo").style.height = "32px";
+        }
+    },
     logout() {
       firebase.auth().signOut().then(
         result => {
           // Sign-out successful.
-          alert('로그아웃 되었습니다!')
+          // alert('로그아웃 되었습니다!')
+          Swal.fire('LogOut Success!', '다시 돌아오기로 약속~!')
           this.$store.state.isLogin = false;
           this.$store.state.user_nickname = '';
         }).catch(function (error) {
@@ -110,7 +113,6 @@ export default {
   height: 200px;
 }
 #header {
-  padding-bottom: 100px;
   font-family: "Jua", sans-serif;
 }
 .header_container {
@@ -129,6 +131,7 @@ nav {
   transition: 0.5s;
   /* background: linear-gradient(to right, #ff5858, #f857a6); */
   background: #fff;
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
   z-index: 100000000;
 }
 
@@ -136,6 +139,10 @@ nav #hifive {
   font-size: 2.4rem;
   color: #a120ec;
   float: left;
+  transition: 0.5s;
+}
+
+nav .icon {
   transition: 0.5s;
 }
 

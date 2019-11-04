@@ -75,6 +75,7 @@ import db from "@/FirebaseService";
 import firebase from 'firebase';
 import { allSettled } from 'q';
 import router from '../router/index.js'
+import Swal from "sweetalert2";
 
 export default {
   name: 'login',
@@ -150,6 +151,7 @@ export default {
           console.log(user);
           scope.$store.state.user_nickname = "싸피인!!";
           scope.flag = true;
+          router.push("/");
           // ...
         } else {
           // User is signed out.
@@ -161,10 +163,12 @@ export default {
     facebook_login() {
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
+      router.push("/");
     },
     google_login() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
+      router.push("/");
     },
     logout() {
       firebase.auth().signOut().then(
@@ -266,6 +270,10 @@ body {
   background-color: white;
   padding: 30px 0;
   font-family: "Do Hyeon", sans-serif;
+}
+
+.login_container {
+  margin-top: 20px;
 }
 
 h1 {

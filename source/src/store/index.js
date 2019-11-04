@@ -1,7 +1,8 @@
-import Vue from "vue"
-import Vuex from "vuex"
+import Vue from "vue";
+import Vuex from "vuex";
+import db from "@/FirebaseService";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
@@ -22,29 +23,32 @@ export default new Vuex.Store({
     isLogin: false,
     user_nickname: "",
     isValid: undefined,
-    stores: []
+    stores: [],
+    kakaomap: undefined
   },
   mutations: {
     increment(state) {
-      state.QRcode_Lat++
+      state.QRcode_Lat++;
     },
     doubleY(state, Y) {
-      state.Y = Y
+      state.Y = Y;
     },
     doubleX(state, X) {
-      state.Y = X
+      state.Y = X;
     },
     SET_STORES(state, data) {
-      state.stores = data
+      state.stores.push(data);
     },
-
+    SET_MAP(state, map) {
+      state.kakaomap = map;
+    },
     SET_STOREINFO(state, store) {
       if (store.startsWith("{")) {
-        state.QRcode_Store = JSON.parse(store)
-        state.isValid = true
+        state.QRcode_Store = JSON.parse(store);
+        state.isValid = true;
       } else {
-        state.QRcode_Store = ""
-        state.isValid = false
+        state.QRcode_Store = "";
+        state.isValid = false;
       }
     }
   },
@@ -52,20 +56,18 @@ export default new Vuex.Store({
     // 상점 리스트를 가져오는 함수입니다.
     // FETCH_STORES(context){
     FETCH_STORES({ commit }) {
-      fetchStoreList()
-        .then(res => {
-          console.log(res)
-          // context.commit('SET_STORES',res.data);
-          commit("SET_STORES", res.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      db.collection("stores")
+        .get()
+        .then(function(Snapshot) {
+          Snapshot.forEach(function(store) {
+            commit("SET_STORES", store.data());
+          });
+        });
     },
 
     READ_QRCODE(context, content) {
-      console.log("READ_QRCODE: " + content)
-      context.commit("SET_STOREINFO", content)
+      console.log("READ_QRCODE: " + content);
+      context.commit("SET_STOREINFO", content);
     }
   }
-})
+});
