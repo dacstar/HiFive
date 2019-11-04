@@ -118,7 +118,7 @@ export default {
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
             return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
         }).then(function(result){
-          Swal.fire('HiFive LogIn Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
+          Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
           console.log(result.user.email)
           console.log('result', result)
           scope.test=result;
@@ -181,8 +181,6 @@ export default {
       firebase.auth().signOut().then(
         result => {
           // Sign-out successful.
-          // console.log('로그아웃 된거야?');
-
           this.flag = false;
           this.$store.state.user_nickname = '';
         }).catch(function (error) {

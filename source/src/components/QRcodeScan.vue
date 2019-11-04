@@ -19,7 +19,8 @@
       <div v-if="validationFailure" class="validation-failure">올바른 하이파이브 QRcode가 아닙니다!</div>
 
       <div v-if="validationPending" class="validation-pending">
-        8시간 이내에 인식하신적이 있는지, 혹은 장소 내에 있는지 분석중입니다...
+        8시간 이내에 인식하신 적이 있는지,<br>
+        또는 장소 내에 있는지 분석 중입니다...<br>
         잠시만 기다려주세요.
       </div>
     </qrcode-stream>
@@ -266,7 +267,8 @@ export default {
 
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  font-weight: bold;
+  font-family: "Do Hyeon", sans-serif;
+  /* font-weight: bold; */
   font-size: 1.4rem;
   padding: 10px;
 
@@ -282,7 +284,7 @@ export default {
 }
 
 .recommend {
-  margin-top: 30px;
+  margin-bottom: 100px !important;
   font-family: "Do Hyeon", sans-serif;
 }
 

@@ -21,10 +21,11 @@
                   <li><router-link to="/map">HiFiveZone</router-link></li>
                 </div>
               </div>
+              
               <li><router-link to="/mypage">MyHifive</router-link></li>
             
               <!-- 로그인 한 상태 -->
-              <div v-if="this.$store.state.user_nickname!=='' ">
+              <div v-if="this.$store.state.user_nickname!=='' " class="user_name">
                 <li>{{this.$store.state.user_nickname}}님 반갑습니다!</li>
                 <li v-on:click="logout"><router-link to="/">LogOut</router-link></li>
               </div>
@@ -42,6 +43,7 @@
                   </li>
                 </div>
               </div>
+
               </div>
             </ul>
           </div>
@@ -76,7 +78,7 @@ export default {
         result => {
           // Sign-out successful.
           // alert('로그아웃 되었습니다!')
-          Swal.fire('LogOut Success!', '다시 돌아오기로 약속~!')
+          Swal.fire('Logout Success!', '다시 돌아오기로 약속~!')
           this.$store.state.isLogin = false;
           this.$store.state.user_nickname = '';
         }).catch(function (error) {
@@ -146,6 +148,10 @@ nav ul {
 
 nav ul li {
   list-style: none;
+}
+
+.user_name li {
+  display: inline-block;
 }
 
 .dropdown {
@@ -269,4 +275,5 @@ input[type="submit"]:hover {
     margin: 0 auto;
   }
 }
+
 </style>
