@@ -5,7 +5,7 @@
         <div class="my_hifive_info">{{this.$store.state.user_nickname}}님의 하이파이브 정보</div>
       </div>
       <div v-else>
-        <div class="my_hifive_info">내 하이파이브 정보를 보려면 로그인해주세요!</div>
+        <div class="my_hifive_info">내 하이파이브 정보를 보려면 <router-link to="/login">로그인</router-link>해주세요!</div>
       </div>
       <div class="hifive_rank">내가 방문한 하이파이브존 TOP3를 확인해보세요!</div>
       <div class="store_list">
@@ -16,7 +16,7 @@
                 <div>
                   <span class="number">{{ index+1 }}</span>
                   <img
-                    src="https://post-phinf.pstatic.net/MjAxNzA2MDlfMjE3/MDAxNDk2OTg3ODIzODA5.MyG6GA71J-5DQE2UIusK6Zl9LyekZXHS4vzSkvSKRZkg.mTjbmTr-iLdD3idvOt5haiN90Iw0IV6Lb5hUkomEX7Eg.JPEG/%EA%B3%B5%EC%9C%A0.jpg?type=w1200"
+                    src="../assets/coffee.png"
                     style="width:50px; height:50px;"
                   />
                   <span
@@ -25,7 +25,7 @@
                   >{{ place.storeName }}</span>
                 </div>
                 <div>
-                  <span class="hifive_count">하이파이브 :: {{ place.count }}회</span>
+                  <span class="hifive_count">하이파이브 : {{ place.count }}회</span>
                 </div>
               </li>
             </template>
@@ -109,12 +109,13 @@ export default {
 }
 
 .my_hifive_info {
-  font-size: 30px;
+  font-size: 2.2vw;
+  /* font-weight: bold !important; */
   font-family: "Jua", sans-serif;
 }
 
 .hifive_rank {
-  font-size: 15px;
+  font-size: 0.8rem;
   margin-top: 20px;
   margin-bottom: 20px;
   font-family: "Jua", sans-serif;

@@ -76,6 +76,7 @@ import db from "@/FirebaseService";
 import firebase from 'firebase';
 import { allSettled } from 'q';
 import router from '../router/index.js'
+import Swal from "sweetalert2";
 
 export default {
   name: 'login',
@@ -117,16 +118,15 @@ export default {
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
             return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
         }).then(function(result){
-          alert(result.user.email + '님 로그인이 되었습니다. 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!')
-          console.log(result)
+          Swal.fire('HiFive LogIn Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
+          console.log(result.user.email)
+          console.log('result', result)
           scope.test=result;
           scope.flag=true;
           scope.user = result.user
           scope.$store.state.user_nickname = result.user.email
           router.push("/");
         });
-
-
 
       // firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
       //   res => {
@@ -158,6 +158,7 @@ export default {
           console.log(user);
           scope.$store.state.user_nickname = "싸피인!!";
           scope.flag = true;
+          router.push("/");
           // ...
         } else {
           // User is signed out.
@@ -169,10 +170,12 @@ export default {
     facebook_login() {
       var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithRedirect(provider);
+      router.push("/");
     },
     google_login() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithRedirect(provider);
+      router.push("/");
     },
     logout() {
       firebase.auth().signOut().then(
@@ -277,6 +280,10 @@ body {
   background-color: white;
   padding: 30px 0;
   font-family: "Do Hyeon", sans-serif;
+}
+
+.login_container {
+  margin-top: 20px;
 }
 
 h1 {

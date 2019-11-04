@@ -3,7 +3,7 @@
     <p class="decode-result">
       좋은 하루입니다! 하이파이브할까요?
       <br />
-      <b>주소 : {{ result }}</b>
+      <!-- <b>주소 : {{ result }}</b> -->
     </p>
 
     <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
@@ -283,6 +283,7 @@ export default {
 
 .recommend {
   margin-top: 30px;
+  font-family: "Do Hyeon", sans-serif;
 }
 
 /* 

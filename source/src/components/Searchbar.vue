@@ -75,7 +75,7 @@ export default {
   font-size: 25px;
   font-family: "Jua", sans-serif;
   margin-top: 20px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 /* 검색 박스 */
