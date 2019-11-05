@@ -19,9 +19,9 @@
       <div v-if="validationFailure" class="validation-failure">올바른 하이파이브 QRcode가 아닙니다!</div>
 
       <div v-if="validationPending" class="validation-pending">
-        8시간 이내에 인식하신 적이 있는지,<br>
-        또는 장소 내에 있는지 분석 중입니다...<br>
-        잠시만 기다려주세요.
+        8시간 이내에 인식하신 적이 있는지,
+        <br />또는 장소 내에 있는지 분석 중입니다...
+        <br />잠시만 기다려주세요.
       </div>
     </qrcode-stream>
     <div class="recommend" v-if="this.$store.state.user_nickname==''">
@@ -247,9 +247,7 @@ export default {
       }
     });
   },
-  created() {
-    this.$store.dispatch("FETCH_STORES");
-  }
+
 }
 </script>
 
