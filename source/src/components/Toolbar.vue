@@ -17,7 +17,7 @@
                   <router-link to="/" class="active">HiFive</router-link>
                 </li>
                 <div class="dropdown-content">
-                  <li><router-link to="/qrcode">Go HiFive</router-link></li>
+                  <li><router-link to="/qrcode">Go QRcode</router-link></li>
                   <li><router-link to="/map">HiFiveZone</router-link></li>
                 </div>
               </div>
@@ -25,7 +25,7 @@
               <li><router-link to="/mypage">MyHifive</router-link></li>
             
               <!-- 로그인 한 상태 -->
-              <div v-if="this.$store.state.user_nickname!=='' " class="user_name">
+              <div v-if="this.$store.state.user_nickname!=='' " class="login_menu">
                 <li>{{this.$store.state.user_nickname}}님 반갑습니다!</li>
                 <li v-on:click="logout"><router-link to="/">LogOut</router-link></li>
               </div>
@@ -168,8 +168,10 @@ nav ul:not(#menu) {
 nav ul:not(#menu) li {
   list-style: none;
 }
-.user_name li {
+
+.login_menu li {
   display: inline-block;
+  color: black;
 }
 .dropdown {
   position: relative;

@@ -13,14 +13,15 @@
   font-family: "Jua", sans-serif;
   font-size: 2vh;
   left: 0;
-  margin-top: 100%;
+  bottom: 0;
+  margin-top: 3%;
   width: 100%;
   align-items: center;
-  background-color: #5e2a7c;
+  background-color: #273057;
   /* background: linear-gradient(#f8fa9c,#a120ec); */
   color: white;
   padding: 40px 0;
   /* margin-top:auto; */ 
-  /* margin-bottom:auto; */
+  margin-bottom:auto;
 }
 </style>

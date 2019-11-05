@@ -285,7 +285,9 @@ export default {
 }
 
 .recommend {
-  margin-bottom: 100px !important;
+  margin: 30px 0 0;
+  /* margin-top: 50px !important;
+  margin-bottom: 50px !important; */
   font-family: "Do Hyeon", sans-serif;
 }
 

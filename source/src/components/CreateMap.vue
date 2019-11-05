@@ -43,7 +43,6 @@ export default {
       // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 
       var positions = this.$store.state.stores;
-      console.log("왔다")
       console.log(positions[0]);
 
       // Marker
@@ -90,7 +89,7 @@ export default {
         desc.appendChild(ellipsis)
         var jibun=document.createElement("div");
         jibun.className="ibun ellipsis";
-        jibun.innerHTML="HI하이파이브:"+positions[i].count;
+        jibun.innerHTML="하이파이브 : "+positions[i].count+"회";
         desc.appendChild(jibun)
         
         overlay = new kakao.maps.CustomOverlay({
@@ -182,6 +181,11 @@ export default {
   overflow: hidden;
 }
 
+.map_wrap #map img {
+  z-index: 10px;
+}
+
+
 /* 검색 박스 */
 input[type="text"],
 input[type="password"] {
@@ -206,14 +210,13 @@ input[type="password"] {
 .wrap {
   position: absolute;
   left: 0;
-  bottom: 40px;
+  bottom: 22px;
   width: 288px;
   height: 132px;
-  margin-left: -144px;
+  margin-left: -142.5px;
   text-align: left;
   overflow: hidden;
-  font-size: 12px;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  font-size: 13px;
   line-height: 1.5;
 }
 
@@ -223,8 +226,8 @@ input[type="password"] {
 }
 
 .wrap .info {
-  width: 286px;
-  height: 120px;
+  width: 250px;
+  height: 100px;
   border-radius: 5px;
   border-bottom: 2px solid #ccc;
   border-right: 1px solid #ccc;
@@ -238,18 +241,20 @@ input[type="password"] {
 }
 
 .info .title {
-  padding: 5px 0 0 10px;
+  padding-top: 7px;
+  text-align: center;
   height: 30px;
   background: #eee;
   border-bottom: 1px solid #ddd;
-  font-size: 18px;
+  font-family: "Do Hyeon", sans-serif;
+  font-size: 17px;
   font-weight: bold;
 }
 
 .info .close {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 45px;
   color: #888;
   width: 17px;
   height: 17px;
@@ -263,9 +268,11 @@ input[type="password"] {
 .info .body {
   position: relative;
   overflow: hidden;
+  font-family: "Do Hyeon", sans-serif;
 }
 
 .info .desc {
+  margin: 10px 5px 5px 5px;
   position: relative;
   height: 75px;
 }
@@ -274,8 +281,8 @@ input[type="password"] {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom:5%;
-  margin-top:5%;
+  margin-bottom: 2px;
+  margin-top: 2px;
 
 }
 

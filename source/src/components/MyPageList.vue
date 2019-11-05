@@ -103,14 +103,13 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 20px;
-  /* font-family: "Do Hyeon", sans-serif; */
-  height: 720px;
+  margin-top: 50px;
+  height: 600px;
 }
 
 .my_hifive_info {
+  margin-top: 10px;
   font-size: 2.2vw;
-  /* font-weight: bold !important; */
   font-family: "Jua", sans-serif;
 }
 
@@ -118,7 +117,7 @@ export default {
   font-size: 0.8rem;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-family: "Jua", sans-serif;
+  font-family: "Do Hyeon", sans-serif;
 }
 
 ul {

@@ -1,14 +1,14 @@
 <template>
-  <div id="app">
-    <div class="container">
-      <h1>This is MainPage!</h1>
-      <!-- <searchbar></searchbar> -->
-    </div>
-  </div>
+  <main-page-card></main-page-card>
 </template>
 
 <script>
+import MainPageCard from "../components/MainPageCard.vue";
+
 export default {
+  components: {
+    MainPageCard
+  },
   created() {
     this.$store.dispatch("FETCH_STORES");
   }

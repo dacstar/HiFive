@@ -108,7 +108,7 @@ export default {
   var scope = this;
   if (user) {
     console.log(user)
-    scope.$store.state.user_nickname =user.email
+    scope.$store.state.user_nickname = user.email
     // User is signed in.
   } else {
     // No user is signed in.
