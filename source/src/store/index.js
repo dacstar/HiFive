@@ -39,6 +39,9 @@ export default new Vuex.Store({
     SET_STORES(state, data) {
       state.stores.push(data)
     },
+    SET_STORE(state, data) {
+      state.stores = data
+    },
     SET_MAP(state, map) {
       state.kakaomap = map
     },

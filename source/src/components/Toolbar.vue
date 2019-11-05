@@ -202,7 +202,6 @@ nav ul:not(#menu) li {
 }
 .dropdown-content a:hover {
   background-color: #a120ec;
-  margin: 5px 15px;
 }
 .dropdown:hover .dropdown-content {
   display: block;

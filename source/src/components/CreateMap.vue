@@ -12,6 +12,11 @@ import firebase from "firebase/app";
 import { async } from "q";
 
 export default {
+  data() {
+    return {
+      stores: []
+    }
+  },
   computed: {
     // stores(){
     //   return this.$store.status.stores;
@@ -23,10 +28,10 @@ export default {
   methods: {
     async create_customover() {
       // firebase database -> get store data
-      // const snapshot = await db.collection('stores').get();
-      // snapshot.forEach(store => {
-      //   this.stores.push(store.data());
-      // });
+      const snapshot = await db.collection('stores').get();
+      snapshot.forEach(store => {
+        this.stores.push(store.data());
+      });
 
       var mapContainer = document.getElementById("map");
       var mapOptions = {
@@ -37,12 +42,14 @@ export default {
 
       this.$store.commit("SET_MAP", map);
 
+
       // 지도 확대 축소를 제어할 수 있는 줌 컨트롤을 생성
       var zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
       // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 
-      var positions = this.$store.state.stores;
+      var positions = this.stores;
+      this.$store.commit("SET_STORE", positions);
       console.log(positions[0]);
 
       // Marker
@@ -81,17 +88,17 @@ export default {
         close.className = "close";
         title.appendChild(close);
         var desc = document.createElement("div");
-        desc.className="desc";
+        desc.className = "desc";
         body.appendChild(desc);
-        var ellipsis=document.createElement("div");
-        ellipsis.className="ellipsis";
-        ellipsis.innerHTML=positions[i].address;
+        var ellipsis = document.createElement("div");
+        ellipsis.className = "ellipsis";
+        ellipsis.innerHTML = positions[i].address;
         desc.appendChild(ellipsis)
-        var jibun=document.createElement("div");
-        jibun.className="ibun ellipsis";
-        jibun.innerHTML="하이파이브 : "+positions[i].count+"회";
+        var jibun = document.createElement("div");
+        jibun.className = "ibun ellipsis";
+        jibun.innerHTML = "하이파이브 : " + positions[i].count + "회";
         desc.appendChild(jibun)
-        
+
         overlay = new kakao.maps.CustomOverlay({
           content: content,
           position: marker.getPosition()
@@ -151,8 +158,8 @@ export default {
   },
   mounted() {
     this.create_customover();
-    var scope=this;
-    firebase.auth().onAuthStateChanged(function(user) {
+    var scope = this;
+    firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         // User is signed in.
         scope.$store.state.user_nickname = user.email;
@@ -184,7 +191,6 @@ export default {
 .map_wrap #map img {
   z-index: 10px;
 }
-
 
 /* 검색 박스 */
 input[type="text"],
@@ -283,7 +289,6 @@ input[type="password"] {
   white-space: nowrap;
   margin-bottom: 2px;
   margin-top: 2px;
-
 }
 
 .desc .jibun {
