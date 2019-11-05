@@ -58,6 +58,7 @@
                 <router-link to="/qrcode" class="ham_menus"><li>Go Hifve</li></router-link>
                 <router-link to="/map" class="ham_menus"><li>HiFiveZone</li></router-link>
                 <router-link to="/mypage" class="ham_menus"><li>MyHifive</li></router-link>
+                
               <!-- 로그인 한 상태 -->
               <div v-if="this.$store.state.user_nickname!=='' " id="hamburger_logout">
                 <router-link to="/"><li v-on:click="logout">LogOut</li></router-link>
@@ -195,10 +196,13 @@ nav ul:not(#menu) li {
   display: block;
 }
 .dropdown-content a {
+  /* margin: 5px 15px; */
   background-color: #fff;
+  
 }
 .dropdown-content a:hover {
   background-color: #a120ec;
+  margin: 5px 15px;
 }
 .dropdown:hover .dropdown-content {
   display: block;
@@ -213,7 +217,7 @@ nav ul:not(#menu) li a {
   cursor: pointer;
 }
 nav ul:not(#menu) li a.active,
-nav ul:not(#menu)li a:hover {
+nav ul:not(#menu) li a:hover {
   color: #fff;
   background-color: #a120ec;
 }
