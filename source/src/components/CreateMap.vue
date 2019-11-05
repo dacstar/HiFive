@@ -43,6 +43,7 @@ export default {
       // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
 
       var positions = this.$store.state.stores;
+      console.log("왔다")
       console.log(positions[0]);
 
       // Marker
@@ -80,6 +81,18 @@ export default {
         var close = document.createElement("div");
         close.className = "close";
         title.appendChild(close);
+        var desc = document.createElement("div");
+        desc.className="desc";
+        body.appendChild(desc);
+        var ellipsis=document.createElement("div");
+        ellipsis.className="ellipsis";
+        ellipsis.innerHTML=positions[i].address;
+        desc.appendChild(ellipsis)
+        var jibun=document.createElement("div");
+        jibun.className="ibun ellipsis";
+        jibun.innerHTML="HI하이파이브:"+positions[i].count;
+        desc.appendChild(jibun)
+        
         overlay = new kakao.maps.CustomOverlay({
           content: content,
           position: marker.getPosition()
@@ -139,6 +152,15 @@ export default {
   },
   mounted() {
     this.create_customover();
+    var scope=this;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        scope.$store.state.user_nickname = user.email;
+      } else {
+        // No user is signed in.
+      }
+    });
   }
 };
 </script>
@@ -176,7 +198,6 @@ input[type="password"] {
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
-  margin-top: 10px;
   margin-right: 10px;
   margin-bottom: 15px;
 }
@@ -246,7 +267,6 @@ input[type="password"] {
 
 .info .desc {
   position: relative;
-  margin: 13px 0 0 90px;
   height: 75px;
 }
 
@@ -254,6 +274,9 @@ input[type="password"] {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom:5%;
+  margin-top:5%;
+
 }
 
 .desc .jibun {
