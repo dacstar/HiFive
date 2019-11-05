@@ -48,15 +48,27 @@
             </ul>
 
             <!-- 햄버거 메뉴 -->
-            <div class="hamburger">
-              <label for="toggle">&#9776;</label>
-              <input type="checkbox" id="toggle"/>
-              <div class="menu">
-                <a href="#">hifive</a>
-                <a href="#">mypage</a>
-                <a href="#">login</a>
-                <a href="#">signup</a>
+            <div id="menuToggle">
+              <input type="checkbox" />
+              <span></span>
+              <span></span>
+              <span></span>
+              <ul id="menu">
+                <router-link to="/" class="ham_menus"><li>Home</li></router-link>
+                <router-link to="/qrcode" class="ham_menus"><li>Go Hifve</li></router-link>
+                <router-link to="/map" class="ham_menus"><li>HiFiveZone</li></router-link>
+                <router-link to="/mypage" class="ham_menus"><li>MyHifive</li></router-link>
+              <!-- 로그인 한 상태 -->
+              <div v-if="this.$store.state.user_nickname!=='' " id="hamburger_logout">
+                <router-link to="/"><li v-on:click="logout">LogOut</li></router-link>
               </div>
+              
+              <!-- 로그인 안 한 상태 -->
+              <div v-else>
+                <router-link to="/login" class="ham_menus"><li>LogIn</li></router-link>
+                <router-link to="/signup" class="ham_menus"><li>SignUp</li></router-link>
+              </div>
+              </ul>
             </div>
 
           </div>
@@ -69,7 +81,6 @@
 <script>
 import firebase from 'firebase';
 import Swal from 'sweetalert2'
-
 export default {
   
   methods: {
@@ -117,7 +128,7 @@ export default {
 #header {
   font-family: "Jua", sans-serif;
 }
-.header_container {
+.header_container:not(.ham_menus) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -136,30 +147,25 @@ nav {
   box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.2);
   z-index: 100000000;
 }
-
 nav #hifive {
   font-size: 2.4rem;
   color: #a120ec;
   float: left;
   transition: 0.5s;
 }
-
 nav .icon {
   transition: 0.5s;
 }
-
 .header_menu {
   display: inline;
 }
-
-nav ul {
+nav ul:not(#menu) {
   float: right;
   margin: 0;
   padding: 0;
   display: flex;
 }
-
-nav ul li {
+nav ul:not(#menu) li {
   list-style: none;
 }
 
@@ -167,7 +173,6 @@ nav ul li {
   display: inline-block;
   color: black;
 }
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -183,7 +188,6 @@ nav ul li {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -193,16 +197,13 @@ nav ul li {
 .dropdown-content a {
   background-color: #fff;
 }
-
 .dropdown-content a:hover {
   background-color: #a120ec;
 }
-
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
-nav ul li a {
+nav ul:not(#menu) li a {
   list-style: 80px;
   color: black;
   padding: 5px 15px;
@@ -211,13 +212,11 @@ nav ul li a {
   transition: 0.5s;
   cursor: pointer;
 }
-
-nav ul li a.active,
-nav ul li a:hover {
+nav ul:not(#menu) li a.active,
+nav ul:not(#menu)li a:hover {
   color: #fff;
   background-color: #a120ec;
 }
-
 input[type="submit"] {
   font-family: "Jua", sans-serif;
   list-style: 80px;
@@ -228,47 +227,14 @@ input[type="submit"] {
   transition: 0.5s;
   cursor: pointer;
 }
-
 input[type="submit"]:hover {
   color: #fff;
   background-color: #a120ec;
 }
-
-.header_container .logo {
+.header_container:not(.ham_menus) .logo {
   vertical-align: middle;
   display: flex;
 }
-
-.hamburger {
-  border-bottom: 1px solid #EAEAEB;
-  height: 70px;
-  display: none;
-}
-
-.menu {
-  margin: 0 30px 0 0;
-}
-
-.menu a {
-  clear: right;
-  text-decoration: none;
-  color: gray;
-  margin: 0 10px;
-  line-height: 70px;
-}
-
-label {
-  font-size: 26px;
-  line-height: 70px;
-  display: none;
-  width: 26px;
-  float: right;
-}
-
-#toggle {
-  display: none;
-}
-
 #header > nav > div > div > a:link {
   text-decoration: none;
 }
@@ -279,66 +245,159 @@ label {
   color: #a120ec;
   font-size: 30px;
 }
+
+#menuToggle
+{
+  display: none;
+  position: relative;
+  left: 100px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0;
+  z-index: 2; 
+  
+  -webkit-touch-callout: none;
+}
+
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menu
+{
+  position: absolute;
+  width: 170px;
+  margin: -100px 0 0 -10px;
+  padding: 40px;
+  padding-top: 110px;
+  
+  background: #ededed;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  
+  transform-origin: 0% 0%;
+  transform: translate(100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu .ham_menus {
+  text-decoration: none;
+}
+
+#menu li
+{
+  padding: 10px 0;
+  font-size: 22px;
+  text-align: left;
+}
+
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
 @media screen and (max-width: 768px) {
-  .header_container {
+  .header_container:not(.ham_menus) {
     justify-content: center;
   }
-  .header_container ul {
+  .header_container ul:not(#menu) {
     display: none;
   }
-  .hamburger{
+  #menuToggle {
     display: block;
   }
-  label {
-    display: block;
-    cursor: pointer;
-  }
-  .menu {
-    text-align: center;
-    width: 100%;
-    display: none;
-  }
-  .menu a {
-    display: block;
-    border-bottom: 1px solid #EAEAEB;
-    margin: 0;
-  }
-  #toggle:checked + .menu {
-    display: block;
-  }
-
 }
 /* 
     SCREEN : DESKTOP
     SIZE : 1281px
   */
 @media (min-width: 1281px) {
-  .header_container {
+  .header_container:not(.ham_menus) {
     width: 90%;
     margin: 0 auto;
   }
 }
-
 /* 
     SCREEN : LABTOP AND DESKTOP
     SIZE : 1025px ~ 1280px
   */
 @media (min-width: 1025px) and (max-width: 1281px) {
-  .header_container {
+  .header_container:not(.ham_menus) {
     width: 90%;
     margin: 0 auto;
   }
 }
-
 /* 
     SCREEN : TABLET, IPAD
     SIZE : 768px to 1024px
   */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .header_container {
+  .header_container:not(.ham_menus) {
     width: 90%;
     margin: 0 auto;
   }
 }
+
 
 </style>
