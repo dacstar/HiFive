@@ -283,10 +283,6 @@ export default {
 </script>
 
 <style scoped>
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -482,6 +478,12 @@ input[type="submit"]:hover {
   .login_container {
     width: 90%;
     margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn {
+    width: 100%;
   }
 }
 </style>

@@ -25,7 +25,7 @@
               <li><router-link to="/mypage">MyHifive</router-link></li>
             
               <!-- 로그인 한 상태 -->
-              <div v-if="this.$store.state.user_nickname!=='' " class="user_name">
+              <div v-if="this.$store.state.user_nickname!=='' " class="login_menu">
                 <li>{{this.$store.state.user_nickname}}님 반갑습니다!</li>
                 <li v-on:click="logout"><router-link to="/">LogOut</router-link></li>
               </div>
@@ -163,8 +163,9 @@ nav ul li {
   list-style: none;
 }
 
-.user_name li {
+.login_menu li {
   display: inline-block;
+  color: black;
 }
 
 .dropdown {
