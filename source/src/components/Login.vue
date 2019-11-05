@@ -12,7 +12,7 @@
             </div>
 
             <div class="col_left">
-              <a href="#" class="twitter btn" id="fire" v-on:click="anonymous_login()">
+              <a href="#" class="twitter btn" id="fire" v-on:click="anonymous_login();">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
               <br />
@@ -152,36 +152,6 @@ export default {
         }
         // ...
       });
-
-      // 2019.11.04 Laoding Alert 기능 구현중
-      const showLoading = function () {
-        Swal({
-          title: 'Now loading',
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          timer: 2000,
-          onOpen: () => {
-            Swal.showLoading();
-          }
-        }).then(
-          () => { },
-          (dismiss) => {
-            if (dismiss === 'timer') {
-              console.log('closed by timer!!!!');
-              Swal({
-                title: 'Finished!',
-                type: 'success',
-                timer: 2000,
-                showConfirmButton: false
-              })
-            }
-          }
-        )
-      };
-
-      document.getElementById("fire").addEventListener('click', (event) => {
-        showLoading();
-      });
     },
     facebook_login() {
       var provider = new firebase.auth.FacebookAuthProvider();
@@ -203,7 +173,6 @@ export default {
           alert(error.message);
         });
     },
-
   },
   mounted() {
     var scope = this;
@@ -274,6 +243,40 @@ export default {
         var credential = error.credential;
         // ...
       });
+
+    // 2019.11.04 Laoding Alert 기능 구현중
+    console.log("hi1")
+    const showLoading = function () {
+      console.log("hi2")
+      Swal({
+        title: 'Now loading',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        timer: 2000,
+        onOpen: () => {
+          Swal.showLoading();
+        }
+      }).then(
+        () => { },
+        (dismiss) => {
+          if (dismiss === 'timer') {
+            console.log('closed by timer!!!!');
+            Swal({
+              title: 'Finished!',
+              type: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            })
+          }
+        }
+      )
+    };
+    console.log("hi3")
+
+    document.getElementById('fire').addEventListener('click', (event) => {
+      console.log("hi4")
+      showLoading();
+    });
   }
 }
 </script>
