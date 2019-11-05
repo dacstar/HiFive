@@ -19,7 +19,7 @@
         <label for="psw-repeat">
           <b>Repeat Password</b>
         </label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required />
+        <input type="password" v-model="psw_repeat" placeholder="Repeat Password" name="psw-repeat" required />
 
         <label>
           <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px" /> Remember me
@@ -35,7 +35,7 @@
 
         <div class="clearfix">
           <button type="button" class="cancelbtn" v-on:click="cancel()">뒤로가기</button>
-          <button type="submit" class="signupbtn" v-on:click="signUp(); addUserToDB();">회원가입</button>
+          <button type="submit" class="signupbtn" v-on:click="signUp();">회원가입</button>
         </div>
       </div>
     </div>
@@ -47,27 +47,42 @@ import db from "@/FirebaseService";
 import firebase from 'firebase';
 import router from '../router/index.js'
 import { log } from 'util';
+import Swal from "sweetalert2";
 
 export default {
   name: 'signup',
   data: function () {
     return {
       email: '',
-      password: ''
+      password: '',
+      psw_repeat:''
     }
   },
   methods: {
     signUp: function () {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        res => {
-          console.log(res);
-          alert("회원가입 성공!")
-          this.$router.push("login");
-        },
-        function (err) {
-          alert(err.message)
-        }
-      );
+      if(this.password == this.psw_repeat) {
+        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+          res => {
+            console.log(res);
+            Swal.fire("회원가입 성공!", "하이파이브에 오신걸 환영합니다!","success");
+            this.$router.push("login");
+            this.addUserToDB();
+          },
+          function (err) {
+            const errorCode = err.code;
+            console.log(err);
+            if (errorCode == "auth/invalid-email") {
+              Swal.fire("잘못된 이메일 형식입니다.", "다시 확인해주세요.", "error");
+            } else if (errorCode == "auth/weak-password") {
+              Swal.fire("비밀번호가 너무 짧습니다.", "6자 이상 입력해주세요.", "error");
+            } else if (errorCode == "auth/email-already-in-use") {
+              Swal.fire("이미 가입된 이메일 입니다.", "","error");
+            } 
+          }
+        );
+      } else {
+        Swal.fire("비밀번호가 맞지 않습니다.", "다시 확인해주세요.", "error");
+      }
     },
     addUserToDB() {
       var userEmail = this.email; // 사용자 식별자 넣기
