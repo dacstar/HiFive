@@ -105,18 +105,19 @@ export default {
     login() {
       var scope = this;
 
-      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
-        return firebase.auth().signInWithEmailAndPassword(scope.email, scope.password);
-      }).then(function (result) {
-        Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
-        console.log(result.user.email)
-        console.log('result', result)
-        scope.test = result;
-        scope.flag = true;
-        scope.user = result.user
-        scope.$store.state.user_nickname = result.user.email
-        router.push("/");
-      }).catch(function (error) {
+
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function (result) {
+            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
+        }).then(function(result){
+          Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
+          console.log(result.user.email)
+          console.log('result', result)
+          scope.test=result;
+          scope.flag=true;
+          scope.user = result.user
+          scope.$store.state.user_nickname = result.user.email
+          router.push("/");
+        }).catch(function(error){
         const errorCode = error.code;
         if (errorCode == "auth/invalid-email") {
           Swal.fire("잘못된 이메일 형식입니다.", "다시 확인해주세요.", "error");
