@@ -12,14 +12,14 @@
             </div>
 
             <div class="col_left">
-              <a href="#" class="twitter btn" v-on:click="anonymous_login()">
+              <a href="#" class="twitter btn" id="fire" v-on:click="anonymous_login()">
                 <i class="fa fa-twitter fa-fw"></i> 익명 로그인
               </a>
-              <br>
+              <br />
               <a href="#" class="fb btn" v-on:click="facebook_login()">
                 <i class="fa fa-facebook fa-fw"></i> 페이스북 로그인
               </a>
-              <br>
+              <br />
               <a href="#" class="google btn" v-on:click="google_login()">
                 <i class="fab fa-google"></i>구글 로그인
               </a>
@@ -55,8 +55,8 @@
             </div>
           </div>
         </div>
-        </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -69,7 +69,7 @@ import Swal from "sweetalert2";
 
 export default {
   name: 'login',
-  data: function() {
+  data: function () {
     return {
       email: '',
       password: '',
@@ -105,18 +105,18 @@ export default {
     login() {
       var scope = this;
 
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
-            return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
-        }).then(function(result){
-          Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
-          console.log(result.user.email)
-          console.log('result', result)
-          scope.test=result;
-          scope.flag=true;
-          scope.user = result.user
-          scope.$store.state.user_nickname = result.user.email
-          router.push("/");
-        }).catch(function(error){
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+        return firebase.auth().signInWithEmailAndPassword(scope.email, scope.password);
+      }).then(function (result) {
+        Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");
+        console.log(result.user.email)
+        console.log('result', result)
+        scope.test = result;
+        scope.flag = true;
+        scope.user = result.user
+        scope.$store.state.user_nickname = result.user.email
+        router.push("/");
+      }).catch(function (error) {
         const errorCode = error.code;
         if (errorCode == "auth/invalid-email") {
           Swal.fire("잘못된 이메일 형식입니다.", "다시 확인해주세요.", "error");
@@ -133,7 +133,7 @@ export default {
         var errorCode = error.code;
         var errorMessage = error.message;
         // ...
-        console.log('익명로그인 에러',errorCode, errorMessage);
+        console.log('익명로그인 에러', errorCode, errorMessage);
       });
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -143,6 +143,7 @@ export default {
           console.log(user);
           scope.$store.state.user_nickname = "싸피인!!";
           scope.flag = true;
+
           router.push("/");
           // ...
         } else {
@@ -150,6 +151,36 @@ export default {
           // ...
         }
         // ...
+      });
+
+      // 2019.11.04 Laoding Alert 기능 구현중
+      const showLoading = function () {
+        Swal({
+          title: 'Now loading',
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          timer: 2000,
+          onOpen: () => {
+            Swal.showLoading();
+          }
+        }).then(
+          () => { },
+          (dismiss) => {
+            if (dismiss === 'timer') {
+              console.log('closed by timer!!!!');
+              Swal({
+                title: 'Finished!',
+                type: 'success',
+                timer: 2000,
+                showConfirmButton: false
+              })
+            }
+          }
+        )
+      };
+
+      document.getElementById("fire").addEventListener('click', (event) => {
+        showLoading();
       });
     },
     facebook_login() {
@@ -172,24 +203,25 @@ export default {
           alert(error.message);
         });
     },
+
   },
   mounted() {
     var scope = this;
     if (this.flag) {
       // 로그인 된 상태
-        alert(this.user);
-      } else {
-        // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
+      alert(this.user);
+    } else {
+      // alert("하이파이브 지수가 1 올랐습니다! 유의미한 지수로 인정받기 위해, 혹은 기여자가 되기 위해 회원가입을 하시겠습니까? y/n 이런거 띄워줘~~!")
     }
-      firebase.auth().onAuthStateChanged(function(user) {
-     if (user) {
-                   console.log(user)
-                   scope.flag=true;
-                   scope.$store.state.user_nickname = user.email
-                  // User is signed in.
-       } else {
-    // No user is signed in.
-         }
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user)
+        scope.flag = true;
+        scope.$store.state.user_nickname = user.email
+        // User is signed in.
+      } else {
+        // No user is signed in.
+      }
     });
 
     // 카카오 로그인 버튼을 생성합니다.
