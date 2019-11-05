@@ -105,7 +105,7 @@ export default {
     login() {
       var scope = this;
 
-            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(function (result) {
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function (result) {
             return firebase.auth().signInWithEmailAndPassword(scope.email,scope.password);
         }).then(function(result){
           Swal.fire('Login Success!', result.user.email + '님, 이제 하이파이브를 더 자유롭게 이용하실 수 있습니다!', "success");

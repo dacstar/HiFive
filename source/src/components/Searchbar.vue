@@ -93,7 +93,7 @@ input[type="password"] {
   padding: 12px 20px 12px 40px;
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
-  margin-top: 10px;
+  margin-top: 1%;
   margin-right: 10px;
   margin-bottom: 15px;
 }
