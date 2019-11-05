@@ -14,7 +14,7 @@
   font-size: 2vh;
   left: 0;
   margin-top: 20px !important;
-  width: 100%;
+  width: 100% !important;
   align-items: center;
   background-color: #5e2a7c;
   /* background: linear-gradient(#f8fa9c,#a120ec); */

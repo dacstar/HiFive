@@ -33,6 +33,6 @@ export default {
 body {
   /* padding: 0;
   margin: 0; */
-  height: 750px !important;
+  /* height: 750px !important; */
 }
 </style>
