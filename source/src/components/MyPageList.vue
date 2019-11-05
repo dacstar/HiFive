@@ -104,7 +104,7 @@ export default {
 <style scoped>
 .container {
   margin-top: 50px;
-  height: 700px;
+  height: 600px;
 }
 
 .my_hifive_info {

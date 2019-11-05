@@ -62,7 +62,7 @@ export default {
         res => {
           console.log(res);
           alert("회원가입 성공!")
-          this.$router.push("login");
+          this.$router.push("/");
         },
         function (err) {
           alert(err.message)
@@ -93,7 +93,7 @@ export default {
   var scope = this;
   if (user) {
     console.log(user)
-    scope.$store.state.user_nickname =user.email
+    scope.$store.state.user_nickname = user.email
     // User is signed in.
   } else {
     // No user is signed in.

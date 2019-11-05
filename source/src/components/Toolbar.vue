@@ -17,7 +17,7 @@
                   <router-link to="/" class="active">HiFive</router-link>
                 </li>
                 <div class="dropdown-content">
-                  <li><router-link to="/qrcode">Go HiFive</router-link></li>
+                  <li><router-link to="/qrcode">Go QRcode</router-link></li>
                   <li><router-link to="/map">HiFiveZone</router-link></li>
                 </div>
               </div>
