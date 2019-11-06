@@ -1,15 +1,15 @@
 <template>
-  <div class="app">
-      this is my info page
-  </div>
+  <my-page-list></my-page-list>
 </template>
 
 <script>
-export default {
+import MyPageList from "../components/MyPageList.vue";
 
+export default {
+  components: {
+    MyPageList
+  }
 }
 </script>
-
 <style>
-
 </style>
