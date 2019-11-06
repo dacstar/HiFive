@@ -271,9 +271,7 @@ input[type="submit"]:hover {
   position: absolute;
   top: -7px;
   left: -5px;
-  
   cursor: pointer;
-  
   opacity: 0;
   z-index: 2; 
   
@@ -358,6 +356,16 @@ input[type="submit"]:hover {
   color: #a120ec;
   font-size: 22px;
   text-align: left;
+}
+
+#hamburger_logout li {
+  text-decoration: none;
+  font-family: "Do Hyeon", sans-serif;
+  text-transform: uppercase;
+}
+
+#hamburger_logout a {
+  text-decoration: none;
 }
 
 #menuToggle input:checked ~ ul
