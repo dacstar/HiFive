@@ -55,7 +55,7 @@
               <span></span>
               <ul id="menu">
                 <router-link to="/" class="ham_menus"><li>Home</li></router-link>
-                <router-link to="/qrcode" class="ham_menus"><li>Go Hifve</li></router-link>
+                <router-link to="/qrcode" class="ham_menus"><li>Go QRcode</li></router-link>
                 <router-link to="/map" class="ham_menus"><li>HiFiveZone</li></router-link>
                 <router-link to="/mypage" class="ham_menus"><li>MyHifive</li></router-link>
                 
@@ -180,20 +180,24 @@ nav ul:not(#menu) li {
 }
 .dropdown-content {
   display: none;
+  background-color: #fff;
 }
 .dropdown:hover .dropdown-content {
   display: none;
   position: absolute;
   margin-top: 5px;
-  background-color: rgba(200, 25, 253, 0.1);
+  background-color: #fff;
+  /* background-color: rgba(200, 25, 253, 0.1); */
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 .dropdown-content a {
-  color: black;
+  color: black; 
+  margin: 5px 15px;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  background-color: #fff;
 }
 .dropdown-content a {
   /* margin: 5px 15px; */
@@ -253,10 +257,8 @@ input[type="submit"]:hover {
 {
   display: none;
   position: relative;
-  left: 100px;
-  
+  left: 170px;
   z-index: 1;
-  
   -webkit-user-select: none;
   user-select: none;
 }
@@ -285,8 +287,7 @@ input[type="submit"]:hover {
   height: 4px;
   margin-bottom: 5px;
   position: relative;
-  
-  background: #cdcdcd;
+  background: #EDEDED;
   border-radius: 3px;
   
   z-index: 1;
@@ -331,10 +332,11 @@ input[type="submit"]:hover {
   position: absolute;
   width: 170px;
   margin: -100px 0 0 -10px;
-  padding: 40px;
-  padding-top: 110px;
-  
-  background: #ededed;
+  margin-top: 31px;
+  padding: 10px 10px 10px 10px;
+  /* padding-top: 110px; */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  background: #fff;
   list-style-type: none;
   -webkit-font-smoothing: antialiased;
   
@@ -346,11 +348,14 @@ input[type="submit"]:hover {
 
 #menu .ham_menus {
   text-decoration: none;
+  font-family: "Do Hyeon", sans-serif;
+  text-transform: uppercase;
 }
 
 #menu li
 {
   padding: 10px 0;
+  color: #a120ec;
   font-size: 22px;
   text-align: left;
 }
