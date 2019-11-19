@@ -1,11 +1,10 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import { fetchStoreList } from "./api/index.js"
-import { stat } from "fs"
+import db from "@/FirebaseService"
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   state: {
     // 여기에 컴포넌트 간에 공유할 변수 선언
     // ex) hifiveCnt : 0
@@ -22,7 +21,10 @@ export const store = new Vuex.Store({
     Y: 0,
     user_test_img: "",
     isLogin: false,
-    user_nickname: ""
+    user_nickname: "",
+    isValid: undefined,
+    stores: [],
+    kakaomap: undefined
   },
   mutations: {
     increment(state) {
@@ -35,26 +37,34 @@ export const store = new Vuex.Store({
       state.Y = X
     },
     SET_STORES(state, data) {
+      state.stores.push(data)
+    },
+    SET_STORE(state, data) {
       state.stores = data
     },
-
+    SET_MAP(state, map) {
+      state.kakaomap = map
+    },
     SET_STOREINFO(state, store) {
-      console.log("SET_STOREINFO: " + store)
-      state.QRcode_Store = JSON.parse(store)
+      if (store.startsWith("{")) {
+        state.QRcode_Store = JSON.parse(store)
+        state.isValid = true
+      } else {
+        state.QRcode_Store = ""
+        state.isValid = false
+      }
     }
   },
   actions: {
     // 상점 리스트를 가져오는 함수입니다.
     // FETCH_STORES(context){
     FETCH_STORES({ commit }) {
-      fetchStoreList()
-        .then(res => {
-          console.log(res)
-          // context.commit('SET_STORES',res.data);
-          commit("SET_STORES", res.data)
-        })
-        .catch(error => {
-          console.log(error)
+      db.collection("stores")
+        .get()
+        .then(function(Snapshot) {
+          Snapshot.forEach(function(store) {
+            commit("SET_STORES", store.data())
+          })
         })
     },
 
