@@ -21,9 +21,9 @@
               <a href="#" class="google btn" v-on:click="google_login()">
                 <i class="fab fa-google"></i>구글 로그인
               </a>
-              <a id="kakao-login-btn"></a>
-              <a href="http://developers.kakao.com/logout"></a>
-              
+              <!-- 카카오계정 로그인 -->
+              <!-- <a id="kakao-login-btn"></a>
+              <a href="http://developers.kakao.com/logout"></a> -->
             </div>
 
             <div class="col">
