@@ -245,7 +245,7 @@
  문제
 
     ㅇString으로 인한 HTML삽입은 수정/삭제가 힘들다
-
+    
     ㅇVue.js의 문법이 통하지 않다.
 
 
@@ -299,9 +299,6 @@
 
 ## 채원
 
-<<<<<<< HEAD
-
-=======
 * Git - commit message rule, branch naming rule 상위 폴더 README에 업로드 하였습니다.
 
 * Hifive Welcome Kit 제작(상점에 제공할 계획)  - 후보 6개 중 1개 선정(회의 폴더에 파일 업로드 완료)
@@ -394,4 +391,3 @@
    </li>
  </template>
 ```
->>>>>>> f1159cce520f2ba92cdba50fc44dd6e612d302d1
